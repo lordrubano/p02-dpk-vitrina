@@ -237,6 +237,20 @@ footer{margin-top:40px;font-size:13px;color:var(--muted)}
 .m3d-legend{margin-top:12px}
 .m3d-legend i{border:1px solid var(--axis)}
 
+/* рендеры */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:22px}
+.gallery a{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface-2);text-decoration:none;color:var(--fg-2)}
+.gallery img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.gallery figure{margin:0}
+.gallery figcaption{font-size:12px;padding:6px 8px;line-height:1.3}
+.gallery a:hover img{filter:brightness(1.05)}
+.hero .gal-note{font-size:12px;color:var(--muted);margin:6px 0 0}
+details.pc > summary .thumb{width:72px;height:45px;border-radius:6px;object-fit:cover;flex:none;border:1px solid var(--line);background:var(--surface-2)}
+.pc-fig{margin:0;grid-column:1/-1}
+.pc-fig img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:var(--surface-2)}
+.pc-fig figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+@media (max-width:520px){details.pc > summary .thumb{width:56px;height:35px}}
+
 /* материал */
 .mats{display:grid;gap:16px}
 .mat{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 22px;align-items:start}
@@ -311,6 +325,15 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       <div class="kpi"><div class="v">350–750 <small>тыс. ₽</small></div><div class="t">вложения на 1-ю очередь <span class="est">оценка</span></div></div>
       <div class="kpi"><div class="v">5 тыс.+ <small>+20%</small></div><div class="t">летних веранд кафе в Москве в сезон 2026 — самый большой спрос среди организаций</div></div>
     </div>
+    <div class="gallery" aria-label="Фотореалистичные визуализации предлагаемых изделий">
+      <a href="#products"><figure><img src="renders/02_mebel_s.jpg" srcset="renders/02_mebel_s.jpg 800w, renders/02_mebel.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Стол на 4 с табуретами-тумбами из брусков ДПК на террасе"><figcaption>Садовая мебель с хранением</figcaption></figure></a>
+      <a href="#products"><figure><img src="renders/03_naves_s.jpg" srcset="renders/03_naves_s.jpg 800w, renders/03_naves.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Стол под навесом с крышей из сотового поликарбоната вечером"><figcaption>Навес над столом</figcaption></figure></a>
+      <a href="#products"><figure><img src="renders/01_kashpo_s.jpg" srcset="renders/01_kashpo_s.jpg 800w, renders/01_kashpo.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Три кашпо разной высоты с растениями у стены дома"><figcaption>Кашпо</figcaption></figure></a>
+      <a href="#products"><figure><img src="renders/05_gryadki_s.jpg" srcset="renders/05_gryadki_s.jpg 800w, renders/05_gryadki.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Высокая грядка с приоткрытой крышкой-парником и рассадой"><figcaption>Грядки с крышкой-парником</figcaption></figure></a>
+      <a href="#products"><figure><img src="renders/04_besedka_s.jpg" srcset="renders/04_besedka_s.jpg 800w, renders/04_besedka.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Беседка-конструктор на газоне с опущенной шторой"><figcaption>Беседка-конструктор</figcaption></figure></a>
+      <a href="#products"><figure><img src="renders/06_shirmy_s.jpg" srcset="renders/06_shirmy_s.jpg 800w, renders/06_shirmy.jpg 1600w" sizes="(max-width:760px) 50vw, 220px" width="800" height="500" alt="Три ширмы из брусков с листами отгораживают зону отдыха"><figcaption>Ширмы</figcaption></figure></a>
+    </div>
+    <p class="gal-note">Фотореалистичные визуализации предлагаемых изделий (Blender, Cycles). Это не фотографии готовых образцов: изделия ещё не собраны, а кадры показывают, как они будут выглядеть из деталей системы.</p>
     <p class="small" style="margin:16px 0 0">Главная оговорка отчёта: данные маркетплейсов по отдельным нишам собрать не удалось, поэтому спрос по нишам оценён косвенно. Баллы — экспертная оценка, а не измерение.</p>
   </header>
 
@@ -318,7 +341,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
     <a href="#picture">Общая картина</a>
     <a href="#rating">Рейтинг</a>
     <a href="#material">Материал</a>
-    <a href="#models">3D-модели</a>
+    <a href="#models">Покрутить 3D</a>
     <a href="#charts">Сравнение баллов</a>
     <a href="#prices">Цены</a>
     <a href="#road">Порядок запуска</a>
@@ -405,12 +428,12 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
     <div class="sec-head">
       <h2>Материал: из чего собирается система</h2>
       <p class="lead">Все изделия собираются из одного набора деталей: брусок лаги ДПК, втулки, стеклопластиковые стержни, листы в пазах, створки из поликарбоната, шторы из гибкого ПВХ и немного стали. Ниже — каждая деталь крупно, её свойства, цена и вес по отчёту и заметкам. Где данных нет, так и написано.</p>
-      <p class="small" style="margin:0">Изображения — фотореалистичные 3D-визуализации, построенные кодом прямо на странице. Настоящих фото поставщиков здесь нет (у них свои авторские права) — под каждой деталью ссылки, где их посмотреть.</p>
+      <p class="small" style="margin:0">Изображения — фотореалистичные визуализации деталей (Blender, Cycles), а не фото поставщиков (у тех свои авторские права) — под каждой деталью ссылки, где посмотреть настоящие фото. Узел стенки ниже можно покрутить.</p>
     </div>
     <div class="mats">
 
       <article class="card mat">
-        <figure class="shot" data-shot="lag"><div class="shot-box"><img alt="Отрезок полой лаги ДПК крупным планом: торцевой срез с тремя камерами, брашированная поверхность" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: отрезок лаги 300 мм и 160 мм, видны камеры на срезе и волокна сверху.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_1_laga_s.jpg" srcset="renders/mat_1_laga_s.jpg 800w, renders/mat_1_laga.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Отрезок полой лаги ДПК крупным планом: торцевой срез с тремя камерами, паз сверху, брашированная поверхность"></div><figcaption>Фотореалистичная визуализация: отрезок лаги 300 мм и 160 мм, на срезе видны три камеры, сверху — паз под лист.</figcaption></figure>
         <div>
           <h3>Лага ДПК — главный брусок системы</h3>
           <p>Древесно-полимерный композит: древесная мука (50–65%) в пластике. Лага полая: по карточке поставщика профиль 50×35 мм, внутри 3 камеры и 4 продольных ребра жёсткости, сверху продольная канавка (в неё встаёт лист), снизу две направляющие. Поверхность брашированная, цвет почти чёрный.</p>
@@ -423,7 +446,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       </article>
 
       <article class="card mat">
-        <figure class="shot" data-shot="bush"><div class="shot-box"><img alt="Втулка — отрезок лаги 50 мм, сквозь неё проходит стеклопластиковый стержень" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: втулка 50 мм со стержнем и вторая втулка рядом.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_2_vtulka_s.jpg" srcset="renders/mat_2_vtulka_s.jpg 800w, renders/mat_2_vtulka.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Втулка — отрезок лаги 50 мм, сквозь неё проходит стеклопластиковый стержень; рядом ещё две втулки"></div><figcaption>Фотореалистичная визуализация: втулка 50 мм со стержнем Ø12 насквозь и две втулки рядом.</figcaption></figure>
         <div>
           <h3>Втулка — отрезок той же лаги 50 мм</h3>
           <p>Стоит в углах изделия между рядами брусков. Через втулку насквозь проходит стержень, поэтому углы стенки держатся не на клею и уголках, а на стержне.</p>
@@ -435,7 +458,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       </article>
 
       <article class="card mat">
-        <figure class="shot" data-shot="rod"><div class="shot-box"><img alt="Стеклопластиковые стержни диаметром 12 мм со спиральной навивкой" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: стержни Ø12 со спиральной навивкой волокна.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_3_sterzhen_s.jpg" srcset="renders/mat_3_sterzhen_s.jpg 800w, renders/mat_3_sterzhen.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Три стеклопластиковых стержня диаметром 12 мм со спиральной навивкой, гайка и шайба"></div><figcaption>Фотореалистичная визуализация: стержни Ø12 со спиральной навивкой волокна.</figcaption></figure>
         <div>
           <h3>Стеклопластиковый стержень Ø12</h3>
           <p>Композитная арматура из стекловолокна (например, АКП-12). Проходит вертикально через втулки в углах и стягивает ряды брусков в одну стенку; у высокой грядки уходит в землю.</p>
@@ -447,7 +470,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       </article>
 
       <article class="card mat">
-        <figure class="shot" data-shot="pc"><div class="shot-box"><img alt="Лист-вставка в канавке лаги и угол сотового поликарбоната 4 мм с видимыми каналами-сотами" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: лист «слоновая кость» в канавке лаги и прозрачный сотовый поликарбонат 4 мм, на торце видны соты.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_4_polikarbonat_s.jpg" srcset="renders/mat_4_polikarbonat_s.jpg 800w, renders/mat_4_polikarbonat.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Угол сотового поликарбоната 4 мм с видимыми каналами-сотами на бруске лаги и лист-вставка в пазу второго бруска"></div><figcaption>Фотореалистичная визуализация: сотовый поликарбонат 4 мм (на торце видны соты) и лист «слоновая кость» в пазу лаги.</figcaption></figure>
         <div>
           <h3>Лист-вставка и сотовый поликарбонат 4 мм</h3>
           <p>Лист 4 мм вставляется в пазы брусков и закрывает стенку между рядами (цвета в моделях — молочный, «слоновая кость», зелёный). Тот же сотовый поликарбонат 4 мм стоит в створках крыши навеса и в крышке-парнике: внутри два тонких слоя и перегородки-соты.</p>
@@ -459,7 +482,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       </article>
 
       <article class="card mat">
-        <figure class="shot" data-shot="pvc"><div class="shot-box"><img alt="Рулонная штора из гибкого ПВХ: свёрнутый рулон на трубе и опущенное прозрачное полотно с окантовкой" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: рулон на трубе и опущенное полотно с окантовкой и люверсами.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_5_shtora_s.jpg" srcset="renders/mat_5_shtora_s.jpg 800w, renders/mat_5_shtora.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Рулонная штора: полотно гибкого ПВХ намотано на алюминиевую трубу, край с окантовкой лежит на столе"></div><figcaption>Фотореалистичная визуализация: рулон ПВХ на трубе Ø64 и край полотна с окантовкой.</figcaption></figure>
         <div>
           <h3>Гибкое стекло ПВХ — шторы</h3>
           <p>Прозрачная плёнка ПВХ толщиной 500–700 мкм с окантовкой. У нас штора сворачивается в рулон на трубе под краем крыши и опускается по бокам навеса или беседки.</p>
@@ -471,7 +494,7 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
       </article>
 
       <article class="card mat">
-        <figure class="shot" data-shot="steel"><div class="shot-box"><img alt="Стальные детали: шпилька M12 с гайкой и шайбой, петля створки, вкладыш стыка стойки с отверстиями" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: шпилька M12 с гайкой, шайба, петля и стальной вкладыш стыка.</figcaption></figure>
+        <figure class="shot"><div class="shot-box"><img src="renders/mat_6_uzel_s.jpg" srcset="renders/mat_6_uzel_s.jpg 800w, renders/mat_6_uzel.jpg 1600w" sizes="(max-width:760px) 100vw, 560px" width="1600" height="1000" loading="lazy" alt="Шпилька M12 с гайкой и шайбой и угол стенки крупно: бруски, лист в пазу, втулка, стержень с гайкой сверху"></div><figcaption>Фотореалистичная визуализация: шпилька M12 с гайкой и шайбой и узел стенки (брусок — лист — втулка — стержень).</figcaption></figure>
         <div>
           <h3>Сталь: шпильки, петли, вкладыш, анкеры</h3>
           <p>Шпильки M12 с гайками и шайбами стягивают стойки с прогоном, на петлях откидываются створки и крышки. Высокие стойки навеса состоят из двух частей на стальном вкладыше — поэтому всё помещается в короткий ящик. Навес ставится на винтовые анкеры без бетона.</p>
@@ -521,8 +544,8 @@ ol.steps li.done::marker{color:var(--q1);font-weight:700}
   <!-- 3D-МОДЕЛИ -->
   <section id="models">
     <div class="sec-head">
-      <h2>3D-модели изделий</h2>
-      <p class="lead">Как изделия из рейтинга собираются из деталей нашей системы: бруски лаги ДПК 50×30 с листами в пазах, втулки в углах, стеклопластиковые стержни, створки из сотового поликарбоната и рулонные шторы. Модели упрощённые, но размеры близки к настоящим.</p>
+      <h2>Покрутить 3D</h2>
+      <p class="lead">Интерактивные модели: как изделия из рейтинга собираются из деталей нашей системы — бруски лаги ДПК 50×30 с листами в пазах, втулки в углах, стеклопластиковые стержни, створки из сотового поликарбоната и рулонные шторы. Модели упрощённые, но размеры близки к настоящим; фотореалистичные кадры каждого решения — в карточках ниже.</p>
     </div>
     <div class="card">
       <div class="filters m3d-pick" id="m3dPick" role="group" aria-label="Выбор изделия"></div>
@@ -1189,6 +1212,38 @@ function renderCharts(){
 }
 
 /* ---------- карточки ---------- */
+var RENDERS={
+ kashpo:["01_kashpo","Три кашпо разной высоты из брусков ДПК с листами в пазах, с травой, цветами и кустом, у стены дома на террасе"],
+ mebel:["02_mebel","Стол на 4 с тумбами-хранилищами и четыре табурета-тумбы из брусков ДПК на террасе из доски, на столе графин и кружки"],
+ naves:["03_naves","Стол под навесом: угловые стойки, прогон, двускатная крыша из створок с сотовым поликарбонатом, свёрнутые шторы, вечерний свет"],
+ besedka:["04_besedka","Беседка-конструктор: навес на 8 на газоне, скамьи из деталей табурета, кашпо по торцам, одна боковая штора опущена"],
+ gryadki:["05_gryadki","Две высокие грядки на огороде; у ближней приоткрыта крышка-парник из створок с поликарбонатом, внутри рассада"],
+ shirmy:["06_shirmy","Три ширмы из брусков с листами в пазах на стойках отгораживают зону отдыха с табуретом и кашпо от соседской стены"],
+ verandy:["07_verandy","Летняя веранда кафе: ряд из трёх столов на 4 с табуретами, низкие ширмы-ограждения и кашпо по краю, фасад с вывеской"],
+ baki:["08_baki","Павильон для двух мусорных баков 240 л у деревянного забора; крышка-створка приоткрыта, внутри видны баки"],
+ bar:["09_bar","Барная стойка из двух тумб со столешницей и три барных табурета-тумбы у стены дома на террасе"],
+ glamp:["10_glamp","Деревянный настил у глэмп-шатра на фоне елей: стол с навесом и табуреты-тумбы"],
+ agro:["11_agro","Агротуризм: навес со столом на гравийной площадке, рядом высокие грядки, за забором амбар"],
+ oteli:["12_oteli","Лаунж-зона отеля у бассейна: стол, две скамьи, табуреты и кашпо на светлой плитке"],
+ ofis:["13_ofis","Офисная терраса на крыше с городским фоном: два стола с табуретами, ширмы и кашпо у парапета"],
+ gos:["14_gos","Городской сквер: длинный вазон-кашпо с растениями и скамья из деталей системы на плитке, урна и фонарь в размытии"],
+ zabor:["15_zabor","Пять секций забора из брусков с листами в пазах на стойках вдоль участка у дома"],
+ detsad:["16_detsad","Прогулочная веранда для детсада: навес на 8 над резиновым покрытием площадки, скамьи, кашпо; без людей"],
+ bordyur:["17_bordyur","Низкая оградка клумбы из двух рядов брусков на стержнях, внутри цветы, вокруг газон и дорожка"],
+ drovnik:["18_drovnik","Дровник со стенками из брусков с просветами и крышей из створок, внутри уложены дрова, у забора"],
+ pesoch:["19_pesoch","Песочница из стенок системы с крышкой, раскрытой в две скамейки со спинками, на детском дворе"],
+ teplica:["20_teplica","Теплица «домиком» из стоек, прогонов и створок с сотовым поликарбонатом на огороде — рассматриваемый, но отложенный вариант"],
+ torg:["21_torgovye","Небольшой торговый киоск из стенок с листами, прилавком и односкатной крышей из створок на городской улице"]
+};
+function renderFig(it){
+  var r=RENDERS[it.id];if(!r)return "";
+  var f="renders/"+r[0];
+  return '<figure class="pc-fig"><img src="'+f+'_s.jpg" srcset="'+f+'_s.jpg 800w, '+f+'.jpg 1600w" sizes="(max-width:1120px) 100vw, 1056px" width="1600" height="1000" loading="lazy" alt="'+esc(r[1])+'"><figcaption>Фотореалистичная визуализация, предлагаемое изделие: '+esc(r[1])+'.</figcaption></figure>';
+}
+function renderThumb(it){
+  var r=RENDERS[it.id];if(!r)return "";
+  return '<img class="thumb" src="renders/'+r[0]+'_s.jpg" width="72" height="45" loading="lazy" alt="">';
+}
 var cardFilter="all";
 function li(arr){return "<ul>"+arr.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>";}
 function estMark(s){return esc(s)+(s&&s!=="—"&&!/не указан|не требует|минимальн/.test(s)?' <span class="est">оценка</span>':"");}
@@ -1199,8 +1254,9 @@ function renderCards(){
     var scores=CRIT.map(function(c,i){return "<span>"+c+": <b>"+it.s[i]+"</b></span>";}).join("");
     var prio='<div class="prio"><h4>Приоритет запуска</h4><p><span class="badge q'+it.q+'">'+esc(it.ql)+'</span></p><p style="margin-top:8px">'+esc(it.why)+'</p>'+
       (it.q!==0?'<dl><dt>До запуска</dt><dd>'+esc(it.todo)+'</dd><dt>Вложения</dt><dd>'+estMark(it.invest)+'</dd><dt>Срок</dt><dd>'+estMark(it.time)+'</dd></dl>':'')+'</div>';
-    d.innerHTML='<summary><span class="nm">'+esc(it.name)+'</span><span class="badge q'+it.q+'">'+esc(it.ql)+'</span><span class="sc-tot">'+it.total+' из 35</span><span class="chev" aria-hidden="true">▼</span></summary>'+
+    d.innerHTML='<summary>'+renderThumb(it)+'<span class="nm">'+esc(it.name)+'</span><span class="badge q'+it.q+'">'+esc(it.ql)+'</span><span class="sc-tot">'+it.total+' из 35</span><span class="chev" aria-hidden="true">▼</span></summary>'+
       '<div class="pc-body">'+
+        renderFig(it)+
         '<div class="full scorerow">'+scores+'</div>'+
         '<div><h4>Рынок и спрос</h4><p>'+esc(it.market)+'</p></div>'+
         '<div><h4>Цены конкурентов</h4>'+li(it.prices)+'</div>'+
