@@ -1,0 +1,240 @@
+<meta charset="utf-8">
+<title>Альбом P-02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef1ee; --panel:#ffffff; --ink:#1c2420; --muted:#5f6d66; --line:#d3dbd6; --accent:#2d6a4f; --accent-ink:#ffffff;
+  --ok:#2d7a4b; --wait:#a4631b; --bad:#a83b32; --stage:#dfe7e2;
+  --f-head:"IBM Plex Sans Condensed","Arial Narrow",Arial,sans-serif; --f-body:"IBM Plex Sans","Segoe UI",Arial,sans-serif; --f-mono:"IBM Plex Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ color-scheme:dark;
+    --bg:#121614; --panel:#1a201d; --ink:#e4ebe7; --muted:#9aa8a1; --line:#2c3531; --accent:#74c69d; --accent-ink:#0f1a14;
+    --ok:#6fcf97; --wait:#e0a458; --bad:#ef8a80; --stage:#1f2622; }
+}
+:root[data-theme="dark"]{ color-scheme:dark;
+  --bg:#121614; --panel:#1a201d; --ink:#e4ebe7; --muted:#9aa8a1; --line:#2c3531; --accent:#74c69d; --accent-ink:#0f1a14;
+  --ok:#6fcf97; --wait:#e0a458; --bad:#ef8a80; --stage:#1f2622; }
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45;padding-inline:16px;padding-block:0 32px}
+.wrap{max-width:1500px;margin:0 auto;display:grid;gap:14px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;padding-block:14px 10px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-head);font-size:26px;line-height:1.1;margin:2px 0 0;text-wrap:balance}
+.nav{display:flex;align-items:center;gap:10px}
+.nav button{font:600 18px/1 var(--f-body);width:44px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.nav button:hover{border-color:var(--accent)}
+#cnt{font-family:var(--f-mono);font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;font:500 13.5px/1.2 var(--f-body);padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.chip[aria-current="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.ok{background:var(--ok)}.dot.wait{background:var(--wait)}.dot.bad{background:var(--bad)}
+.chip[aria-current="true"] .dot{outline:2px solid var(--accent-ink)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.view{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+@media (max-width:980px){.view{grid-template-columns:minmax(0,1fr)}}
+.stage{min-width:0}
+.s3d{position:relative;height:clamp(380px,70vh,820px);border-radius:10px;overflow:hidden;background:var(--stage);border:1px solid var(--line)}
+.s3d canvas{width:100%;height:100%;display:block}
+.tog{position:absolute;left:10px;right:10px;top:10px;display:flex;flex-wrap:wrap;gap:6px 12px;background:rgba(255,255,255,.9);color:#1c2420;padding:6px 10px;border-radius:8px;font-size:13px}
+.hint{position:absolute;left:10px;bottom:8px;margin:0;font-size:12px;color:#44514b;background:rgba(255,255,255,.8);padding:3px 8px;border-radius:6px}
+.sheet{background:#ffffff;color:#1d2a26;border-radius:10px;border:1px solid var(--line);overflow-x:auto;padding-block:6px}
+.sheet img{display:block;width:100%;max-width:1400px;height:auto;margin:0 auto}
+.cap{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:8px}
+.status{display:inline-flex;align-items:center;gap:7px;font:500 12.5px/1 var(--f-mono);letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.cap h2{font-family:var(--f-head);font-size:21px;line-height:1.15;margin:0;text-wrap:balance}
+.cap p{margin:0 0 6px;max-width:65ch}
+#info p{margin:0 0 6px}
+.keys{font-size:12.5px;color:var(--muted)}
+#s6{margin:0;background:#fff;font-family:Segoe UI,Arial,sans-serif;color:#1d2a26}
+#s6 h1{font-size:20px;margin:14px 20px 2px}
+#s6 p.sub{margin:0 20px 4px;color:#5b6a64;font-size:13px}
+#s6 .b{fill:#2b2b2b;stroke:#000;stroke-width:.6}
+#s6 .b2{fill:#4a4a4a;stroke:#000;stroke-width:.6}
+#s6 .sh{fill:#e8cf62}
+#s6 .rod{stroke:#c0392b;stroke-width:3}
+#s6 .t{font-size:12.5px;fill:#1d2a26}
+#s6 .r{fill:#c0392b}
+#s7{margin:0;background:#fff;font-family:Segoe UI,Arial,sans-serif;color:#1d2a26}
+#s7 h1{font-size:20px;margin:14px 20px 2px}
+#s7 p.sub{margin:0 20px 6px;color:#5b6a64;font-size:13px}
+#s7 .b{fill:#2b2b2b;stroke:#000;stroke-width:.8;vector-effect:non-scaling-stroke}
+#s7 .q{fill:#555;stroke:#000;stroke-width:.8;vector-effect:non-scaling-stroke}
+#s7 .f{fill:#2b2b2b;stroke:#1f9d55;stroke-width:2.2;vector-effect:non-scaling-stroke}
+#s7 .sh{fill:#e8cf62}
+#s7 .shq{fill:#d9d2b0}
+#s7 .rod{stroke:#c0392b;stroke-width:1.6;stroke-dasharray:6 4;vector-effect:non-scaling-stroke}
+#s7 .pad{fill:#111;stroke:#1f9d55;stroke-width:1;vector-effect:non-scaling-stroke}
+#s7 .gr{stroke:#8a8f8c;stroke-width:1.2;vector-effect:non-scaling-stroke}
+#s7 .t{font-size:12.5px;fill:#1d2a26}
+#s7 .g{fill:#1f7a45;font-weight:600}
+#s7 table{border-collapse:collapse;font-size:13px;margin:0 20px 18px}
+#s7 td,#s7 th{border:1px solid #cfd6d2;padding:4px 9px;text-align:center}
+#s7 th{background:#eef3f0}
+#s7 td.l{text-align:left}
+#s7 .ok{color:#1f7a45;font-weight:600}
+#s7 .no{color:#a33;font-weight:600}
+#s9{margin:0;background:#fff;font-family:Segoe UI,Arial,sans-serif;color:#1d2a26}
+#s9 h1{font-size:20px;margin:14px 20px 2px}
+#s9 p.sub{margin:0 20px 6px;color:#5b6a64;font-size:13px}
+#s9 .st{fill:#3a3532;stroke:#000;stroke-width:1;vector-effect:non-scaling-stroke}
+#s9 .seat{fill:#8a6a4f;stroke:#000;stroke-width:1.2;vector-effect:non-scaling-stroke}
+#s9 .tab{fill:#1f9d55;stroke:#000;stroke-width:1;vector-effect:non-scaling-stroke}
+#s9 .rod{stroke:#c0392b;stroke-width:3;vector-effect:non-scaling-stroke}
+#s9 .dot{fill:#c0392b}
+#s9 .gr{stroke:#8a8f8c;stroke-width:1.2;vector-effect:non-scaling-stroke}
+#s9 .t{font-size:13px;fill:#1d2a26}
+#s9 .g{fill:#1f7a45;font-weight:600}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div><div class="eyebrow">P-02 · лага ДПК 50×30 на стержнях GFRP Ø12</div><h1>Альбом предложений</h1></div>
+    <div class="nav"><button id="prev" aria-label="Предыдущий слайд">←</button><span id="cnt">1 / 11</span><button id="next" aria-label="Следующий слайд">→</button></div>
+  </header>
+  <nav class="chips" id="chips" aria-label="Слайды"></nav>
+  <main class="view">
+    <section class="stage">
+      <div class="s3d" id="s3d">
+        <canvas id="c" aria-label="3D-модель"></canvas>
+        <div class="tog"><label><input type="checkbox" id="sheets" checked> вставки</label><label>торцы <select id="ends"><option value="plugs">заглушки</option><option value="trims">уголок</option></select></label><label><input type="checkbox" id="showTop" checked> столешница</label><label><input type="checkbox" id="showSeats" checked> сиденья</label><button id="topViewBtn" type="button">вид сверху</button><label><input type="checkbox" id="shelf2"> докупные полки</label><label><input type="checkbox" id="xInsc"> доп. вставки</label><label><input type="checkbox" id="lightc"> освещение</label><label><input type="checkbox" id="canopyc"> навес</label><label><input type="checkbox" id="shDownc"> шторы вниз</label><label><input type="checkbox" id="nightc"> ночь</label><label><input type="checkbox" id="peoplec"> люди</label><label><input type="checkbox" id="frameC"> только каркас</label><label>у стоек <select id="postDeco"><option value="none">нет</option><option value="A">полка</option><option value="C">две полки</option></select></label><label><input type="checkbox" id="postEnd"> сплошная ширма у торца</label><label><input type="checkbox" id="curtSideC" checked> шторы по бокам</label><label><input type="checkbox" id="curtEndC" checked> шторы на торцах</label><label><input type="checkbox" id="pnTc"> накладка на стол</label><label><input type="checkbox" id="pnSc"> накладки на сиденья</label><label>цвет накладок <select id="pnCol"></select></label><label><input type="checkbox" id="glassc"> гибкое стекло</label><label><input type="checkbox" id="coverc" checked> чехол</label><label>цвет лаги <select id="lagCol"></select></label></div>
+        <p class="hint">Крутить — мышью, приближать — колесом</p>
+      </div>
+      <div class="sheet" id="s6" hidden>
+<h1>Линия вставлена в промежутки стенки квадрата (Т-узел)</h1>
+<p class="sub">Лага 50×30, модуль 447 мм (брусок 497), 7 поясов = 420 мм. Масштаб ≈ 1:1,1 слева, 1:1,6 справа. Красное — стержни.</p>
+<svg width="100%" viewBox="0 0 1320 600" style="max-width:1320px">
+<!-- ============ Разрез по оси линии ============ -->
+<g transform="translate(40,70)">
+  <text x="0" y="-38" font-size="15" font-weight="700">Разрез по оси линии</text>
+  <text x="0" y="-20" class="t">слева — стенка квадрата (в разрезе), справа — линия</text>
+  <g transform="translate(110,0) scale(0.9)">
+    <!-- лист линии: от 27 мм за Т-стержнем до 27 мм перед следующим, по высоте H-2h -->
+    <rect class="sh" x="2" y="30" width="393" height="360"/>
+    <!-- бруски стенки квадрата — нечётные уровни 1,3..13 (сверху уровень 13) -->
+    <g class="b2">
+      <rect x="-50" y="0" width="50" height="30"/><rect x="-50" y="60" width="50" height="30"/><rect x="-50" y="120" width="50" height="30"/>
+      <rect x="-50" y="180" width="50" height="30"/><rect x="-50" y="240" width="50" height="30"/><rect x="-50" y="300" width="50" height="30"/><rect x="-50" y="360" width="50" height="30"/>
+    </g>
+    <!-- бруски линии — чётные уровни 0,2..12: торец заподлицо с внутренней гранью квадрата -->
+    <g class="b">
+      <rect x="-50" y="30" width="497" height="30"/><rect x="-50" y="90" width="497" height="30"/><rect x="-50" y="150" width="497" height="30"/>
+      <rect x="-50" y="210" width="497" height="30"/><rect x="-50" y="270" width="497" height="30"/><rect x="-50" y="330" width="497" height="30"/><rect x="-50" y="390" width="497" height="30"/>
+    </g>
+    <!-- следующий пролёт линии — нечётные уровни -->
+    <rect class="sh" x="449" y="30" width="120" height="360"/>
+    <g class="b">
+      <rect x="397" y="0" width="175" height="30"/><rect x="397" y="60" width="175" height="30"/><rect x="397" y="120" width="175" height="30"/>
+      <rect x="397" y="180" width="175" height="30"/><rect x="397" y="240" width="175" height="30"/><rect x="397" y="300" width="175" height="30"/><rect x="397" y="360" width="175" height="30"/>
+    </g>
+    <line class="rod" x1="-25" y1="-8" x2="-25" y2="428"/><line class="rod" x1="422" y1="-8" x2="422" y2="428"/>
+    <line x1="-95" y1="420" x2="600" y2="420" stroke="#8a8f8c" stroke-width="1.2"/>
+  </g>
+  <g class="t">
+    <text x="0" y="440">① Верхний брусок стенки квадрата (уровень 13) лежит поверх</text>
+    <text x="0" y="457">    верхнего бруска линии — отдельный верхний элемент не нужен.</text>
+    <text x="0" y="478">② Каждый брусок линии зажат между брусками квадрата: 30 мм в 30 мм.</text>
+    <text x="0" y="499">③ Стержень — в центре стенки квадрата, через отверстие в торце бруска</text>
+    <text x="0" y="516">    линии и через новое отверстие Ø14 посередине брусков этой стенки.</text>
+  </g>
+</g>
+<!-- ============ Вид сверху ============ -->
+<g transform="translate(720,70)">
+  <text x="0" y="-38" font-size="15" font-weight="700">Вид сверху</text>
+  <text x="0" y="-20" class="t">лист стенки квадрата разрезан на два узких</text>
+  <g transform="translate(10,20) scale(0.62)">
+    <!-- стенки квадрата 497×497 -->
+    <g class="b2"><rect x="0" y="0" width="497" height="50"/><rect x="0" y="447" width="497" height="50"/></g>
+    <g class="b"><rect x="0" y="0" width="50" height="497"/><rect x="447" y="0" width="50" height="497"/></g>
+    <!-- листы: у трёх стенок целые, у стенки к линии — два узких -->
+    <g class="sh"><rect x="52" y="23" width="393" height="4"/><rect x="52" y="470" width="393" height="4"/><rect x="23" y="52" width="4" height="393"/>
+      <rect x="470" y="52" width="4" height="170"/><rect x="470" y="275" width="4" height="170"/></g>
+    <!-- линия: верхний её брусок под бруском квадрата — пунктир -->
+    <rect x="447" y="223.5" width="50" height="50" fill="none" stroke="#000" stroke-dasharray="5 4"/>
+    <rect class="b" x="497" y="223.5" width="447" height="50"/>
+    <rect class="sh" x="499" y="246.5" width="393" height="4"/>
+    <g class="r"><circle cx="25" cy="25" r="8"/><circle cx="472" cy="25" r="8"/><circle cx="25" cy="472" r="8"/><circle cx="472" cy="472" r="8"/>
+      <circle cx="472" cy="248.5" r="8"/><circle cx="919" cy="248.5" r="8"/></g>
+    <g class="t" font-size="20">
+      <text x="505" y="130">узкий лист ≈170 мм</text><line x1="500" y1="124" x2="478" y2="124" stroke="#1d2a26"/>
+      <text x="505" y="390">узкий лист ≈170 мм</text><line x1="500" y1="384" x2="478" y2="384" stroke="#1d2a26"/>
+      <text x="505" y="210">Т-узел: стержень</text>
+      <text x="170" y="260">горшок, полка —</text><text x="170" y="285">как были</text>
+      <text x="620" y="320">линия →</text>
+    </g>
+  </g>
+  <g class="t">
+    <text x="0" y="370">④ Лист стенки квадрата, обращённой к линии: вместо одного 393 мм —</text>
+    <text x="0" y="387">    два по ≈170 мм, край в 27 мм от стержня, как в углах.</text>
+    <text x="0" y="408">⑤ Стенки квадрата к линии — те, у которых верхний брусок (нечётные</text>
+    <text x="0" y="425">    уровни). Квадрат просто поворачивают на 90°, деталей не добавляется.</text>
+    <text x="0" y="446">⑥ Торец линии не выходит внутрь квадрата — заподлицо с гранью.</text>
+    <text x="0" y="467">⑦ Саморез 4,5×70 в торец и торцевая колонка линии — больше не нужны.</text>
+  </g>
+</g>
+</svg></div>
+      <div class="sheet" id="s8" hidden><img src="samorez.png" alt="Саморез-упор: разрез бруска и положение двух саморезов под листом"></div>
+    </section>
+    <aside class="cap" aria-live="polite">
+      <div class="status" id="st"></div>
+      <h2 id="capT"></h2>
+      <div id="info"></div>
+      <div id="capX"></div>
+      <p class="keys">Листать — стрелками ← → на клавиатуре или кнопками вверху.</p>
+    </aside>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="engine-p02.js"></script>
+<script src="album-furniture.js"></script>
+<script>
+(function () {
+  const S = [
+    { k: 'NN4', t: 'Стол на 4 + 2 скамьи', st: 'wait', sl: 'новая линейка · 1020' },
+    { k: 'NN6', t: 'Стол на 6: 2 скамьи + 2 табурета', st: 'wait', sl: 'новая линейка · 1020' },
+    { k: 'NN8', t: 'Стол на 8 + 4 скамьи', st: 'wait', sl: 'новая линейка · 1020' },
+    { k: 'V3', t: 'Как устроен стол', st: 'wait', sl: 'тумбы с перегородкой · стойка 8 колонн' },
+    { k: 'NW4', t: 'Стол на 4 зимой', st: 'wait', sl: 'ящик · табуреты в отсеках' },
+    { k: 'NW6', t: 'Стол на 6 зимой', st: 'wait', sl: 'ящик · табуреты в отсеках' },
+    { k: 'NW8', t: 'Стол на 8 зимой', st: 'wait', sl: 'ящик · табуреты в отсеках' },
+    { k: 'PNL', t: 'Накладные панели и гибкое стекло', st: 'wait', sl: 'отдельные позиции' },
+    { id: 's6', t: 'Т-узел: линия в стенке квадрата', st: 'ok', sl: 'принято · в модели',
+      x: ['Бруски линии входят в свободные ряды стенки квадрата. Стержень проходит в центре стенки, через отверстие Ø14 посередине её брусков.',
+          'Лист этой стенки — два узких, по ≈170 мм. Саморезы в торец и торцевая колонка втулок не нужны.',
+          'При чётном числе пролётов следующий квадрат поворачивается на 90° или берётся только нечётное число пролётов — на выбор в конструкторе.'] },
+    { id: 's8', t: 'Саморез-упор под листом', st: 'ok', sl: 'принято',
+      x: ['Два самореза 4,2×45 в бруске под листом, по 50 мм от краёв. Лист стоит на их стержнях и не проваливается в пустой ярус.',
+          'Головки — на внутренней грани, снаружи не видны. Зимой выкручивают — сплошной лист проходит до низа.'] }
+  ];
+  const chips = document.getElementById('chips'), s3d = document.getElementById('s3d');
+  S.forEach((s, i) => {
+    const b = document.createElement('button'); b.className = 'chip'; b.type = 'button';
+    b.innerHTML = '<span class="dot ' + s.st + '"></span>' + s.t; b.onclick = () => go(i); chips.appendChild(b);
+  });
+  let cur = 0;
+  function go(i) {
+    cur = (i + S.length) % S.length; const s = S[cur];
+    chips.querySelectorAll('.chip').forEach((b, j) => b.setAttribute('aria-current', j === cur ? 'true' : 'false'));
+    document.getElementById('cnt').textContent = (cur + 1) + ' / ' + S.length;
+    document.getElementById('st').innerHTML = '<span class="dot ' + s.st + '"></span>' + s.sl;
+    document.getElementById('capT').textContent = s.t;
+    ['s6', 's8'].forEach(id => { const el = document.getElementById(id); if (el) el.hidden = s.id !== id; });
+    s3d.hidden = !s.k;
+    if (s.k && window.__furn) { window.__furn.resize(); window.__furn.show(s.k); window.__furn.view(s.k); document.getElementById('capX').innerHTML = ''; }
+    else { document.getElementById('info').innerHTML = ''; document.getElementById('capX').innerHTML = s.x.map(p => '<p>' + p + '</p>').join(''); }
+    try { history.replaceState(null, '', '#s' + (cur + 1)); } catch (e) {}
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('next').onclick = () => go(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft') go(cur - 1);
+  });
+  const m = /^#s(\d+)$/.exec(location.hash || '');
+  go(m ? Math.min(S.length, Math.max(1, +m[1])) - 1 : 0);
+})();
+</script>
