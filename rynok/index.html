@@ -1,0 +1,2330 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Рынок для системы из ДПК</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --font: "Golos Text", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --bg:#f2f3ef; --surface:#ffffff; --surface-2:#eceee8; --surface-3:#e3e6df;
+  --fg:#1c2320; --fg-2:#4a524d; --muted:#737a75;
+  --line:#dadfd7; --grid:#e7eae4; --axis:#c3c9c0;
+  --link:#1d6a43; --focus:#1f7a4a;
+  --q1:#1f7a4a; --q2:#d4952b; --q3:#3a6fb5; --q0:#9a968e;
+  --q1-soft:#e2f0e7; --q2-soft:#f8ecd6; --q3-soft:#e2eaf6; --q0-soft:#ebeae6;
+  --ours:#26312c; --comp:#bdb6a8; --mini:#5f6d64;
+  --cmpA:#b8433a; --cmpB:#0a8fa0; --cmpC:#553a9e;
+  --note-bg:#f7f0e3; --note-line:#e3cfa6;
+  --scene-bg:#e4e9e1;
+  --shadow: 0 1px 2px rgba(20,30,25,.06), 0 4px 16px rgba(20,30,25,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121412; --surface:#1c1e1b; --surface-2:#252824; --surface-3:#2d302b;
+    --fg:#ecebe4; --fg-2:#c0c3ba; --muted:#8e928b;
+    --line:#32362f; --grid:#2b2e2a; --axis:#474b44;
+    --link:#74c796; --focus:#74c796;
+    --q1:#20784a; --q2:#c0862a; --q3:#6a86da; --q0:#6f6c66;
+    --q1-soft:#1c3226; --q2-soft:#382c18; --q3-soft:#1e2a3f; --q0-soft:#2b2a27;
+    --ours:#e6e3d8; --comp:#5f5b53; --mini:#9ba79f;
+    --cmpA:#d65f4c; --cmpB:#1aa3b3; --cmpC:#8a6ee0;
+    --note-bg:#2a2419; --note-line:#4e4128;
+    --scene-bg:#1a1e1a;
+    --shadow: 0 1px 2px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121412; --surface:#1c1e1b; --surface-2:#252824; --surface-3:#2d302b;
+  --fg:#ecebe4; --fg-2:#c0c3ba; --muted:#8e928b;
+  --line:#32362f; --grid:#2b2e2a; --axis:#474b44;
+  --link:#74c796; --focus:#74c796;
+  --q1:#20784a; --q2:#c0862a; --q3:#6a86da; --q0:#6f6c66;
+  --q1-soft:#1c3226; --q2-soft:#382c18; --q3-soft:#1e2a3f; --q0-soft:#2b2a27;
+  --ours:#e6e3d8; --comp:#5f5b53; --mini:#9ba79f;
+  --cmpA:#d65f4c; --cmpB:#1aa3b3; --cmpC:#8a6ee0;
+  --note-bg:#2a2419; --note-line:#4e4128;
+  --scene-bg:#1a1e1a;
+  --shadow: 0 1px 2px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.55}
+a{color:var(--link);text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,32px);padding-block:24px 64px}
+h1,h2,h3{line-height:1.2;margin:0;font-weight:700;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,42px)}
+h2{font-size:clamp(21px,3vw,27px);margin-bottom:6px}
+h3{font-size:18px}
+p{margin:0 0 10px}
+.lead{color:var(--fg-2);max-width:72ch}
+.small{font-size:14px;color:var(--muted)}
+.est{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.02em;padding:1px 7px;border-radius:999px;border:1px solid var(--note-line);background:var(--note-bg);color:var(--fg-2);vertical-align:1px;white-space:nowrap}
+
+/* top bar */
+.topbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.theme-switch{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:3px}
+.theme-switch button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--fg-2);padding:5px 12px;border-radius:999px;cursor:pointer}
+.theme-switch button[aria-pressed="true"]{background:var(--surface-3);color:var(--fg);font-weight:600}
+
+/* hero */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,34px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,var(--q1) 0 34%,var(--q2) 34% 67%,var(--q3) 67% 100%)}
+.hero .date{font-size:14px;color:var(--muted);margin:8px 0 16px}
+.hero .summary{font-size:clamp(16px,2vw,18px);max-width:78ch;color:var(--fg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:22px}
+.kpi{background:var(--surface-2);border-radius:12px;padding:14px 16px;min-width:0}
+.kpi .v{font-size:clamp(24px,3.4vw,32px);font-weight:700;line-height:1.1}
+.kpi .v small{font-size:15px;font-weight:600;color:var(--fg-2)}
+.kpi .t{font-size:14px;color:var(--fg-2);margin-top:6px}
+.leaders{display:flex;flex-direction:column;gap:4px;margin-top:2px}
+.leaders div{display:flex;justify-content:space-between;gap:8px;font-weight:600}
+.leaders span:last-child{font-variant-numeric:tabular-nums}
+
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav.toc a{font-size:14px;text-decoration:none;color:var(--fg-2);border:1px solid var(--line);background:var(--surface);padding:5px 12px;border-radius:999px}
+nav.toc a:hover{color:var(--fg);border-color:var(--axis)}
+
+section{margin-top:44px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(14px,3vw,24px);box-shadow:var(--shadow);min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.sec-head{margin-bottom:14px}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin:14px 0}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .v{font-size:24px;font-weight:700;line-height:1.15}
+.tile .t{font-size:14px;color:var(--fg-2);margin-top:4px}
+.tile .s{font-size:12px;color:var(--muted);margin-top:6px}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.notes .card p:last-child{margin-bottom:0}
+.notes h3{margin-bottom:8px;font-size:16px}
+
+/* chips & filters */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0 14px}
+.chip{font:inherit;font-size:14px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--fg-2);padding:6px 12px;border-radius:999px;cursor:pointer;min-height:34px}
+.chip:hover{border-color:var(--axis);color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--surface);border-color:var(--fg)}
+.chip .dot{width:10px;height:10px;border-radius:3px;flex:none}
+.chip[aria-pressed="true"] .dot{box-shadow:0 0 0 2px var(--surface)}
+.dot.q1{background:var(--q1)}.dot.q2{background:var(--q2)}.dot.q3{background:var(--q3)}.dot.q0{background:var(--q0)}
+input.search{font:inherit;font-size:15px;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);min-width:0;flex:1 1 220px;max-width:340px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;color:var(--fg)}
+.badge::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor}
+.badge.q1{background:var(--q1-soft)}.badge.q1::before{background:var(--q1)}
+.badge.q2{background:var(--q2-soft)}.badge.q2::before{background:var(--q2)}
+.badge.q3{background:var(--q3-soft)}.badge.q3::before{background:var(--q3)}
+.badge.q0{background:var(--q0-soft)}.badge.q0::before{background:var(--q0)}
+
+/* table */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--surface-2)}
+thead th{background:var(--surface-2);font-weight:600;color:var(--fg-2);position:sticky;top:0;white-space:nowrap}
+th button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+th button .arr{font-size:11px;color:var(--muted);width:10px}
+th[aria-sort="ascending"] .arr::after{content:"▲";color:var(--fg)}
+th[aria-sort="descending"] .arr::after{content:"▼";color:var(--fg)}
+.rating td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.rating td.name{min-width:190px;font-weight:600}
+.sc{display:inline-flex;align-items:center;gap:6px}
+.sc .bar{width:34px;height:6px;border-radius:3px;background:var(--surface-3);overflow:hidden;display:inline-block}
+.sc .bar i{display:block;height:100%;background:var(--mini);border-radius:3px}
+.tot{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.tot .bar{width:64px;height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden;display:inline-block}
+.tot .bar i{display:block;height:100%;border-radius:4px}
+.table-note{font-size:13px;color:var(--muted);margin-top:8px}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--fg-2);margin:4px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.legend i.line{height:3px;width:18px;border-radius:2px}
+.chart-box{position:relative;width:100%}
+.chart-sub{font-size:14px;color:var(--fg-2);margin:2px 0 8px}
+
+/* price list */
+.plist{list-style:none;margin:10px 0 0;padding:0;font-size:14px;display:grid;gap:4px}
+.plist li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--line);padding:3px 0}
+.plist li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--fg-2)}
+.plist li.ours span:first-child{font-weight:700}
+
+/* roadmap */
+.road{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;position:relative;min-width:0}
+.phase .when{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.phase h3{margin:4px 0 8px}
+.phase ul{margin:0 0 10px;padding-left:18px;font-size:14px;color:var(--fg-2)}
+.phase li{margin-bottom:4px}
+.phase .money{border-top:1px solid var(--line);padding-top:10px;font-size:14px}
+.phase .money b{font-size:20px;display:block}
+.phase .stripe{position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0}
+
+/* product cards */
+.pcards{display:grid;gap:10px}
+details.pc{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+details.pc > summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+details.pc > summary::-webkit-details-marker{display:none}
+details.pc > summary .nm{font-weight:700;font-size:17px;flex:1 1 220px;min-width:0}
+details.pc > summary .sc-tot{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+details.pc > summary .chev{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:inline-grid;place-items:center;color:var(--muted);font-size:12px;flex:none}
+details.pc[open] > summary .chev{transform:rotate(180deg)}
+details.pc[open] > summary{border-bottom:1px solid var(--line)}
+.pc-body{padding:14px 16px 18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px 22px}
+.pc-body h4{margin:0 0 6px;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.pc-body p,.pc-body ul{font-size:15px;margin:0}
+.pc-body ul{padding-left:18px}
+.pc-body li{margin-bottom:4px}
+.pc-body .full{grid-column:1/-1}
+.prio{background:var(--surface-2);border-radius:10px;padding:12px 14px}
+.prio dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;margin:8px 0 0;font-size:15px}
+.prio dt{color:var(--muted)}
+.prio dd{margin:0}
+.scorerow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--fg-2)}
+.scorerow span b{font-variant-numeric:tabular-nums;color:var(--fg)}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+.tools-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.linkbtn{font:inherit;font-size:14px;background:none;border:0;color:var(--link);cursor:pointer;text-decoration:underline;padding:4px 0}
+
+/* unreliable */
+.unrel{background:var(--note-bg);border:1px solid var(--note-line);border-radius:16px;padding:clamp(14px,3vw,24px)}
+.unrel ol{margin:10px 0 0;padding-left:22px;display:grid;gap:8px;font-size:15px}
+.unrel li b{font-weight:600}
+
+/* sources */
+details.src{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+details.src > summary{cursor:pointer;padding:14px 16px;font-weight:600}
+details.src ol{margin:0;padding:0 16px 16px 40px;font-size:14px;columns:2 320px;column-gap:28px}
+details.src li{break-inside:avoid;margin-bottom:6px;overflow-wrap:anywhere}
+details.src li .u{color:var(--muted);font-size:12px;display:block}
+
+.reuse td:first-child{font-weight:600;min-width:150px}
+.reuse td{min-width:200px}
+footer{margin-top:40px;font-size:13px;color:var(--muted)}
+
+/* 3D */
+.m3d-pick{margin:0 0 14px}
+.m3d-pick .chip{border-radius:12px;padding:6px 12px;text-align:left}
+.pk{display:flex;flex-direction:column;line-height:1.2}
+.pk b{font-weight:600}
+.pk small{font-size:12px;opacity:.78}
+.m3d-cap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:6px}
+.m3d-text{font-size:15px;color:var(--fg-2);margin:0 0 12px;max-width:82ch}
+.m3d-stage{position:relative;width:100%;height:min(65vh,560px);min-height:280px;border-radius:12px;overflow:hidden;background:var(--scene-bg);border:1px solid var(--line)}
+.m3d-stage canvas{display:block;width:100% !important;height:100% !important;touch-action:none;cursor:grab}
+.m3d-stage canvas:active{cursor:grabbing}
+.m3d-hint{position:absolute;left:8px;bottom:8px;max-width:calc(100% - 16px);font-size:12px;line-height:1.35;color:var(--fg-2);background:var(--surface);opacity:.9;padding:4px 9px;border-radius:8px;pointer-events:none}
+.m3d-msg{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center;color:var(--fg-2);font-size:15px}
+.m3d-tools{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:12px}
+.btn{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:7px 14px;border-radius:10px;cursor:pointer;min-height:36px}
+.btn:hover{border-color:var(--axis)}
+.btn.primary{background:var(--fg);color:var(--surface);border-color:var(--fg)}
+.btn[aria-pressed="true"]{background:var(--surface-3)}
+.m3d-colors{display:inline-flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;color:var(--fg-2);margin-left:auto}
+.sw{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{border-color:var(--fg);box-shadow:inset 0 0 0 2px var(--surface)}
+.m3d-legend{margin-top:12px}
+.m3d-legend i{border:1px solid var(--axis)}
+
+/* материал */
+.mats{display:grid;gap:16px}
+.mat{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px 22px;align-items:start}
+@media (max-width:760px){.mat{grid-template-columns:1fr}}
+.mat h3{margin-bottom:6px}
+.mat p{font-size:15px}
+.shot{margin:0}
+.shot-box{position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line)}
+.shot-box img{display:block;width:100%;height:100%;object-fit:cover}
+.shot-ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;padding:12px;text-align:center}
+.shot figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}
+.fact{background:var(--surface-2);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--fg-2);line-height:1.35}
+.fact b{display:block;font-size:17px;color:var(--fg);margin-bottom:2px}
+.pm{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px 18px;font-size:14px}
+.pm h4{margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.pm ul{margin:0;padding-left:18px}
+.pm li{margin-bottom:3px}
+.warn{background:var(--note-bg);border:1px solid var(--note-line);border-radius:10px;padding:8px 12px;font-size:14px;margin:10px 0}
+.srcl{font-size:13px;color:var(--muted);margin:10px 0 0}
+.srcl a{margin-right:10px;white-space:nowrap}
+.node-stage{position:relative;width:100%;height:min(55vh,440px);min-height:280px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#e7e5e0}
+.node-stage canvas{display:block;width:100% !important;height:100% !important;touch-action:none;cursor:grab}
+.nmark{position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:#1c2320;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;pointer-events:none;box-shadow:0 0 0 2px #fff;opacity:0}
+ol.steps{margin:10px 0 0;padding-left:22px;font-size:14px;color:var(--fg-2);display:grid;gap:4px}
+ol.steps li.on{color:var(--fg);font-weight:700}
+ol.steps li.done::marker{color:var(--q1);font-weight:700}
+
+/* оживление отчёта */
+.bar i{transform-origin:left center}
+@keyframes barfill{from{transform:scaleX(0)}to{transform:none}}
+.fill-anim .bar i{animation:barfill .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--r,0) * 45ms)}
+.kpi .v,.tile .v,.leaders span:last-child{font-variant-numeric:tabular-nums}
+.phase{transition:border-color .35s,box-shadow .35s,transform .35s,opacity .35s}
+.phase .stripe{transition:width .35s}
+.phase.lit{border-color:var(--pc);box-shadow:0 0 0 2px var(--pc),var(--shadow)}
+.phase.lit .stripe{width:7px}
+.road.playing .phase:not(.lit){opacity:.55}
+@media (prefers-reduced-motion: no-preference){ .phase.lit{transform:translateY(-3px)} }
+
+@media (max-width:520px){
+  .rating td.name{min-width:150px}
+  th,td{padding:7px 8px}
+  .sc .bar{width:22px}
+}
+@media (prefers-reduced-motion: reduce){
+  *{scroll-behavior:auto !important;transition:none !important;animation:none !important}
+}
+@media (prefers-reduced-motion: no-preference){
+  html{scroll-behavior:smooth}
+  details.pc > summary .chev{transition:transform .15s}
+}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">Исследование рынка · модульная система из ДПК</div>
+    <div class="theme-switch" role="group" aria-label="Тема оформления">
+      <button type="button" data-theme-set="auto" aria-pressed="true">Авто</button>
+      <button type="button" data-theme-set="light" aria-pressed="false">Светлая</button>
+      <button type="button" data-theme-set="dark" aria-pressed="false">Тёмная</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <h1>Рынок для системы из ДПК</h1>
+    <div class="date">Сентябрь 2026 · цены конкурентов взяты со страниц производителей и магазинов на сентябрь 2026</div>
+    <p class="summary">Начинать стоит с <b>садовой мебели с хранением, навеса над столом и кашпо</b>: они собираются из готовых проверенных деталей, у них самые высокие баллы в рейтинге (26–28 из 35), а прямых аналогов в каталогах нет. Вторая очередь — высокие грядки с крышкой-парником, беседка-конструктор, ширмы и летние веранды кафе. Теплицы, дровники, заборы, песочницы, бордюры, торговые павильоны и изделия для детсадов не запускать: крыша системы не рассчитана на снег, а в этих нишах нужны строгие нормы или идёт ценовая война.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="v">21</div><div class="t">изделие и отрасль оценены по 7 признакам, максимум 35 баллов</div></div>
+      <div class="kpi"><div class="leaders"><div><span>Кашпо</span><span>28</span></div><div><span>Садовая мебель</span><span>27</span></div><div><span>Навес над столом</span><span>26</span></div></div><div class="t">лидеры 1-й очереди, баллы из 35</div></div>
+      <div class="kpi"><div class="v">350–750 <small>тыс. ₽</small></div><div class="t">вложения на 1-ю очередь <span class="est">оценка</span></div></div>
+      <div class="kpi"><div class="v">5 тыс.+ <small>+20%</small></div><div class="t">летних веранд кафе в Москве в сезон 2026 — самый большой спрос среди организаций</div></div>
+    </div>
+    <p class="small" style="margin:16px 0 0">Главная оговорка отчёта: данные маркетплейсов по отдельным нишам собрать не удалось, поэтому спрос по нишам оценён косвенно. Баллы — экспертная оценка, а не измерение.</p>
+  </header>
+
+  <nav class="toc" aria-label="Разделы">
+    <a href="#picture">Общая картина</a>
+    <a href="#rating">Рейтинг</a>
+    <a href="#material">Материал</a>
+    <a href="#models">3D-модели</a>
+    <a href="#charts">Сравнение баллов</a>
+    <a href="#prices">Цены</a>
+    <a href="#road">Порядок запуска</a>
+    <a href="#products">Карточки решений</a>
+    <a href="#unreliable">Где данные ненадёжны</a>
+    <a href="#sources">Источники</a>
+  </nav>
+
+  <!-- ОБЩАЯ КАРТИНА -->
+  <section id="picture">
+    <div class="sec-head">
+      <h2>Общая картина</h2>
+      <p class="lead">Покупатели уходят в интернет, сезон короткий, лага дешёвая. Продавать надо через свой сайт, Авито и маркетплейсы, изделия должны быть готовы к февралю.</p>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="v">2,01 трлн ₽</div><div class="t">рынок товаров для дома, сада и ремонта в 2025 году, +13,2%</div><div class="s">AdIndex, данные Infoline</div></div>
+      <div class="tile"><div class="v">867 млрд ₽</div><div class="t">продажи этой категории на Яндекс Маркете, Ozon и Wildberries, +42,5%</div><div class="s">AdIndex, данные Infoline</div></div>
+      <div class="tile"><div class="v">−8% / +14%</div><div class="t">весна 2026: штук в обычных магазинах для дачи продали меньше, в интернете — больше</div><div class="s">Коммерсантъ</div></div>
+      <div class="tile"><div class="v">5,9 против 3,5</div><div class="t">тыс. ₽ — средний чек в интернете и в магазине; пик сезона — апрель – середина июня</div><div class="s">Коммерсантъ</div></div>
+      <div class="tile"><div class="v">+25% · +12%</div><div class="t">беседки (средняя цена 60 тыс. ₽) и навесы (25 тыс. ₽) на Авито покупают чаще, 3-й кв. 2025</div><div class="s">ECOMHUB</div></div>
+      <div class="tile"><div class="v">230–363 ₽/м</div><div class="t">лага ДПК 50×30; стеклопластиковый стержень Ø12 — около 19–20 ₽/м</div><div class="s">DPK Market, Twowin, dpk-decking.ru, Арм-Пласт</div></div>
+    </div>
+    <div class="notes">
+      <div class="card">
+        <h3>Садовая мебель: 45 или 115 млрд ₽?</h3>
+        <p>BusinesStat называет 115 млрд ₽ за 2025 год (рост на 55% с 2021 года, в основном из-за подорожания). Менее надёжный источник даёт 45–50 млрд ₽ за 2024 год. Расхождение больше чем в 2 раза, причину установить нельзя.</p>
+      </div>
+      <div class="card">
+        <h3>Каналы продаж дорогие для крупных коробок</h3>
+        <p>Комиссия Ozon в «Доме и саде» — от 10 до 55% (максимум 52% с 28.08.2026), в других обзорах для мебели 14–35% — проверять в личном кабинете. Доставка крупного товара на Wildberries — 1–3 тыс. ₽ за заказ. Авито с доставкой ПЭК: до 120 кг, до 400×200×220 см, цена до 150 тыс. ₽. Лемана ПРО берёт продавцов, работающих от года, с сертификатами.</p>
+        <p><b>Вывод:</b> крупные комплекты — через свой сайт и Авито, на маркетплейсы — только небольшие вещи (табурет-тумба, шторы, небольшие кашпо, отдельные детали).</p>
+      </div>
+      <div class="card">
+        <h3>Про деньги — только общие данные</h3>
+        <p>Средняя рентабельность мебельных фабрик в 2024 году — 5,3%. Небольшие мастерские закладывают наценку 70–100%. Продавцы беседок дают межсезонные скидки 15–22%. Маржи по отдельным изделиям не найдено — все оценки доходности в отчёте авторские.</p>
+      </div>
+      <div class="card">
+        <h3>Про снег</h3>
+        <p>Снеговая нагрузка в Москве — 1,43 кПа (около 143 кг/м²), в Новосибирске 1,57, в Казани 2,46 (вторичный источник). Сотовый поликарбонат 4 мм на створках снег не удержит даже по самой мягкой цифре. Правило «створки снимаются на зиму» определяет, в какие ниши вообще можно идти.</p>
+      </div>
+      <div class="card">
+        <h3>Рынок ДПК растёт медленно</h3>
+        <p>Продажи террасной доски выросли с 4,5 до 5,9 млн м² за 2020–2024 годы, а годовой рост упал с 12% до 3%. Производители доски будут искать новые изделия и станут конкурентами. На жаре ДПК удлиняется на 2–3 мм на метр — в узлах нужны зазоры.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h3 style="margin-bottom:4px">Сколько готовых деталей работает в каждом изделии</h3>
+      <p class="small">Новые детали — предложения: вводить их или нет, решает владелец.</p>
+      <div class="table-scroll">
+        <table class="reuse">
+          <thead><tr><th>Изделие</th><th>Какие готовые детали работают</th><th>Что придётся доделать</th></tr></thead>
+          <tbody id="reuseBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- РЕЙТИНГ -->
+  <section id="rating">
+    <div class="sec-head">
+      <h2>Сводный рейтинг</h2>
+      <p class="lead">Каждое решение получило от 1 до 5 баллов по семи признакам, веса одинаковые, максимум 35. «Риски: 5» — значит риски низкие. Нажмите на заголовок столбца, чтобы отсортировать.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Фильтр по очереди" id="rateFilters"></div>
+    <div class="table-scroll">
+      <table class="rating" id="rateTable">
+        <thead><tr id="rateHead"></tr></thead>
+        <tbody id="rateBody"></tbody>
+      </table>
+    </div>
+    <p class="table-note">Баллы — экспертная оценка автора отчёта по заметкам, а не измерение. Где данных нет (особенно по спросу в нишах), балл занижен или стоит «середина».</p>
+
+    <div class="card" style="margin-top:16px">
+      <h3>Итоговый балл по всем решениям</h3>
+      <p class="chart-sub">Из 35 возможных. Цвет — очередь запуска. Фильтр выше действует и на диаграмму.</p>
+      <div class="legend" id="queueLegend"></div>
+      <div class="chart-box" id="totalBox"><canvas id="totalChart" aria-label="Итоговый балл по решениям" role="img"></canvas></div>
+    </div>
+  </section>
+
+  <!-- МАТЕРИАЛ -->
+  <section id="material">
+    <div class="sec-head">
+      <h2>Материал: из чего собирается система</h2>
+      <p class="lead">Все изделия собираются из одного набора деталей: брусок лаги ДПК, втулки, стеклопластиковые стержни, листы в пазах, створки из поликарбоната, шторы из гибкого ПВХ и немного стали. Ниже — каждая деталь крупно, её свойства, цена и вес по отчёту и заметкам. Где данных нет, так и написано.</p>
+      <p class="small" style="margin:0">Изображения — фотореалистичные 3D-визуализации, построенные кодом прямо на странице. Настоящих фото поставщиков здесь нет (у них свои авторские права) — под каждой деталью ссылки, где их посмотреть.</p>
+    </div>
+    <div class="mats">
+
+      <article class="card mat">
+        <figure class="shot" data-shot="lag"><div class="shot-box"><img alt="Отрезок полой лаги ДПК крупным планом: торцевой срез с тремя камерами, брашированная поверхность" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: отрезок лаги 300 мм и 160 мм, видны камеры на срезе и волокна сверху.</figcaption></figure>
+        <div>
+          <h3>Лага ДПК — главный брусок системы</h3>
+          <p>Древесно-полимерный композит: древесная мука (50–65%) в пластике. Лага полая: по карточке поставщика профиль 50×35 мм, внутри 3 камеры и 4 продольных ребра жёсткости, сверху продольная канавка (в неё встаёт лист), снизу две направляющие. Поверхность брашированная, цвет почти чёрный.</p>
+          <div class="warn"><b>Проверить по образцу.</b> В наших моделях и расчётах принят брусок 50×30, а в карточке — 50×35 (эти данные о профиле передал владелец, в заметках отчёта карточки нет). Вес по карточкам противоречит сам себе: 0,25 кг/м у одного продавца и 3,5 кг/м у другого — хлыст нужно взвесить.</div>
+          <div class="facts"><div class="fact"><b>230–363 ₽</b>за погонный метр, ≈920–1 450 ₽ за хлыст 4 м</div><div class="fact"><b>не подтверждён</b>вес: 0,25 или 3,5 кг/м — обе цифры неправдоподобны</div><div class="fact"><b>15–25 лет</b>срок службы при правильном монтаже (сайт продавца)</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Не гниёт, красить не нужно.</li><li>Полая — легче и дешевле полнотелой.</li><li>Одна и та же лага идёт во все изделия.</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>На жаре +30 °C удлиняется на 2–3 мм на метр — в узлах нужны зазоры.</li><li>Полая сильнее впитывает воду и хуже держит нагрузку, чем полнотелая (мнение продавцов).</li><li>Дешёвые составы выгорают на солнце; тёмный ДПК сильно нагревается.</li><li>Горит — рядом с огнём ставить нельзя.</li><li>Как лага ведёт себя под долгой нагрузкой (ползучесть), данных не найдено.</li></ul></div></div>
+          <p class="srcl">Посмотреть фото у поставщика: <a href="https://dpkmarket.com/komplektuyushchie/13799/" target="_blank" rel="noopener noreferrer">DPK Market</a> <a href="https://twowin.ru/product/laga-opornaya-dpk-50h30h4000mm/" target="_blank" rel="noopener noreferrer">Twowin</a> <a href="https://dpk-decking.ru/laga-dpk-50x30x4000" target="_blank" rel="noopener noreferrer">dpk-decking.ru</a> <a href="https://woodgrand.ru/katalog/lagi-iz-dpk/" target="_blank" rel="noopener noreferrer">Woodgrand</a></p>
+        </div>
+      </article>
+
+      <article class="card mat">
+        <figure class="shot" data-shot="bush"><div class="shot-box"><img alt="Втулка — отрезок лаги 50 мм, сквозь неё проходит стеклопластиковый стержень" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: втулка 50 мм со стержнем и вторая втулка рядом.</figcaption></figure>
+        <div>
+          <h3>Втулка — отрезок той же лаги 50 мм</h3>
+          <p>Стоит в углах изделия между рядами брусков. Через втулку насквозь проходит стержень, поэтому углы стенки держатся не на клею и уголках, а на стержне.</p>
+          <div class="facts"><div class="fact"><b>≈12–18 ₽</b>за штуку по цене лаги (посчитано на этой странице)</div><div class="fact"><b>нет данных</b>вес — зависит от веса лаги, который не подтверждён</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Отдельную деталь покупать не нужно — режется из той же лаги.</li><li>Цвет и фактура совпадают с брусками.</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>Отверстие под стержень сверлится в полом профиле; как втулка держит нагрузку, не проверено.</li></ul></div></div>
+          <p class="srcl">Фото лаги у поставщиков — по ссылкам в блоке выше.</p>
+        </div>
+      </article>
+
+      <article class="card mat">
+        <figure class="shot" data-shot="rod"><div class="shot-box"><img alt="Стеклопластиковые стержни диаметром 12 мм со спиральной навивкой" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: стержни Ø12 со спиральной навивкой волокна.</figcaption></figure>
+        <div>
+          <h3>Стеклопластиковый стержень Ø12</h3>
+          <p>Композитная арматура из стекловолокна (например, АКП-12). Проходит вертикально через втулки в углах и стягивает ряды брусков в одну стенку; у высокой грядки уходит в землю.</p>
+          <div class="facts"><div class="fact"><b>19–27 ₽</b>за погонный метр</div><div class="fact"><b>0,22 кг/м</b>вес по карточке производителя</div><div class="fact"><b>≥1,2 ГПа</b>прочность на разрыв по карточке; продаётся как замена стальной Ø16</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Не ржавеет: в каркасе нет ржавеющего металла, кроме стального вкладыша.</li><li>Почти ничего не стоит на фоне лаги (10–30 ₽ на метр конструкции).</li><li>Лёгкий.</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>Одна карточка («Стройсталь») даёт 1 700 ₽/м и 1,25 кг/м — вероятно, ошибка или другой товар.</li><li>Как стержень работает в узле под долгой нагрузкой, в заметках не проверено.</li></ul></div></div>
+          <p class="srcl">Посмотреть фото у поставщика: <a href="https://arm-plast.ru/czenyi/kompozitnaya-stekloplastikovaya-armatura-kypit/akp-12.html" target="_blank" rel="noopener noreferrer">Арм-Пласт</a> <a href="https://metallobazav.ru/catalog/kompozitnaya-armatura/armatura-kompozitnaya-12-mm/" target="_blank" rel="noopener noreferrer">Металлобаза Волхонка</a> <a href="https://petrovich.ru/catalog/5287/stekloplastikovaya-armatura-12-mm/" target="_blank" rel="noopener noreferrer">Петрович</a></p>
+        </div>
+      </article>
+
+      <article class="card mat">
+        <figure class="shot" data-shot="pc"><div class="shot-box"><img alt="Лист-вставка в канавке лаги и угол сотового поликарбоната 4 мм с видимыми каналами-сотами" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: лист «слоновая кость» в канавке лаги и прозрачный сотовый поликарбонат 4 мм, на торце видны соты.</figcaption></figure>
+        <div>
+          <h3>Лист-вставка и сотовый поликарбонат 4 мм</h3>
+          <p>Лист 4 мм вставляется в пазы брусков и закрывает стенку между рядами (цвета в моделях — молочный, «слоновая кость», зелёный). Тот же сотовый поликарбонат 4 мм стоит в створках крыши навеса и в крышке-парнике: внутри два тонких слоя и перегородки-соты.</p>
+          <div class="facts"><div class="fact"><b>нет данных</b>цена листа поликарбоната в заметках не найдена</div><div class="fact"><b>нет данных</b>вес листа</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Лёгкий, пропускает свет.</li><li>Створки снимаются и на зиму ложатся в ящик.</li><li>Производитель сам называет 4 мм материалом «для небольших парников» — для крышки грядки подходит.</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>Снег не держит: в Москве снеговая нагрузка около 143 кг/м², крыша из 4 мм на такое не рассчитана — створки на зиму снимают.</li><li>Давление грунта в грядке не выдержит — для стенок грядки нужен другой лист (решает владелец).</li><li>На поликарбонат жалуются из-за шума дождя, царапин и пыли.</li></ul></div></div>
+          <p class="srcl">Посмотреть фото и данные: <a href="https://ruspolik.ru/informatsiya/polikarbonat-i-snegovye-nagruzki-raschet-i-praktika/" target="_blank" rel="noopener noreferrer">Ruspolik</a> <a href="https://polygalvostok.ru/krysha-besedki-iz-polikarbonata/" target="_blank" rel="noopener noreferrer">polygalvostok.ru</a></p>
+        </div>
+      </article>
+
+      <article class="card mat">
+        <figure class="shot" data-shot="pvc"><div class="shot-box"><img alt="Рулонная штора из гибкого ПВХ: свёрнутый рулон на трубе и опущенное прозрачное полотно с окантовкой" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: рулон на трубе и опущенное полотно с окантовкой и люверсами.</figcaption></figure>
+        <div>
+          <h3>Гибкое стекло ПВХ — шторы</h3>
+          <p>Прозрачная плёнка ПВХ толщиной 500–700 мкм с окантовкой. У нас штора сворачивается в рулон на трубе под краем крыши и опускается по бокам навеса или беседки.</p>
+          <div class="facts"><div class="fact"><b>790–2 310 ₽/м²</b>полотно у рынка</div><div class="fact"><b>7–15 тыс. ₽</b>готовая штора 3×2,2 м у рынка; наша — 6–15 тыс. ₽</div><div class="fact"><b>до 10 лет</b>заявляют продавцы; независимых данных нет</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Закрывает от ветра и дождя, почти не мешает виду.</li><li>Покупатель вешает сам и экономит на бригаде (у рынка минимальный заказ на монтаж 6–12 тыс. ₽).</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>Мороз: хорошая плёнка держит до −30 °C, но становится хрупкой уже около +4 °C — на холоде не сворачивать, на зиму лучше снять.</li><li>Дешёвая плёнка желтеет, мутнеет и трескается.</li><li>В закрытой беседке на солнце жарко, бывает конденсат; порез не ремонтируется — полотно меняют целиком.</li></ul></div></div>
+          <p class="srcl">Посмотреть фото у поставщика: <a href="https://netrama.ru/myagkie-okna-pvh.html" target="_blank" rel="noopener noreferrer">Netrama</a> <a href="https://mossetka.ru/mjagkie-okna" target="_blank" rel="noopener noreferrer">Mossetka</a> <a href="https://oknamyagkie.ru/shtory-pvkh/shtory-pvkh-dlya-besedok-i-verand/" target="_blank" rel="noopener noreferrer">oknamyagkie.ru</a></p>
+        </div>
+      </article>
+
+      <article class="card mat">
+        <figure class="shot" data-shot="steel"><div class="shot-box"><img alt="Стальные детали: шпилька M12 с гайкой и шайбой, петля створки, вкладыш стыка стойки с отверстиями" hidden><span class="shot-ph">Изображение строится…</span></div><figcaption>Фотореалистичная визуализация: шпилька M12 с гайкой, шайба, петля и стальной вкладыш стыка.</figcaption></figure>
+        <div>
+          <h3>Сталь: шпильки, петли, вкладыш, анкеры</h3>
+          <p>Шпильки M12 с гайками и шайбами стягивают стойки с прогоном, на петлях откидываются створки и крышки. Высокие стойки навеса состоят из двух частей на стальном вкладыше — поэтому всё помещается в короткий ящик. Навес ставится на винтовые анкеры без бетона.</p>
+          <div class="facts"><div class="fact"><b>нет данных</b>цена и вес шпилек, петель и вкладыша в отчёте не считались</div><div class="fact"><b>1,5–1,9 тыс. ₽</b>винтовой анкер (свая) за точку у рынка</div></div>
+          <div class="pm"><div><h4>Плюсы</h4><ul><li>Разборные соединения: всё собирается и разбирается ключом.</li><li>Анкеры без бетона.</li></ul></div>
+          <div><h4>Минусы</h4><ul><li>Вкладыш — единственная металлическая деталь каркаса, его нужно защитить от ржавчины (оцинковка).</li></ul></div></div>
+          <p class="srcl">Карточек поставщиков шпилек, петель и вкладышей в заметках нет. Сваи: <a href="https://familydeck.ru/besedka" target="_blank" rel="noopener noreferrer">FamilyDeck</a></p>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Узел стенки в разборе</h3>
+        <p class="chart-sub">Как собирается угол любой стенки: брусок с пазом → лист в паз → втулка в угол → стержень насквозь → следующий ряд. Крутить мышью или пальцем.</p>
+        <div class="node-stage" id="nodeStage"><div class="m3d-msg" id="nodeMsg" hidden></div></div>
+        <div class="m3d-tools"><button type="button" class="btn primary" id="nodeBuild">Собрать узел</button></div>
+        <ol class="steps" id="nodeSteps">
+          <li>Брусок лаги с пазом — по одному на каждую стенку угла</li>
+          <li>Лист 4 мм вставляется в паз</li>
+          <li>Втулка — отрезок лаги 50 мм — встаёт в угол</li>
+          <li>Стеклопластиковый стержень Ø12 проходит через втулку насквозь</li>
+          <li>Следующий ряд: бруски ложатся на лист, втулка надевается на стержень</li>
+        </ol>
+        <p class="small" style="margin:8px 0 0">Фотореалистичная визуализация. Профиль бруска здесь — по карточке поставщика (50×35), в моделях изделий — 50×30.</p>
+      </article>
+
+      <article class="card why">
+        <h3>Почему именно этот набор</h3>
+        <div class="pm">
+          <div><h4>Что даёт</h4><ul>
+            <li>ДПК не гниёт и не требует покраски.</li>
+            <li>Стержни стеклопластиковые — не ржавеют.</li>
+            <li>Всё разбирается и на зиму укладывается в ящик.</li>
+            <li>Одинаковые детали на все изделия: стол, навес, кашпо, грядка, ширма — из одного склада.</li>
+          </ul></div>
+          <div><h4>Честные минусы</h4><ul>
+            <li>ДПК нагревается на солнце и удлиняется в жару (2–3 мм на метр).</li>
+            <li>Под постоянной нагрузкой может со временем прогибаться (ползучесть) — данных по ДПК не найдено, нужна проверка.</li>
+            <li>Дешёвые составы выгорают.</li>
+            <li>Вес и точный профиль лаги не проверены.</li>
+            <li>Крыша не держит снег — створки на зиму снимают.</li>
+          </ul></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3D-МОДЕЛИ -->
+  <section id="models">
+    <div class="sec-head">
+      <h2>3D-модели изделий</h2>
+      <p class="lead">Как изделия из рейтинга собираются из деталей нашей системы: бруски лаги ДПК 50×30 с листами в пазах, втулки в углах, стеклопластиковые стержни, створки из сотового поликарбоната и рулонные шторы. Модели упрощённые, но размеры близки к настоящим.</p>
+    </div>
+    <div class="card">
+      <div class="filters m3d-pick" id="m3dPick" role="group" aria-label="Выбор изделия"></div>
+      <div class="m3d-cap"><h3 id="m3dTitle">Кашпо</h3><span class="badge q1" id="m3dBadge">Очередь 1 · балл 28 из 35</span></div>
+      <p class="m3d-text" id="m3dText"></p>
+      <div class="m3d-stage" id="m3dStage">
+        <div class="m3d-msg" id="m3dMsg" hidden></div>
+        <div class="m3d-hint" id="m3dHint">Крутить — мышью или пальцем · приблизить — колесом или двумя пальцами</div>
+      </div>
+      <div class="m3d-tools">
+        <button type="button" class="btn primary" id="m3dBuild">Собрать заново</button>
+        <button type="button" class="btn" id="m3dAct" hidden></button>
+        <button type="button" class="btn" id="m3dSpin" aria-pressed="true">Автовращение</button>
+        <span class="m3d-colors" role="group" aria-label="Цвет листа в стенках">Цвет листа:
+          <button type="button" class="sw" data-sheet="milk" style="background:#ece9e1" aria-pressed="true" aria-label="Молочный" title="Молочный"></button>
+          <button type="button" class="sw" data-sheet="ivory" style="background:#e0d1ae" aria-pressed="false" aria-label="Слоновая кость" title="Слоновая кость"></button>
+          <button type="button" class="sw" data-sheet="green" style="background:#7da463" aria-pressed="false" aria-label="Зелёный" title="Зелёный"></button>
+        </span>
+      </div>
+      <div class="legend m3d-legend">
+        <span><i style="background:#2c2622"></i>брусок лаги ДПК 50×30</span>
+        <span><i style="background:#3d332b"></i>втулка 50×30×50</span>
+        <span><i style="background:#d9cda9"></i>стеклопластиковый стержень Ø12</span>
+        <span><i style="background:#ece9e1"></i>лист-вставка 4 мм</span>
+        <span><i style="background:#dfe9ec"></i>сотовый поликарбонат 4 мм</span>
+        <span><i style="background:#eef4f4"></i>гибкое стекло ПВХ (шторы)</span>
+        <span><i style="background:#cfd3d6"></i>оцинкованная сталь, алюминиевая труба</span>
+      </div>
+      <p class="small" style="margin:6px 0 0">Фотореалистичная визуализация: материалы с фактурой и отражениями, солнце и небо. Модель показывает устройство изделия, а не рабочий чертёж; мелкий крепёж показан не везде.</p>
+    </div>
+  </section>
+
+  <!-- СРАВНЕНИЕ ПО ПРИЗНАКАМ -->
+  <section id="charts">
+    <div class="sec-head">
+      <h2>Сравнить решения по семи признакам</h2>
+      <p class="lead">Выберите до трёх решений. Чем дальше точка от центра, тем лучше (для рисков — тем ниже риск).</p>
+    </div>
+    <div class="card">
+      <div class="filters" id="cmpChips" role="group" aria-label="Выбор решений для сравнения"></div>
+      <div class="legend" id="cmpLegend"></div>
+      <div class="grid2" style="align-items:start">
+        <div class="chart-box" style="height:380px"><canvas id="radarChart" role="img" aria-label="Сравнение выбранных решений по семи признакам"></canvas></div>
+        <div class="table-scroll"><table id="cmpTable"></table></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЦЕНЫ -->
+  <section id="prices">
+    <div class="sec-head">
+      <h2>Наша цена против цен конкурентов</h2>
+      <p class="lead">Полосы — диапазоны «от–до», короткие метки — одна цена. Тёмная полоса — наше изделие; где в отчёте это оценка или только стоимость сырья, так и подписано.</p>
+    </div>
+    <div class="card">
+      <div class="filters" id="priceTabs" role="tablist" aria-label="Изделие"></div>
+      <h3 id="priceTitle"></h3>
+      <p class="chart-sub" id="priceSub"></p>
+      <div class="legend"><span><i style="background:var(--ours)"></i>наше</span><span><i style="background:var(--ours);opacity:.45"></i>наше — оценка</span><span><i style="background:var(--comp)"></i>конкуренты и рынок</span></div>
+      <div class="chart-box" id="priceBox"><canvas id="priceChart" role="img" aria-label="Сравнение цен"></canvas></div>
+      <ul class="plist" id="priceList"></ul>
+      <p class="small" style="margin-top:10px">Для ширм, барной стойки, глэмпингов и отелей нашей цены в отчёте нет — они показаны только в карточках.</p>
+    </div>
+  </section>
+
+  <!-- ДОРОЖНАЯ КАРТА -->
+  <section id="road">
+    <div class="sec-head">
+      <h2>Порядок запуска</h2>
+      <p class="lead">Все суммы вложений и сроки — оценки отчёта. Себестоимости работы, цены листа поликарбоната и стоимости испытаний в заметках нет; до трат их нужно пересчитать по реальным закупочным ценам.</p>
+      <button type="button" class="linkbtn" id="roadPlay">Показать этапы по порядку</button>
+    </div>
+    <div class="road">
+      <div class="phase"><span class="stripe" style="background:var(--q1)"></span>
+        <div class="when">Октябрь – декабрь 2026</div>
+        <h3>Подготовка 1-й очереди</h3>
+        <ul>
+          <li>Взвесить хлыст лаги и собранные изделия: от веса зависят доставка, правила Авито и маркетплейсов (до 120 кг) и нагрузки.</li>
+          <li>Провести и заснять испытания стола, табурета и навеса, в том числе на ветер с опущенными шторами.</li>
+          <li>Решить, чем защитить кашпо от грунта; выставить кашпо сразу — сейчас их сезон.</li>
+          <li>Выставочный комплект «стол + табуреты + навес + шторы + свет + 2 кашпо», видео сборки из ящика.</li>
+          <li>Стол и навес — на Авито и сайт по предзаказу с осенней скидкой (у рынка межсезонные скидки 15–22%).</li>
+          <li>Табурет-тумбу и шторы — на один маркетплейс, сверив комиссию в кабинете.</li>
+          <li>Поставить зимовать образцы высокой грядки и павильона для баков.</li>
+        </ul>
+        <div class="money"><b>350–750 тыс. ₽</b> вложения 1-й очереди <span class="est">оценка</span></div>
+      </div>
+      <div class="phase"><span class="stripe" style="background:var(--q2)"></span>
+        <div class="when">Январь – июль 2027</div>
+        <h3>Продажи 1-й очереди, запуск 2-й</h3>
+        <ul>
+          <li>Основной сезон мебели и навесов — март–июль.</li>
+          <li>К февралю — запас деталей и высокая грядка с крышкой, если образец пережил зиму.</li>
+          <li>С апреля — беседка-конструктор как верхняя комплектация навеса, ширмы как дополнения.</li>
+          <li>В декабре–феврале: протоколы горючести, альбом решений, переговоры с 3–5 кафе о пилотных верандах на сезон 2027.</li>
+        </ul>
+        <div class="money"><b>450–1 050 тыс. ₽</b> вложения 2-й очереди, большую часть съедят испытания и пилоты <span class="est">оценка</span></div>
+      </div>
+      <div class="phase"><span class="stripe" style="background:var(--q3)"></span>
+        <div class="when">2-я половина 2027 – 2028</div>
+        <h3>3-я очередь: новые каналы</h3>
+        <ul>
+          <li>После первого сезона, когда известны реальные жалобы и маржа.</li>
+          <li>Глэмпинги и турбазы, агротуризм, отели и офисные террасы — тем же набором.</li>
+          <li>Павильон для баков и барная стойка — если образцы прошли зиму.</li>
+          <li>Госзаказ — только несъёмные кашпо и вазоны в малых закупках.</li>
+          <li>Теплицы, дровники, песочницы, заборы, бордюры, торговые павильоны, детсады — не запускать, пока нет крыши под снег и протоколов безопасности.</li>
+        </ul>
+        <div class="money"><b>360–780 тыс. ₽</b> сумма оценок по изделиям 3-й очереди — посчитана на этой странице сложением; общего итога в отчёте нет <span class="est">оценка</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Стартовые вложения по каждому решению</h3>
+      <p class="chart-sub">Тыс. ₽, диапазон «от–до», все цифры — оценки отчёта. Отели («минимальные, каталог для дизайнеров») и офисные террасы («отдельных вложений не требует») без цифр и на диаграмме не показаны.</p>
+      <div class="legend" id="investLegend"></div>
+      <div class="chart-box" id="investBox"><canvas id="investChart" role="img" aria-label="Вложения по решениям"></canvas></div>
+    </div>
+  </section>
+
+  <!-- КАРТОЧКИ -->
+  <section id="products">
+    <div class="sec-head">
+      <h2>Карточки решений</h2>
+      <p class="lead">Рынок и спрос, цены конкурентов, сильные и слабые стороны, что сделать до запуска. Нажмите на карточку, чтобы раскрыть.</p>
+    </div>
+    <div class="tools-row">
+      <div class="filters" role="group" aria-label="Фильтр карточек по очереди" id="cardFilters" style="margin:0"></div>
+      <input class="search" type="search" id="cardSearch" placeholder="Поиск: например, «шторы» или «снег»" aria-label="Поиск по карточкам">
+    </div>
+    <div class="tools-row" style="margin:8px 0 12px"><span class="small" id="cardCount"></span><button type="button" class="linkbtn" id="toggleAll">Раскрыть все</button></div>
+    <div class="pcards" id="pcards"></div>
+  </section>
+
+  <!-- НЕНАДЁЖНЫЕ ДАННЫЕ -->
+  <section id="unreliable">
+    <div class="unrel">
+      <h2>Где данные ненадёжны</h2>
+      <p class="small" style="margin:0">Оговорки собраны из всего отчёта: противоречия между источниками, непроверенные цифры и то, чего найти не удалось.</p>
+      <ol id="unrelList"></ol>
+    </div>
+  </section>
+
+  <!-- ИСТОЧНИКИ -->
+  <section id="sources">
+    <details class="src">
+      <summary>Источники из отчёта (<span id="srcCount"></span>) — нажмите, чтобы раскрыть</summary>
+      <ol id="srcList"></ol>
+    </details>
+  </section>
+
+  <footer>Страница собрана по отчёту «Рынок модульной системы из ДПК» (сентябрь 2026). Все цифры — из отчёта; пометка «оценка» стоит там, где её ставит отчёт.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>
+(function(){
+"use strict";
+
+/* ---------- данные ---------- */
+var CRIT = ["Спрос","Цена","Качество","Эффективность","Конкуренция","Доходность","Риски"];
+var QNAME = {1:"1-я очередь",2:"2-я очередь",3:"3-я очередь",0:"Не запускать / отложить"};
+var QORDER = {1:1,2:2,3:3,0:4};
+
+var ITEMS = [
+ {id:"kashpo", name:"Кашпо", short:"Кашпо", s:[3,4,4,5,4,4,4], total:28, q:1, ql:"1-я очередь",
+  market:"Точного объёма ниши нет. На Wildberries кашпо продаются в основном в августе–октябре, то есть вне главного дачного пика, — это сглаживает загрузку. Производителей кашпо из ДПК мало. Кашпо нужны и организациям: в Москве в самом простом (уведомительном) порядке на веранде кафе разрешены только зонты, столы, стулья и компактные цветочные элементы. Вазоны покупают и по госзаказу: лоты от 94 до 667 тыс. ₽.",
+  prices:["Кашпо из ДПК «Ландшафт» — 8,8 тыс. ₽ (mebeldpk.ru)","Кашпо из ДПК 1200×300×770 мм — 21,9–29,9 тыс. ₽ (SAVEWOOD, по поисковой выдаче)","Премиальные уличные кашпо из других материалов — от 3,5 тыс. ₽ (небольшой куб) до 17,7 тыс. ₽ (высокий конус), Treez","Пластиковые 40×40 см — около 2,3–2,7 тыс. ₽","Наше: на кашпо 1,2 м уходит около 9–10 м лаги — 2,1–3,6 тыс. ₽ сырья по рознице (грубая оценка, не расчёт)"],
+  strong:["Это стенки тумбы — готовая проверенная деталь; кашпо P-02 из той же лаги уже делали.","Большой запас по цене: сырьё около 2,1–3,6 тыс. ₽ (оценка) при цене конкурента 22–30 тыс. ₽.","Стержни в пазах решают главную жалобу на ДПК с грунтом: слабые пластиковые уголки и нет перемычек, из-за чего стенки разводит.","Мостик сразу к двум покупателям-организациям: веранды кафе (без сложного согласования) и благоустройство (вазоны по госзаказу)."],
+  weak:["Внутри влажный грунт — нужен вкладыш или плёнка, иначе листы в пазах будут всё время мокрыми. Это новая деталь, решает владелец.","После зимы на ДПК с грунтом у покупателей появлялись пятна, похожие на грибок.","Тёмный ДПК на солнце греет грунт.","Спрос на кашпо в штуках и рублях не найден.","Большое кашпо с грунтом в ящик не уберёшь — честно писать, что оно зимует на месте, пустым или с многолетниками."],
+  why:"Лучшее сочетание по рейтингу: всё из готовых деталей, низкий риск, высокая цена у конкурентов, мало производителей из ДПК и прямой выход к кафе и городу.",
+  todo:"Решить, чем защитить стенки от грунта; сделать 2–3 размера (узкое у стены, квадратное, длинное-ограждение); выставить на Авито, на сайте и на одном маркетплейсе. Кафе к сезону 2027 года предлагать зимой.",
+  invest:"50–150 тыс. ₽", inv:[50,150], time:"первые продажи через 2–6 недель — осень как раз сезон кашпо"},
+
+ {id:"mebel", name:"Садовая мебель (стол, скамья, табурет-тумба)", short:"Садовая мебель", s:[4,3,4,5,3,4,4], total:27, q:1, ql:"1-я очередь",
+  market:"Самая крупная из рассмотренных ниш: от 45–50 до 115 млрд ₽ в год, в зависимости от источника. Рост шёл в основном за счёт цены, в 2025 году замедлился. Сезон — март–сентябрь, пик — апрель–июль; в июле садовая мебель в топе Wildberries, через месяц спрос падает. Покупатели жалуются в основном на зимнее хранение: ротанг на морозе теряет гибкость, металлический каркас ржавеет; пластик Keter собирают только при температуре выше +5 °C. Готовых отзывов с маркетплейсов собрать не удалось. Барьеров входа почти нет.",
+  prices:["ДПК на металлическом каркасе (mebeldpk.ru): стол 20–31 тыс. ₽, скамья 14,4–21,3 тыс. ₽, стул 13,5 тыс. ₽, барный табурет 9,4 тыс. ₽","Комплекты «стол + места» из ДПК на металле — 39,8–62,4 тыс. ₽","Искусственный ротанг: обеденные группы от 73,5 тыс. ₽ (Latitudo)","Литой алюминий: 150–460 тыс. ₽ за группу (Fingarden)","Пластиковая скамья-сундук Keter на 265 л — 23,9 тыс. ₽","Наше: табурет-тумба ≈4,5 тыс. ₽; стол на 4 — 38–80 тыс. ₽"],
+  strong:["Всё уже сделано и проверено: стенки с листами, полки, стойки. Цены посчитаны, новые детали не нужны.","Табурет-тумба за ≈4,5 тыс. ₽ вдвое дешевле барного табурета из ДПК у конкурента (9,4 тыс. ₽), и внутри есть место для хранения. Коробка маленькая — хороший «входной» товар для маркетплейсов.","Закрывает главные боли покупателя: мебель не нужно убирать в сарай (всё ложится в зимний ящик), в каркасе нет ржавеющего металла, есть место для подушек и пледов.","Набора «мебель + хранение + зимний ящик + навес + свет» в найденных каталогах нет; спрос сдвигается к «комплексным решениям» и зонам отдыха."],
+  weak:["Стол на 4 за 38–80 тыс. ₽ заметно дороже комплекта из ДПК на металле (40–62 тыс. ₽ вместе с местами); в полной комплектации заходит в цены недорогого ротанга.","По оценке агрегатора, предметы дороже 18 тыс. ₽ — лишь 2–3% проданных штук (цифра не подтверждена).","ДПК нагревается на солнце.","Вес комплекта неизвестен, пока лага не взвешена, а от веса зависят правила доставки.","При продаже крупного стола через Ozon или Wildberries комиссия и доставка съедят заметную часть цены."],
+  why:"Ядро системы, из которого вырастают остальные изделия: цены посчитаны, те же детали идут в навес, кашпо и ширмы.",
+  todo:"Взвесить хлыст лаги и собранные изделия; провести и сфотографировать простую проверку нагрузки (сесть, встать на табурет, нагрузить стол); фото и видео сборки из ящика; комплекты — на Авито и свой сайт, табурет-тумбу — на один маркетплейс.",
+  invest:"150–300 тыс. ₽ (выставочный комплект, запас деталей на 3–5 комплектов, съёмка, реклама)", inv:[150,300], time:"первые продажи через Авито и сайт — через 1–2 месяца по предзаказу с осенней скидкой; основная волна — март–июль 2027"},
+
+ {id:"naves", name:"Навес над столом (шторы, свет)", short:"Навес над столом", s:[4,3,3,5,4,4,3], total:26, q:1, ql:"1-я очередь",
+  market:"На Авито навесы покупают на 12% чаще, чем годом раньше (средняя цена 25 тыс. ₽), беседки — на 25% чаще (60 тыс. ₽). Спрос на строительство беседок и навесов через «Авито Услуги» в июне 2026 года вырос на 20%. На мягкие окна покупатели жалуются из-за желтизны, мутности и хрупкости на морозе, на поликарбонат — из-за шума дождя, царапин и пыли. Установка у рынка — 25–35% от цены материалов, фундамент под беседку на сваях — 18–28 тыс. ₽.",
+  prices:["Навес из поликарбоната на стальном каркасе с установкой — от 2,8–3,5 тыс. ₽/м² (сайты с минимальной ценой)","Прайс московского продавца: 6–8 м² с листом 6 мм и установкой — 57 тыс. ₽, 8–12 м² — 65 тыс. ₽","Беседка из ДПК под ключ — 35–39 тыс. ₽/м² (FamilyDeck)","Шторы ПВХ — 1 050–2 310 ₽/м², то есть 7–15 тыс. ₽ за штору 3×2,2 м","Монтаж мягких окон — минимальный заказ 6–12 тыс. ₽","Наше: навес над столом за 57 тыс. ₽ при площади 6–9 м² — примерно 6,3–9,5 тыс. ₽/м² (оценка: точная площадь под крышей не задана); боковая штора 6–15 тыс. ₽"],
+  strong:["Собирается из готовых деталей: угловые стойки на анкерах, прогон, створки, шторы, свет 24 В.","Прямых аналогов не найдено: навесы на металле не выглядят как ДПК, у них нет встроенного света, их нельзя достроить.","Ставится на винтовые анкеры без бетона; высокие стойки из двух частей на стальном вкладыше — все детали входят в короткий ящик.","Шторы покупатель вешает сам и экономит на бригаде (у рынка минимальный заказ на монтаж 6–12 тыс. ₽).","Естественно продаётся в паре со столом и поднимает средний чек.","В 4–7 раз дешевле беседки из ДПК под ключ в пересчёте на м²."],
+  weak:["Крыша не держит снег, створки надо снимать на зиму — а покупатель навеса обычно ждёт круглогодичную крышу; конкуренты с листом 6–10 мм продают именно это.","Пролёт без промежуточной стойки — 1,5–3 м.","Стальной вкладыш — единственная металлическая деталь каркаса, её нужно защитить от ржавчины.","Лист 4 мм под дождём шумнее толстого.","Цена за м² выше, чем у простых навесов на металле.","Ветер с опущенными шторами не исследован: боковая штора работает как парус, крепление на анкерах нужно проверить расчётом или испытанием."],
+  why:"1-я очередь, в комплекте со столом. Изделие готово, по деньгам самый ценный товар первой очереди, ниша растёт. Продавать честно, как «сезонную крышу»: весной поставил створки, осенью снял и убрал в ящик.",
+  todo:"Инструкция «зимой снять створки» на сайте и в коробке; простая проверка на ветер с опущенными шторами; выставочный образец; видео сборки одним-двумя людьми за день (у конкурентов набор беседки собирают за 4–8 часов — это планка).",
+  invest:"150–300 тыс. ₽", inv:[150,300], time:"предзаказы — ноябрь 2026 – февраль 2027, установки — с апреля 2027"},
+
+ {id:"besedka", name:"Беседка-конструктор", short:"Беседка-конструктор", s:[4,4,3,5,3,4,2], total:25, q:2, ql:"2-я очередь",
+  market:"Готовые беседки на Авито покупают на 25% чаще, средняя цена 60 тыс. ₽. Мастерских сотни, крупных брендов нет. Производители беседок из ДПК обещают, что те «не боятся снега», но расчёта не приводят.",
+  prices:["Наборы для самосборки из бруса 3×3 — 122,5–152,2 тыс. ₽; круглая диаметром 3 м — 82–89 тыс. ₽ (arh-besedki.ru)","Конструктор из бруса на металлических соединителях 3×3 — от 87,8 тыс. ₽","Беседка из ДПК под ключ: 3×3 — 430 тыс. ₽ (Woodgrand), 3×4 — около 400 тыс. ₽ (FamilyDeck)","Металлическая беседка 3×3 с поликарбонатом — 35–55 тыс. ₽","Наша: навес на 8 (≈66 тыс. ₽) + две боковые шторы (12–30 тыс. ₽) + две торцевые (≈16 тыс. ₽) + свет (≈8,6 тыс. ₽) — около 100–120 тыс. ₽ по ценам владельца"],
+  strong:["По цене — как набор из бруса и в 3–4 раза дешевле беседки из ДПК под ключ.","Новых деталей не нужно: это навес на 8 со всеми шторами.","ДПК не гниёт, его не надо красить, зимой всё убирается в ящик."],
+  weak:["Покупатель беседки ещё сильнее ждёт, что она простоит круглый год под снегом; брус и металл продают именно так — сезонная крыша здесь прямой минус.","Закрытая шторами беседка на лёгком каркасе сильнее всего нагружена ветром.","Пролёты 1,5–3 м не позволяют большой открытый зал без стоек; пола в системе нет.","Прямого подтверждения, что покупатели готовы снимать крышу на зиму, нет — только косвенное: разборные беседки продают снятие на зиму как преимущество."],
+  why:"Верхняя комплектация навеса. Продавать после того, как первые покупатели навеса проживут с ним сезон и станут видны реальные жалобы (ветер, шторы, сборка).",
+  todo:"Проверить конструкцию на ветер со всеми опущенными шторами; понятная инструкция на зиму; отдельная страница «беседка» на сайте.",
+  invest:"100–200 тыс. ₽ (в основном испытания и образец)", inv:[100,200], time:"апрель–июнь 2027"},
+
+ {id:"gryadki", name:"Высокие грядки + крышка-парник", short:"Высокие грядки", s:[4,3,4,4,3,3,3], total:24, q:2, ql:"2-я очередь",
+  market:"Дачная ниша большая, с жёстким весенним пиком: оцинкованные грядки продаются в марте–апреле. Цифре «+420% спроса на оцинкованные грядки» верить нельзя — у неё нет первоисточника. На Ozon уже продают набор «хлебница + оцинкованная грядка». Жалобы на грядки из ДПК: пластиковые уголки «совершенно неэффективны», не хватает перемычек, после зимы пятна. На оцинковку — тонкий металл, нет перемычек.",
+  prices:["Грядка из ДПК (dpk-nsk.ru): 1×2 м высотой 22,5 см — 8,7 тыс. ₽; 1×3 м высотой 30 см — 14 тыс. ₽; 1×2 м высотой 60 см — 22,6 тыс. ₽","Комплекты 1×3 и 1×4 высотой 30 см — 15,5–18,2 тыс. ₽ (Woodgrand)","Оцинкованная грядка 1×2 с полимерным покрытием — около 1,7 тыс. ₽, на Ozon от 950 ₽","Парник-«хлебница» на 2 м — 6,5–12,5 тыс. ₽, на 4 м — до 22,5 тыс. ₽","Высокая грядка конкурента (22,6 тыс. ₽) вместе с хлебницей — 32–35 тыс. ₽","Наше: низкая грядка 1×2 м высотой 30 см сплошной стенкой — около 36 м лаги, 8,3–13 тыс. ₽ одного сырья (оценка)"],
+  strong:["Стержни в пазах дают прочные углы и перемычки — закрывают главную жалобу ниши.","Створки из сотового поликарбоната на петлях — готовая откидная крышка-парник; лист 4 мм производитель и называет материалом для небольших парников.","Крышку осенью снимают и убирают в ящик — снеговой проблемы в этой нише нет.","Лучшая позиция — высокая грядка 60–80 см «без наклона» для пожилых.","В каркасной конструкции (стойки + обвязка + лист) лаги уходит меньше, чем в сплошной стенке."],
+  weak:["Низкая грядка сплошной стенкой дороже готовой у конкурента — низкие грядки не наша ниша.","Сотовый поликарбонат 4 мм не удержит давление грунта — нужен другой лист (новая деталь, решает владелец).","Изделие стоит в сырой земле, а данных о том, как ДПК долго держит постоянную нагрузку, нет.","Сезон очень короткий — март–май. Опоздание к февралю означает потерю года."],
+  why:"Потенциал хороший, но нужна одна новая деталь (лист для стенок) и одна зима испытаний. Продавать набором «высокая грядка + откидная крышка»; крышку отдельно — только владельцам своих грядок и кашпо.",
+  todo:"Выбрать лист для стенок и способ защиты от грунта; собрать образец и оставить зимовать с грунтом (зима 2026/27); сфотографировать весной.",
+  invest:"100–250 тыс. ₽", inv:[100,250], time:"март–май 2027, если образец готов к январю; иначе весна 2028"},
+
+ {id:"shirmy", name:"Ширмы (и ширма-кашпо)", short:"Ширмы", s:[3,3,3,5,4,3,3], total:24, q:2, ql:"2-я очередь",
+  market:"Готовых садовых ширм для приватности почти нет. Ширм из ДПК, кроме заборных решений, в выдаче не нашлось. В летних кафе ширмы и низкие ограждения нужны как разделители. Высоту ограждения веранды в Москве источники называют по-разному (60–90 см против 1,1–3 м) — противоречие не разрешено.",
+  prices:["Интерьерные ширмы в Лемане ПРО — от 5,1–5,9 тыс. ₽","Решётка из сосны — около 4,2 тыс. ₽ (Империя Садовода)","Нашей цены на ширму в отчёте нет"],
+  strong:["Сплошная торцевая ширма уже готова и проверена.","Ширма с кашпо внизу — одновременно «цветочный элемент» и разделитель, полезно для кафе.","Конкурентов в нише почти нет.","Продаётся отдельно и как дополнение к столу и навесу."],
+  weak:["Высокая сплошная ширма на анкерах в ветер работает как парус, расчёта нет.","Спрос на садовые ширмы не измерен.","Дешёвые решётки из сосны задают низкий ценовой ориентир."],
+  why:"2-я очередь, выпускать вместе с первой как дополнение. Изделие почти готово, но без расчёта на ветер продавать высокие ширмы рискованно.",
+  todo:"Проверить ширму на ветер; сделать низкую ширму-кашпо для кафе.",
+  invest:"50–100 тыс. ₽", inv:[50,100], time:"весна 2027"},
+
+ {id:"verandy", name:"Летние веранды кафе", short:"Веранды кафе", s:[5,2,4,4,3,4,2], total:24, q:2, ql:"2-я очередь",
+  market:"Самая крупная и быстро растущая ниша среди продаж организациям. В Москве в сезон 2026 года в схеме больше 5 тыс. веранд, +20% за год (вице-мэр называла «более 3 тыс.» — противоречие не разрешено). В городах-миллионниках около 17 тыс. заведений с верандами, +40%. Веранда даёт 20–40% летней выручки. В уведомительном порядке — только зонты, столы, стулья и цветочные элементы; навесы и стены требуют полного согласования (от 30 дней до 3 месяцев). С осени 2025 года согласованные веранды в Москве можно оставлять на зиму. В Петербурге мебель разрешают на 3 сезона, но её нужно убирать каждую ночь с 00:00 до 08:00.",
+  prices:["Базовая веранда из столов и стульев — 200–300 тыс. ₽, стандартная — 300–400 тыс. ₽","Дешёвая мебель для кафе — от 2,3 тыс. ₽ за предмет (3К Мебель); кафе привыкли к 2–10 тыс. ₽ за предмет","Готовые веранды под ключ — от 476 тыс. ₽ (ДДМ-Строй)","Наше: стол на 4 с четырьмя табуретами — 56–98 тыс. ₽, то есть 14–25 тыс. ₽ за место (оценка)"],
+  strong:["Столы, скамьи, кашпо и ширмы проходят в самый простой порядок и делаются из готовых деталей.","Ящик решает проблему, за которую кафе платят: хранение веранды зимой (подрядчики продают его отдельной услугой).","ДПК входит в список материалов, разрешённых для настила веранды.","Сделки крупнее частных, при расширении заведение приходит снова."],
+  weak:["Мебель дорогая для кафе: 14–25 тыс. ₽ за место (оценка) против привычных 2–10 тыс. ₽ за предмет.","Навес и шторы требуют полного согласования.","Требования пожарной безопасности и горючесть ДПК, поликарбоната и ПВХ найти не удалось — без протоколов испытаний крупный заказчик, скорее всего, откажет.","В Петербурге тяжёлую мебель надо убирать каждую ночь.","Сезон короткий, заказы надо собирать зимой."],
+  why:"2-я очередь, пилот в конце первой. Спрос лучший в таблице, но нужны документы и отдельная продажа организациям. Как только появятся протоколы горючести, веранды могут подняться до 1-й очереди.",
+  todo:"Заказать протоколы горючести материалов (стоимость испытаний не найдена); собрать альбом решений с чертежами для согласования; 1–2 пилотные веранды со скидкой ради фото и отзывов; отдельно — «уведомительный комплект» (столы, скамьи, кашпо, низкие ширмы).",
+  invest:"200–500 тыс. ₽", inv:[200,500], time:"первые договоры — на сезон 2027, переговоры в декабре–феврале"},
+
+ {id:"baki", name:"Павильон для мусорных баков", short:"Павильон для баков", s:[2,4,3,4,4,3,3], total:23, q:3, ql:"3-я очередь",
+  market:"Бытовых укрытий для баков на рынке почти нет. Для частного сектора (по пересказу в блоге производителя баков) нужно ограждение с трёх сторон высотой 1–2,5 м и навес, если у баков нет крышек. Данных о спросе нет.",
+  prices:["Пластиковый шкаф Keter Hide Away на бак 240 л — 71,7 тыс. ₽","Металлические ограждения для управляющих компаний — от 57,6–65 тыс. ₽ (на одной странице две цены) до 285 тыс. ₽","Наш павильон на два бака — 25–40 тыс. ₽ (оценка, расчёта не было)"],
+  strong:["Между самоделками и Keter за 71,7 тыс. ₽ — пустое место.","Стенки и створки уже готовы."],
+  weak:["Павильон стоит на улице всю зиму, а крышку из створки 4 мм открывают каждый день и засыпает снегом — нужна другая крышка (решает владелец).","Спрос не подтверждён.","Покупатель может сделать похожее из досок сам."],
+  why:"Узкая ниша с пустым местом по цене, но нужна зимняя крышка.",
+  todo:"Продумать зимнюю крышку и проверить образец одну зиму (2026/27).",
+  invest:"80–150 тыс. ₽", inv:[80,150], time:"лето 2027"},
+
+ {id:"bar", name:"Барная стойка (без огня и воды)", short:"Барная стойка", s:[3,5,2,4,4,3,2], total:23, q:3, ql:"3-я очередь",
+  market:"Интерес к зонам отдыха с грилем растёт. Цен на уличные барные стойки из ДПК не найдено.",
+  prices:["Готовые стальные уличные кухни — от 461 тыс. до 1,1 млн ₽","Летние кухни под ключ — от 199 тыс. ₽","Нашей цены в отчёте нет"],
+  strong:["Собирается из тумб и полок с новой столешницей.","По цене в разы ниже готовых кухонь, сравнимых дешёвых конкурентов нет."],
+  weak:["Настоящая кухня — это гриль, вода и мойка. ДПК горит, рядом с огнём и жаром его ставить нельзя.","Сравнение с кухней за полмиллиона обманчиво — это другое изделие."],
+  why:"3-я очередь, и только барная стойка без огня и воды. Кухню с грилем не запускать.",
+  todo:"Выбрать столешницу и сделать образец.",
+  invest:"50–100 тыс. ₽", inv:[50,100], time:"сезон 2027"},
+
+ {id:"glamp", name:"Глэмпинги и турбазы", short:"Глэмпинги и турбазы", s:[3,3,4,5,3,3,2], total:23, q:3, ql:"3-я очередь",
+  market:"Спрос на глэмпинги в 2025 году вырос вдвое, но в 2026 году рынок перегрет: больше трети объектов выставлены на продажу, загрузка около 36% вместо плановых 65%, окупаемость 6–10 лет вместо 3. С 01.09.2025 — обязательная классификация, с 01.06.2026 — ГОСТ. Государство софинансирует до 50% затрат на модульные средства размещения (вторичный источник, условия проверить). Бюджет на мебель и террасу одного домика не найден.",
+  prices:["Цен по этой отрасли в отчёте нет"],
+  strong:["Товар тот же, что в 1-й очереди: навес, стол, шторы и свет у каждого домика.","Работающим объектам сейчас выгоднее доукомплектоваться дёшево, чем строить новое."],
+  weak:["Отрасль в кризисе, деньги считают строго.","80% глэмпингов работают круглый год, а крыша зимой снимается.","Пожарные требования при классификации могут коснуться горючих материалов."],
+  why:"Новый канал для уже готового набора, а не новое изделие.",
+  todo:"Коммерческое предложение «терраса на домик» и протоколы горючести (те же, что для веранд).",
+  invest:"50–150 тыс. ₽", inv:[50,150], time:"2027–2028"},
+
+ {id:"agro", name:"Агротуризм", short:"Агротуризм", s:[2,3,3,5,4,3,3], total:23, q:3, ql:"3-я очередь",
+  market:"Ниша маленькая, но быстро растёт: около 650 тыс. гостей в 2025 году, +62,5%. Грант Минсельхоза «Агротуризм» покрывает благоустройство и туристический инвентарь; по грантам реализовано больше 360 проектов.",
+  prices:["Цен по этой отрасли в отчёте нет"],
+  strong:["Фермеру с грантом нужны навесы, столы и высокие грядки для показа гостям — это наш набор.","Конкуренция слабая."],
+  weak:["Объектов мало, закупки небольшие.","Размер гранта в заметках не подтверждён."],
+  why:"Готовить ничего не нужно, кроме предложения для получателей гранта.",
+  todo:"Предложение для получателей гранта.",
+  invest:"30–80 тыс. ₽", inv:[30,80], time:"зависит от того, когда выдают гранты"},
+
+ {id:"oteli", name:"Отели", short:"Отели", s:[2,3,3,4,2,3,3], total:20, q:3, ql:"3-я очередь (по случаю)",
+  market:"Бюджеты отелей на уличную мебель не найдены. Поставщики — крупные продавцы ротанга и алюминия (JOYGARDEN, Hot-Link, KAYA), покупки идут через дизайнеров.",
+  prices:["Цен по этой отрасли в отчёте нет"],
+  strong:["Загородным отелям и базам отдыха нужны хранение, навесы и свет — наш готовый набор."],
+  weak:["Сильные поставщики, вход через дизайнеров, данных нет."],
+  why:"3-я очередь, продавать по случаю.",
+  todo:"Каталог для дизайнеров.",
+  invest:"минимальные — каталог для дизайнеров", inv:null, time:"не указан"},
+
+ {id:"ofis", name:"Офисные террасы", short:"Офисные террасы", s:[1,3,3,4,3,3,3], total:20, q:3, ql:"3-я очередь (по случаю)",
+  market:"В Москве и области около 70 офисов с террасами; примерно 30% арендаторов используют их для встреч и мероприятий. Год публикации в источнике не указан.",
+  prices:["Цен по этой отрасли в отчёте нет"],
+  strong:["Нужен как раз наш набор: навес, мебель, ширмы, свет."],
+  weak:["Объектов мало, каждая сделка индивидуальная."],
+  why:"3-я очередь, продавать по случаю.",
+  todo:"Отдельной подготовки не требует.",
+  invest:"отдельных вложений не требует", inv:null, time:"не указан"},
+
+ {id:"gos", name:"Благоустройство, госзаказ", short:"Госзаказ", s:[4,2,2,2,2,2,3], total:17, q:3, ql:"3-я очередь (только вазоны)",
+  market:"На федеральный проект «Формирование комфортной городской среды» заложено 50,8 млрд ₽ в 2025 году и, по пересказу, по 60 млрд ₽ в год в 2026–2028 годах, но уличная мебель — малая часть каждого проекта. В базе агрегатора 27,5 тыс. записей о закупках скамеек и 3,6 тыс. — вазонов. Скамьи и вазоны не требуют обязательной сертификации, хватает отказного письма. Малые закупки без торгов — до 600 тыс. ₽ за контракт, в электронной форме — до 5 млн ₽. Производителей много: только в Московской области их 50.",
+  prices:["Скамья по госзаказу — 9,5–14 тыс. ₽ за штуку","Лоты на вазоны — от 94 до 667 тыс. ₽"],
+  strong:["Деньги в отрасли стабильные, закупок много и они мелкие; малым предприятиям платят за 7 рабочих дней.","Большие кашпо-вазоны и скамьи-кашпо могут подойти."],
+  weak:["Для города нужна антивандальность: скрытый крепёж, никаких съёмных деталей — а наша система устроена наоборот.","Цена скамьи по госзаказу низкая.","В спецификациях обычно «металлический каркас с рейками» — изделие на стержнях могут отклонить."],
+  why:"3-я очередь, только вазоны и кашпо в малых закупках.",
+  todo:"«Несъёмная» версия кашпо, отказное письмо, статус малого предприятия и электронная подпись.",
+  invest:"150–300 тыс. ₽", inv:[150,300], time:"первая закупка — через 3–6 месяцев после подготовки"},
+
+ {id:"zabor", name:"Секции забора", short:"Секции забора", s:[3,2,3,3,2,2,2], total:17, q:0, ql:"Не запускать",
+  market:"Рынок занят крупными марками: Террапол, Holzhof, Polywood, Grand Line. Заборы продают погонными метрами с монтажом. Цифра «продажи ДПК-заборов +35%» взята из статьи, похожей на рекламную, источника у неё нет.",
+  prices:["Забор из ДПК — 3,5–8 тыс. ₽ за погонный метр","Готовая секция Holzhof 1×1 м со столбом — 4 750 ₽","Профнастил — 1,2–2 тыс. ₽ за метр"],
+  strong:["Готовая сплошная ширма похожа на секцию, листы можно вставить на просвет."],
+  weak:["На длинном заборе ветер действует на всю плоскость — опоры на анкерах нужно считать.","Цена не ниже, чем у специализированных брендов."],
+  why:"Не запускать. Если нужна «приватность» — продавать короткие ширмы (2-я очередь).",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"detsad", name:"Детсады и школы", short:"Детсады и школы", s:[3,4,1,2,3,3,1], total:17, q:0, ql:"Не запускать",
+  market:"Для игрового оборудования действует ТР ЕАЭС 042/2017. Требования поставщиков к теневым навесам: негорючие материалы, стенки не ниже 1,5 м, приподнятый пол — но источник ссылается на устаревшие нормы.",
+  prices:["Веранды для детсадов — 385–960 тыс. ₽ (ГК Теремок)"],
+  strong:["Наш навес в 6 раз дешевле веранды."],
+  weak:["Не держит снег.","Горючесть ДПК и поликарбоната не подтверждена протоколами.","Нормы для детей строже всего."],
+  why:"Не запускать. Вернуться можно позже, но только к кашпо и высоким грядкам для школьных огородов — после проверки норм.",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"bordyur", name:"Ограды и бордюры", short:"Ограды и бордюры", s:[3,1,3,3,1,1,4], total:16, q:0, ql:"Не запускать отдельно",
+  market:"Массовый пластик и металл; денег в нише нет, конкуренция сильная.",
+  prices:["Бордюры из пластика и металла — 258–800 ₽ за изделие","Наша лага — 230–363 ₽ за погонный метр: по цене ДПК тут не выиграет даже в теории"],
+  strong:["Вид и долговечность рядом с нашими кашпо."],
+  weak:["Цена, сильная конкуренция и отсутствие денег в нише."],
+  why:"Не запускать отдельно. Низкую ограду можно давать как часть «длинного кашпо-ограждения».",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"drovnik", name:"Дровник, навес для инвентаря", short:"Дровник", s:[3,2,2,3,2,2,2], total:16, q:0, ql:"Отложить",
+  market:"В одном только разделе Леманы ПРО в Кирове 209 дровниц. Шкафов для инвентаря из ДПК на рынке нет.",
+  prices:["Деревянный дровник на 2–4 м³ — 17–32 тыс. ₽","Металлический сборный — 59–158 тыс. ₽","Дровницы в Лемане ПРО — от 3,75 тыс. ₽","Пластиковые сундуки и шкафы Keter — 24–66 тыс. ₽"],
+  strong:["Стенки и прогон готовы.","Небольшой шкаф для инвентаря на основе тумбы интересен — шкафов из ДПК на рынке нет."],
+  weak:["Дровник нужен именно зимой, а наша крыша снег не держит.","Дрова тяжёлые, а как ДПК ведёт себя под долгой нагрузкой, неизвестно.","Дерево дешевле."],
+  why:"Дровник отложить. Шкаф для инвентаря («высокая тумба») можно вернуть в 3-й очереди, если появится крыша под снег или изделие будет стоять под навесом.",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"pesoch", name:"Песочница с крышкой", short:"Песочница", s:[2,2,3,3,2,2,1], total:15, q:0, ql:"Не запускать",
+  market:"Оборудование детских площадок можно продавать только с сертификатом или декларацией по ТР ЕАЭС 042/2017. Распространяется ли регламент на домашнюю песочницу, по источникам не проверено.",
+  prices:["Деревянная песочница с крышкой-скамейкой — 11–15 тыс. ₽","Пластиковая — 1,8–13 тыс. ₽","Для детсадов — 25–236 тыс. ₽"],
+  strong:["ДПК не надо пропитывать."],
+  weak:["На крышку из сотового поликарбоната 4 мм может встать ребёнок — она сломается.","Нужна сертификация.","Конкуренты дешёвые."],
+  why:"Не запускать: риск для детей выше любой возможной прибыли.",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"teplica", name:"Теплица", short:"Теплица", s:[4,1,1,2,1,1,1], total:11, q:0, ql:"Не запускать",
+  market:"Производителей десятки, у многих сильные бренды («Воля» работает с 1993 года). Главная жалоба покупателей — теплицу ломает снег.",
+  prices:["Арочная теплица 3×4 — 18,3–49,5 тыс. ₽, 3×6 — 23–83,5 тыс. ₽","Усиленные модели держат 800–1 850 кг/м²"],
+  strong:["По сути нет, кроме готовых створок для форточек."],
+  weak:["Каркас не держит снег, пролёты малы.","По цене система проигрывает стальной арке в разы."],
+  why:"Не запускать. В этой нише хватит высокой грядки с крышкой-парником.",
+  todo:"—", invest:"—", inv:null, time:"—"},
+
+ {id:"torg", name:"Торговые павильоны", short:"Торговые павильоны", s:[2,2,1,1,2,2,1], total:11, q:0, ql:"Не запускать",
+  market:"В Москве нестационарные торговые объекты ставят только по схеме, через аукцион и по типовым решениям Москомархитектуры, площадью до 20 м².",
+  prices:["Павильон 6 м² — от 350 тыс. ₽"],
+  strong:["Почти нет, кроме лёгкой перевозки."],
+  weak:["Павильон должен запираться и стоять зимой.","Решения типовые, торги."],
+  why:"Не запускать. Разве что ярмарочные прилавки в регионах, но данных по ним не найдено.",
+  todo:"—", invest:"—", inv:null, time:"—"}
+];
+
+window.RynokDPK = {items: ITEMS};
+
+var REUSE = [
+ ["Стол, табурет-тумба, скамья","Всё: стенки с листами, полки, стойки","Ничего нового; взвесить лагу, испытать нагрузку"],
+ ["Навес над столом","Угловые стойки на анкерах, прогон, створки, шторы, свет","Инструкция «зимой снять створки»"],
+ ["Кашпо","Стенки тумбы, полки, стойки","Вкладыш или плёнка от влажного грунта"],
+ ["Высокая грядка + крышка","Стенки, стойки, створки на петлях (крышка)","Лист, который выдержит давление грунта (сотовый ПК 4 мм не подходит)"],
+ ["Беседка-конструктор","Всё от навеса на 8 плюс все шторы","Проверка на ветер с опущенными шторами"],
+ ["Ширма","Сплошная торцевая ширма","Расчёт на ветер для высоких ширм"],
+ ["Павильон для баков","Стенки, створки как крышки и дверцы","Крышка, которая переживёт зиму и частое открывание"],
+ ["Барная стойка","Тумбы, полки","Столешница"],
+ ["Дровник","Стенки, прогон","Крыша под снег, полки под тяжёлые дрова"],
+ ["Песочница","Стенки","Крышка, по которой может пройти ребёнок"],
+ ["Теплица","Почти ничего","Несущий каркас под снег"]
+];
+
+/* цены: тыс. ₽; v = [от, до] или число; ours — наше; est — оценка; from — «от» */
+var PRICES = [
+ {id:"table", tab:"Стол и комплекты", title:"Стол на 4 и обеденные группы", unit:"тыс. ₽", sub:"Наш стол на 4 против мебели из ДПК на металле, ротанга и алюминия.",
+  rows:[{l:"Наш стол на 4",v:[38,80],ours:true},{l:"Стол ДПК на металле (mebeldpk.ru)",v:[20,31]},{l:"Комплект «стол + места», ДПК на металле",v:[39.8,62.4]},{l:"Обеденная группа, ротанг (Latitudo)",v:73.5,from:true},{l:"Группа из литого алюминия (Fingarden)",v:[150,460]}]},
+ {id:"stool", tab:"Табурет и скамьи", title:"Табурет-тумба, скамьи и хранение", unit:"тыс. ₽", sub:"Наш табурет-тумба — «входной» товар для маркетплейсов.",
+  rows:[{l:"Наш табурет-тумба",v:4.5,ours:true,approx:true},{l:"Барный табурет ДПК (mebeldpk.ru)",v:9.4},{l:"Стул ДПК (mebeldpk.ru)",v:13.5},{l:"Скамья ДПК (mebeldpk.ru)",v:[14.4,21.3]},{l:"Скамья-сундук Keter 265 л",v:23.9}]},
+ {id:"kashpo", tab:"Кашпо", title:"Кашпо", unit:"тыс. ₽", sub:"Нашей продажной цены в отчёте нет — показана только оценка стоимости сырья на кашпо 1,2 м.",
+  rows:[{l:"Наше кашпо 1,2 м — только сырьё",v:[2.1,3.6],ours:true,est:true},{l:"Пластиковое 40×40 см",v:[2.3,2.7],approx:true},{l:"Премиальные из других материалов (Treez)",v:[3.5,17.7]},{l:"ДПК «Ландшафт» (mebeldpk.ru)",v:8.8},{l:"ДПК 1200×300×770 мм (SAVEWOOD)",v:[21.9,29.9]}]},
+ {id:"naves", tab:"Навес, за м²", title:"Навес: цена за квадратный метр", unit:"тыс. ₽/м²", sub:"Наш навес над столом 57 тыс. ₽ при площади 6–9 м² — пересчёт на м² в отчёте помечен как оценка.",
+  rows:[{l:"Наш навес над столом",v:[6.3,9.5],ours:true,est:true},{l:"Поликарбонат на стали, с установкой",v:[2.8,3.5],from:true},{l:"Беседка из ДПК под ключ (FamilyDeck)",v:[35,39]}]},
+ {id:"besedka", tab:"Беседка", title:"Беседка", unit:"тыс. ₽", sub:"Наша беседка-конструктор — навес на 8 со всеми шторами и светом, по ценам владельца.",
+  rows:[{l:"Наша беседка-конструктор",v:[100,120],ours:true,approx:true},{l:"Металл с поликарбонатом 3×3",v:[35,55]},{l:"Средняя цена беседки на Авито",v:60},{l:"Круглая из бруса Ø3 м (набор)",v:[82,89]},{l:"Конструктор из бруса 3×3",v:87.8,from:true},{l:"Набор из бруса 3×3",v:[122.5,152.2]},{l:"ДПК под ключ 3×4 (FamilyDeck)",v:400,approx:true},{l:"ДПК под ключ 3×3 (Woodgrand)",v:430}]},
+ {id:"shtory", tab:"Шторы", title:"Боковая штора", unit:"тыс. ₽", sub:"За штору около 3×2,2 м. Монтаж у рынка — минимальный заказ; наши шторы покупатель вешает сам.",
+  rows:[{l:"Наша боковая штора",v:[6,15],ours:true},{l:"Штора ПВХ у рынка (3×2,2 м)",v:[7,15]},{l:"Монтаж мягких окон, минимальный заказ",v:[6,12]}]},
+ {id:"gryadki", tab:"Грядки", title:"Грядки и парники", unit:"тыс. ₽", sub:"Нашей продажной цены нет. Показана оценка сырья для низкой грядки сплошной стенкой — поэтому отчёт и советует не делать низкие грядки.",
+  rows:[{l:"Наша низкая грядка 1×2×0,3 м — только сырьё",v:[8.3,13],ours:true,est:true},{l:"Оцинкованная 1×2",v:[0.95,1.7]},{l:"Хлебница на 2 м",v:[6.5,12.5]},{l:"ДПК 1×2 м, 22,5 см",v:8.7},{l:"ДПК 1×3 м, 30 см",v:14},{l:"Комплекты ДПК 1×3 и 1×4, 30 см",v:[15.5,18.2]},{l:"ДПК 1×2 м, 60 см (высокая)",v:22.6},{l:"Высокая грядка + хлебница",v:[32,35]}]},
+ {id:"baki", tab:"Павильон для баков", title:"Павильон для мусорных баков", unit:"тыс. ₽", sub:"Наша цена — оценка отчёта, расчёта не было.",
+  rows:[{l:"Наш павильон на два бака",v:[25,40],ours:true,est:true},{l:"Металлическое ограждение для УК",v:[57.6,285],from:true},{l:"Шкаф Keter Hide Away на бак 240 л",v:71.7}]},
+ {id:"veranda", tab:"Веранда кафе, за место", title:"Мебель для веранды кафе: за одно место", unit:"тыс. ₽", sub:"Наш стол на 4 с четырьмя табуретами (56–98 тыс. ₽) в пересчёте на место — оценка отчёта.",
+  rows:[{l:"Наше: стол + табурет, за место",v:[14,25],ours:true,est:true},{l:"Предмет мебели для кафе, к чему привыкли",v:[2,10]}]}
+];
+
+var UNRELIABLE = [
+ ["Спрос по нишам","данные маркетплейсов по отдельным нишам (продажи, число продавцов, отзывы) собрать не удалось, спрос оценён косвенно. Снять его можно в кабинете продавца Wildberries через «Анализ ниш»."],
+ ["Размер рынка садовой мебели","115 млрд ₽ за 2025 год (BusinesStat) против 45–50 млрд ₽ за 2024 год (менее надёжный источник) — расхождение больше чем в 2 раза, причина не установлена."],
+ ["Вес лаги","в карточках магазинов 0,25 кг/м у одного продавца и 3,5 кг/м у другого — обе цифры неправдоподобны. Хлыст нужно взвесить до расчёта доставки и гарантий."],
+ ["Комиссии маркетплейсов","Ozon в «Доме и саде» — 10–55% (максимум 52%), в других обзорах для мебели 14–35%. Проверять в личном кабинете."],
+ ["Снеговая нагрузка","для Москвы 1,43 кПа по вторичному источнику, другие сайты дают 1,0 и 1,8 кПа по старым нормам."],
+ ["Доля дорогой садовой мебели","«дороже 18 тыс. ₽ — лишь 2–3% проданных штук» — оценка агрегатора, не подтверждена."],
+ ["Маржа и доходность","данных о марже по отдельным изделиям (грядкам, кашпо, беседкам) не найдено; все оценки доходности — авторские."],
+ ["Баллы рейтинга","экспертная оценка по заметкам, а не измерение; где данных нет, балл занижен или стоит «середина»."],
+ ["Вложения и сроки","все суммы и сроки — оценки. Нет данных о себестоимости работы, цене листа поликарбоната и стоимости испытаний."],
+ ["Число веранд в Москве","«больше 5 тыс.» (РИА Новости) против «более 3 тыс.» (вице-мэр) — вероятно, считали по-разному, противоречие не разрешено."],
+ ["Пожарные требования","требования к верандам и горючесть ДПК, поликарбоната и ПВХ найти не удалось; стоимость испытаний тоже не найдена."],
+ ["Высота ограждения веранды","в Москве источники называют 60–90 см и 1,1–3 м — противоречие не разрешено."],
+ ["Ветер","поведение навеса, беседки и высоких ширм на ветру с опущенными шторами в заметках не исследовано."],
+ ["ДПК под долгой нагрузкой","нет данных, как ДПК держит постоянную нагрузку (грунт в грядке, тяжёлые дрова)."],
+ ["«+420% спроса на оцинкованные грядки»","цифра из блога сервиса для продавцов без первоисточника — верить нельзя."],
+ ["«Продажи ДПК-заборов +35%»","из статьи, похожей на рекламную, источника нет."],
+ ["Цена кашпо SAVEWOOD","21,9–29,9 тыс. ₽ взята по поисковой выдаче."],
+ ["Цена ограждения для баков","на одной странице HozOtdel две разные цены: 57,6 и 65 тыс. ₽. Требования к ограждению для частного сектора — пересказ в блоге производителя баков."],
+ ["Площадь навеса","пересчёт 6,3–9,5 тыс. ₽/м² — оценка: точная площадь под крышей в исходных данных не задана."],
+ ["Готовность снимать крышу на зиму","прямого подтверждения нет, только косвенное."],
+ ["Глэмпинги и агротуризм","софинансирование до 50% — вторичный источник, условия проверить; бюджет на мебель одного домика не найден; размер гранта «Агротуризм» не подтверждён."],
+ ["Госзаказ","60 млрд ₽ в год на 2026–2028 — по пересказу."],
+ ["Офисные террасы","год публикации в источнике не указан."],
+ ["Детсады","источник о требованиях к теневым навесам ссылается на устаревшие нормы; распространяется ли ТР ЕАЭС 042/2017 на домашнюю песочницу — не проверено."],
+ ["Отзывы покупателей мебели","готовых отзывов с маркетплейсов собрать не удалось."]
+];
+
+var SOURCES = [["РИА Новости","https://ria.ru/20260401/moskva-2084223539.html"],["AdIndex, данные Infoline","https://adindex.ru/news/tendencies/2026/03/30/343690.phtml"],["Коммерсантъ","https://www.kommersant.ru/doc/8635838"],["РБК Магазин исследований","https://marketing.rbc.ru/articles/16728/"],["sponsr.ru","https://sponsr.ru/dbka/118928/Issledovanie_rynka_mebeli_v_Rossii_sadovaya_korpusnaya_i_kuhonnaya_mebel_20182029/"],["ECOMHUB","https://ecomhub.ru/avito-country-construction-market-growth-2025-garages-baths-houses/"],["Retail.ru","https://www.retail.ru/news/avito-uslugi-spros-na-stroitelstvo-besedok-i-terras-vyros-na-20-za-god-24-iyulya-2026-280247/"],["DPK Market","https://dpkmarket.com/komplektuyushchie/13799/"],["Twowin","https://twowin.ru/product/laga-opornaya-dpk-50h30h4000mm/"],["dpk-decking.ru","https://dpk-decking.ru/laga-dpk-50x30x4000"],["Арм-Пласт","https://arm-plast.ru/czenyi/kompozitnaya-stekloplastikovaya-armatura-kypit/akp-12.html"],["РБК Магазин исследований","https://marketing.rbc.ru/articles/16149/"],["Стройпросто","https://stroyprosto.metallprofil.ru/articles/terrasa-iz-dpk-pochemu-vygibaetsya-v-zharu-i-kak-etogo-izbezhat/"],["Selsup","https://selsup.ru/blog/izmeneniya-tarifov-ozon-s-28-avgusta-2026-logistika-voznagrazhdenie-i-kgt/"],["MPStats","https://mpstats.io/media/tovary/kak-prodavat-mebel-na-wb-i-ozon"],["Selsup","https://selsup.ru/blog/logistika-wildberries/"],["vc.ru","https://vc.ru/marketing/3055146-avito-dostavka-dlya-prodavtsov"],["Selsup","https://selsup.ru/blog/lemana-pro-dlya-sellerov/"],["TestFirm","https://www.testfirm.ru/keyrates/31_proizvodstvo-mebeli"],["DM Mebel","https://dmmebel.com/kakuyu-naczenku-delayut-izgotoviteli-mebeli/"],["Металлпрофиль","https://stroyprosto.metallprofil.ru/articles/skolko-stoit-besedka-polnyy-gid-po-tsenam-2025-goda-s-primerami-praysov/"],["inner.su","https://inner.su/articles/tablitsy-nagruzok-snega-i-vetra-po-regionam/"],["Ruspolik","https://ruspolik.ru/informatsiya/polikarbonat-i-snegovye-nagruzki-raschet-i-praktika/"],["MPStats","https://mpstats.io/media/tovary/top10-dachnyy-sezon"],["mebeldpk.ru","https://mebeldpk.ru/catalog/mebel-dpk/"],["Latitudo","https://donetsk.latitudo.ru/catalog/sadovaya-mebel/obedennye-gruppy/"],["Fingarden","https://fingarden.ru/catalog/sadovaya-mebel/sadovaya-mebel-iz-alyuminiya/"],["KeterShop","https://ketershop.com/catalog/sadovaya_mebel/skameyki_dlya_dachi/606/"],["Alfart","https://alfart.ru/company/blog/kak-khranit-mebel-iz-iskusstvennogo-rotanga-zimoj/"],["MosHome Expo","https://moshome-expo.com/ru/media/news/2025/september/19/dacha-i-sad/"],["5x12.ru","https://www.5x12.ru/navesy-iz-polikarbonata/price1/"],["rus-teplici.ru","https://rus-teplici.ru/tent/"],["FamilyDeck","https://familydeck.ru/besedka"],["Mossetka","https://mossetka.ru/mjagkie-okna"],["oknamyagkie.ru","https://oknamyagkie.ru/shtory-pvkh/shtory-pvkh-dlya-besedok-i-verand/"],["7dach.ru","https://7dach.ru/Nataliya_Stepanova/myagkie-okna-na-dache-plyusy-i-minusy-gibkogo-ostekleniya-256083.html"],["lavdi.ru","https://lavdi.ru/besedki-iz-polikarbonata-dlya-dachi-otzyvy/"],["Netrama","https://netrama.ru/myagkie-okna-pvh.html"],["arh-besedki.ru","https://arh-besedki.ru/besedki-dlya-sborki/"],["Promopult","https://blog.promopult.ru/ecommerce/chto-prodavat-na-wildberries-v-dachnyj-sezon.html"],["mebeldpk.ru","https://mebeldpk.ru/catalog/mebel-dpk/kashpo-iz-dpk-landshaft/"],["SAVEWOOD","https://www.savewood.ru/product/kashpo/kashpo-ulichnye/"],["Treez","https://treez.ru/cat/ulichnye-bolshie-kashpo.html"],["РосТендер","https://rostender.info/category/tendery-vazony"],["Otzovik","https://otzovik.com/review_13334086.html"],["стройподсказка","https://stroy-podskazka.ru/gryadki/iz-dpk/"],["MPHub","https://dostavka.mphub.ru/blog/dachnyj-sezon-otkryt-chto-horosho-prodajotsja-na-wildberries/"],["dpk-nsk.ru","https://dpk-nsk.ru/katalog/gryadki-iz-dpk/"],["Woodgrand","https://woodgrand.ru/katalog/gryadki-iz-dpk/vysokie-gryadki-iz-dpk/"],["OBI","https://www.obi.ru/ocinkovannye-gryadki/gryadka-blago-1kh2-m-polimernoe-pokrytie-zelenaya/p/4302493"],["Ozon","https://www.ozon.ru/category/gryadki-iz-otsinkovannoy-stali/"],["Teplichkin","https://www.teplichkin.com/catalog/parniki/"],["КП","https://www.kp.ru/expert/sad-i-ogorod/luchshie-otsinkovannye-gryadki-dlya-dachi-teplitsy/"],["oknatent.ru","https://oknatent.ru/gotovye-besedki-konstruktory-na-konnektorah/"],["Woodgrand","https://woodgrand.ru/katalog/besedka-iz-dpk-3x3-m-pod-klyuch/"],["SAVEWOOD","https://www.savewood.ru/besedki-iz-dpk/"],["polygalvostok.ru","https://polygalvostok.ru/krysha-besedki-iz-polikarbonata/"],["Лемана ПРО","https://lemanapro.ru/catalogue/shirmy/dlya-zonirovaniya/"],["Империя Садовода","https://www.imperia-sadovoda.ru/catalog/arki_setki_reshetki/sadovaya_shirma_gardendreams/"],["r_keeper","https://rkeeper.ru/blog/mesto-pod-solntsem-kak-postavit-letnyuyu-verandu-po-vsem-pravilam/"],["Агентство городских новостей «Москва»","https://www.mskagency.ru/materials/3542431"],["Коммерсантъ","https://www.kommersant.ru/doc/7956084"],["Рамблер","https://news.rambler.ru/moscow_city/56251071-esli-u-vas-net-verandy-letom-to-u-vas-i-gostey-skoree-vsego-ne-budet-vnutri-restoratory-o-privlekatelnosti-letnih-verand/"],["Москва 24","https://www.m24.ru/news/gorod/15102025/838431"],["Своё дело плюс","https://svoedeloplus.ru/2026/03/14/uproshhennyj-poryadok-dlya-ustanovki-letnih-verand-kafe-i-restoranov-sohranen/"],["3К Мебель","https://3kmebel.ru/catalog/mebel-dlya-letnikh-kafe/"],["ДДМ-Строй","https://www.ddm-stroy.ru/projects/letnie-kafe-i-verandy/"],["Грин Вуд","https://pkgreenwood.ru/category/letnie-kafe-i-verandy/"],["KeterShop","https://ketershop.com/catalog/sadovoe_khranenie/musornye_baki/"],["HozOtdel","https://hozotdel.ru/product/kontejnernaya-ploschadka-dlya-kontejnerov-tbo-bez-vorot/"],["TORUDA","https://toruda.ru/maf/mf-145-1-na-2-konteynera-mf-145-1.html"],["Ай-Пласт","https://iplast.com/blog/normy-i-pravila-ustanovki-musornykh-konteynerov-v-chastnom-sektore/"],["Уличные кухни.ру","https://ulichnie-kuhni.ru/"],["Садовые домики","https://www.sadovie-domiki.ru/letnie-kuhni"],["Российская газета","https://rg.ru/2025/12/08/v-rossii-vdvoe-vyros-spros-na-glemping.html"],["Frontdesk","https://www.frontdesk.ru/article/zakat-ery-glempingov-vse-bolshe-ikh-zakryvaetsya-ili-prodaetsya"],["Т—Ж","https://t-j.ru/news/glamping-reestr/"],["Invest35","https://invest35.ru/mcenter/subsidii-na-modulnye-gostinitsy-i-glempingi-chto-nuzhno-znat-uchastnikam-konkursa-minekonomrazvitiya/"],["Ведомости","https://www.vedomosti.ru/business/articles/2025/10/17/1147542-spros-na-agroturizm-v-rossii-uvelichitsya"],["Lenta.ru","https://lenta.ru/articles/2026/09/21/rossiyane-vse-chasche-vybirayut-fermerskie-hozyaystva-vmesto-kurortov/"],["Joygarden","https://joygarden.ru/cat/mebel-po-napravleniyam/ulichnaya-mebel/mebel-dlya-gostinic/"],["Office News","https://office-news.ru/ofisy-s-terrasami-novyj-trend-delovoj-nedvizhimosti-moskvy/upravlenie-bts/"],["Саморегулирование","https://sroportal.ru/news/federal/v-2025-godu-realizaciya-fedproekta-formirovanie-komfortnoj-gorodskoj-sredy-prodolzhitsya-v-sostave-nacionalnogo-proekta-infrastruktura-dlya-zhizni/"],["АНСБ","https://ancb.ru/publication/read/20211"],["РосТендер","https://rostender.info/category/tendery-na-skamejki"],["СТАР","https://star-pro.ru/kategorii/stroitelstvo/skamejka"],["Эксперт-Тест","https://www.expert-test.ru/stati/sertifikatsiya-stroitelnykh-materialov/sertifikat-na-maf"],["PRO-ABILITY","https://www.pro-ability.ru/tpost/c10ujf7121-statya-93-44-fz-v-2026-godu-vse-sposobi"],["ProductCenter","https://productcenter.ru/producers/r-moskovskaia-obl-191/catalog-malyie-arkhitiekturnyie-formy-396"],["КонсультантПлюс","https://www.consultant.ru/law/podborki/44-fz_kontrakt_smp/"],["Alterra","https://www.alterrapark.ru/blog/blagoustrojstvo-gorodskih-ulic-i-parkov"],["ВсеИнструменты","https://www.vseinstrumenti.ru/sadovaya-tehnika/sadoviy-instrument-i-inventar/dekorativnye-ukrasheniya/ograzhdeniya/dlya-gryadok-i-klumb/bordyury/palisad/"],["Standartpark","https://www.standartpark.ru/catalog/bordyury/"],["ProGorod43","https://progorod43.ru/news/150949"],["ТопХаус","https://msk.tophouse.ru/products/zabor/decorativ/filter/prices-holzhof"],["Дачные решения","https://dachnye-reshenia.ru/drovnicy/"],["SKOGGY","https://skoggy.ru/khozbloki/drovnicy"],["Лемана ПРО","https://kirov.lemanapro.ru/catalogue/ulichnaya-kuhnya/drovnicy/"],["KeterShop","https://ketershop.com/catalog/sadovoe_khranenie/sunduki_plastikovye/"],["ВсеИнструменты","https://www.vseinstrumenti.ru/product/pesochnitsa-s-kryshkoj-skamejkoj-kaprizun-slavushka-r905-12947813/"],["det-ploshadka.ru","https://det-ploshadka.ru/pesochnitsy/s-kryshkoy/"],["ЕЭК","https://eec.eaeunion.org/comission/department/deptexreg/tr/TR_EEU_042_2017.php"],["Кремлёвская","https://xn--m1ao.xn--p1ai/catalog/3x6/"],["teplicy.ru","https://msk.teplicy.ru/"],["ГК Теремок","https://gk-teremok.ru/catalog/ulichnoe-oborudovanie/verandy/"],["блог поставщика","https://xn--63-vlch8au.xn--p1ai/blog/staty/tenevye-navesy"],["КонсультантПлюс","https://www.consultant.ru/law/podborki/nestacionarnye_torgovye_obekty_moskva/"],["WB Partners","https://seller.wildberries.ru/instructions/ru/ru/material/product-niche-analytics"]];
+
+/* ---------- утилиты ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function el(tag,attrs,html){var e=document.createElement(tag);if(attrs){for(var k in attrs){if(k==="class")e.className=attrs[k];else e.setAttribute(k,attrs[k]);}}if(html!=null)e.innerHTML=html;return e;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function fmt(n){return n.toLocaleString("ru-RU",{maximumFractionDigits:2});}
+function tok(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+function qColor(q){return tok("--q"+q);}
+var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var hasIO = "IntersectionObserver" in window;
+function onFirstView(node,fn,thr){
+  if(!node)return;
+  if(!hasIO){fn();return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.disconnect();fn();}});},{threshold:thr||0.3});
+  io.observe(node);
+}
+/* диаграмма строится с анимацией, когда впервые попадает на экран */
+var seen={total:!hasIO||!!reduceMotion,radar:!hasIO||!!reduceMotion,price:!hasIO||!!reduceMotion,invest:!hasIO||!!reduceMotion};
+function withAnim(key,opts){if(!seen[key]){opts.animation=false;}return opts;}
+
+/* проверка сумм */
+ITEMS.forEach(function(it){var sum=it.s.reduce(function(a,b){return a+b;},0);if(sum!==it.total){console.warn("Сумма не сходится:",it.name,sum,it.total);}});
+
+/* ---------- тема ---------- */
+var themeBtns = document.querySelectorAll("[data-theme-set]");
+function applyTheme(mode){
+  if(mode==="light"||mode==="dark"){document.documentElement.setAttribute("data-theme",mode);}
+  else{document.documentElement.removeAttribute("data-theme");}
+  themeBtns.forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-theme-set")===(mode||"auto")));});
+  try{localStorage.setItem("rynok-dpk-theme",mode||"auto");}catch(e){}
+  renderCharts();
+  try{document.dispatchEvent(new Event("rynok:theme"));}catch(e){}
+}
+themeBtns.forEach(function(b){b.addEventListener("click",function(){applyTheme(b.getAttribute("data-theme-set"));});});
+
+/* ---------- общая картина: таблица деталей ---------- */
+$("#reuseBody").innerHTML = REUSE.map(function(r){return "<tr><td>"+esc(r[0])+"</td><td>"+esc(r[1])+"</td><td>"+esc(r[2])+"</td></tr>";}).join("");
+
+/* ---------- рейтинг ---------- */
+var rateFilter = "all";
+var sortState = {key:"total",dir:-1};
+var COLS = [{key:"name",label:"Решение"}].concat(CRIT.map(function(c,i){return {key:"s"+i,label:c};})).concat([{key:"total",label:"Итого из 35"},{key:"q",label:"Очередь"}]);
+
+function makeQueueFilter(container,onChange){
+  var opts=[["all","Все",null],["1","1-я очередь","q1"],["2","2-я очередь","q2"],["3","3-я очередь","q3"],["0","Не запускать / отложить","q0"]];
+  container.innerHTML="";
+  opts.forEach(function(o,i){
+    var b=el("button",{type:"button","class":"chip","aria-pressed":i===0?"true":"false","data-v":o[0]},(o[2]?'<span class="dot '+o[2]+'"></span>':"")+esc(o[1]));
+    b.addEventListener("click",function(){container.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");onChange(o[0]);});
+    container.appendChild(b);
+  });
+}
+function passQ(it,f){return f==="all"||String(it.q)===f;}
+
+function renderHead(){
+  var tr=$("#rateHead");tr.innerHTML="";
+  COLS.forEach(function(c){
+    var th=el("th",{scope:"col"});
+    if(sortState.key===c.key){th.setAttribute("aria-sort",sortState.dir>0?"ascending":"descending");}
+    var b=el("button",{type:"button"},esc(c.label)+'<span class="arr" aria-hidden="true"></span>');
+    b.addEventListener("click",function(){
+      if(sortState.key===c.key){sortState.dir=-sortState.dir;}
+      else{sortState.key=c.key;sortState.dir=(c.key==="name"||c.key==="q")?1:-1;}
+      renderTable();
+    });
+    th.appendChild(b);tr.appendChild(th);
+  });
+}
+function sortVal(it,key){
+  if(key==="name")return it.name;
+  if(key==="total")return it.total;
+  if(key==="q")return QORDER[it.q];
+  return it.s[+key.slice(1)];
+}
+function sortedItems(){
+  var k=sortState.key,d=sortState.dir;
+  return ITEMS.slice().sort(function(a,b){
+    var va=sortVal(a,k),vb=sortVal(b,k),r;
+    if(typeof va==="string"){r=va.localeCompare(vb,"ru");}else{r=va-vb;}
+    if(r===0){r=(b.total-a.total)*(k==="total"?d:-1)||a.name.localeCompare(b.name,"ru");return r;}
+    return r*d;
+  });
+}
+function renderTable(){
+  renderHead();
+  var rows=sortedItems().filter(function(it){return passQ(it,rateFilter);});
+  $("#rateBody").innerHTML=rows.map(function(it,ri){
+    var cells=it.s.map(function(v,i){return '<td class="num"><span class="sc" title="'+CRIT[i]+': '+v+' из 5"><span class="bar" aria-hidden="true"><i style="width:'+(v/5*100)+'%"></i></span>'+v+'</span></td>';}).join("");
+    return '<tr style="--r:'+ri+'"><td class="name">'+esc(it.name)+'</td>'+cells+
+      '<td class="num"><span class="tot"><span class="bar" aria-hidden="true"><i style="width:'+(it.total/35*100).toFixed(1)+'%;background:var(--q'+it.q+')"></i></span>'+it.total+'</span></td>'+
+      '<td><span class="badge q'+it.q+'">'+esc(it.ql)+'</span></td></tr>';
+  }).join("");
+  renderTotalChart();
+}
+makeQueueFilter($("#rateFilters"),function(v){rateFilter=v;renderTable();});
+
+/* легенды очередей */
+function queueLegend(target){
+  target.innerHTML=[1,2,3,0].map(function(q){return '<span><i style="background:var(--q'+q+')"></i>'+QNAME[q]+'</span>';}).join("");
+}
+queueLegend($("#queueLegend"));queueLegend($("#investLegend"));
+
+/* ---------- Chart.js ---------- */
+var charts={};
+function baseOpts(){
+  var fg2=tok("--fg-2"),grid=tok("--grid"),axis=tok("--axis");
+  return {fg2:fg2,grid:grid,axis:axis,surface:tok("--surface"),fg:tok("--fg"),line:tok("--line")};
+}
+function tooltipOpts(c){
+  return {backgroundColor:c.surface,titleColor:c.fg,bodyColor:c.fg2,borderColor:c.line,borderWidth:1,padding:10,cornerRadius:8,displayColors:true,boxPadding:4,titleFont:{weight:"600"}};
+}
+function setDefaults(){
+  if(!window.Chart)return;
+  Chart.defaults.font.family=tok("--font")||"system-ui, sans-serif";
+  Chart.defaults.font.size=12;
+  Chart.defaults.color=tok("--fg-2");
+  if(reduceMotion){Chart.defaults.animation=false;}
+}
+function trunc(l,box){var w=$(box).clientWidth;var n=w<420?17:(w<560?22:40);return l.length>n?l.slice(0,n-1).trim()+"…":l;}
+function destroy(id){if(charts[id]){charts[id].destroy();charts[id]=null;}}
+
+/* (а) итоговый балл */
+function renderTotalChart(){
+  if(!window.Chart)return;
+  destroy("total");
+  var c=baseOpts();
+  var rows=ITEMS.slice().sort(function(a,b){return b.total-a.total;}).filter(function(it){return passQ(it,rateFilter);});
+  var h=Math.max(140,rows.length*28+50);
+  $("#totalBox").style.height=h+"px";
+  charts.total=new Chart($("#totalChart"),{
+    type:"bar",
+    data:{labels:rows.map(function(r){return r.short;}),datasets:[{label:"Итого",data:rows.map(function(r){return r.total;}),backgroundColor:rows.map(function(r){return qColor(r.q);}),borderRadius:4,borderSkipped:"start",barPercentage:.78,categoryPercentage:.92}]},
+    options:withAnim("total",{indexAxis:"y",maintainAspectRatio:false,responsive:true,
+      plugins:{legend:{display:false},tooltip:Object.assign(tooltipOpts(c),{callbacks:{title:function(i){return rows[i[0].dataIndex].name;},label:function(i){var r=rows[i.dataIndex];return " "+r.total+" из 35 · "+r.ql;}}})},
+      scales:{x:{min:0,max:35,ticks:{stepSize:5,color:c.fg2},grid:{color:c.grid},border:{color:c.axis}},
+              y:{ticks:{color:c.fg2,autoSkip:false,callback:function(v,i){return trunc(rows[i].short,"#totalBox");}},grid:{display:false},border:{color:c.axis}}}})
+  });
+}
+
+/* (б) радар */
+var slots=["kashpo","mebel","verandy"];
+var addOrder=slots.slice();
+var SLOT_TOK=["--cmpA","--cmpB","--cmpC"];
+var SLOT_DASH=[[],[6,4],[2,3]];
+var SLOT_PT=["circle","rectRot","triangle"];
+var SLOT_NAME=["А","Б","В"];
+function byId(id){for(var i=0;i<ITEMS.length;i++){if(ITEMS[i].id===id)return ITEMS[i];}return null;}
+function renderCmpChips(){
+  var box=$("#cmpChips");box.innerHTML="";
+  ITEMS.forEach(function(it){
+    var si=slots.indexOf(it.id);
+    var b=el("button",{type:"button","class":"chip","aria-pressed":si>=0?"true":"false"},(si>=0?'<span class="dot" style="background:var('+SLOT_TOK[si]+')"></span>':'<span class="dot '+("q"+it.q)+'" style="opacity:.55"></span>')+esc(it.short));
+    b.addEventListener("click",function(){
+      var idx=slots.indexOf(it.id);
+      if(idx>=0){slots[idx]=null;addOrder=addOrder.filter(function(x){return x!==it.id;});}
+      else{
+        var free=slots.indexOf(null);
+        if(free<0){var oldest=addOrder.shift();free=slots.indexOf(oldest);}
+        slots[free]=it.id;addOrder.push(it.id);
+      }
+      renderCmpChips();renderRadar();
+    });
+    box.appendChild(b);
+  });
+}
+function renderRadar(){
+  var active=[];slots.forEach(function(id,i){if(id){active.push({it:byId(id),i:i});}});
+  $("#cmpLegend").innerHTML=active.length?active.map(function(a){return '<span><i class="line" style="background:var('+SLOT_TOK[a.i]+')"></i>'+SLOT_NAME[a.i]+" — "+esc(a.it.name)+" ("+a.it.total+" из 35)</span>";}).join(""):'<span>Выберите хотя бы одно решение.</span>';
+  var t=$("#cmpTable");
+  if(active.length){
+    t.innerHTML='<thead><tr><th>Признак</th>'+active.map(function(a){return '<th><span class="sc"><span class="dot" style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var('+SLOT_TOK[a.i]+')"></span>'+esc(a.it.short)+'</span></th>';}).join("")+'</tr></thead><tbody>'+
+      CRIT.map(function(cn,ci){return '<tr><td>'+cn+'</td>'+active.map(function(a){return '<td class="num" style="font-variant-numeric:tabular-nums">'+a.it.s[ci]+'</td>';}).join("")+'</tr>';}).join("")+
+      '<tr><td><b>Итого из 35</b></td>'+active.map(function(a){return '<td style="font-variant-numeric:tabular-nums"><b>'+a.it.total+'</b></td>';}).join("")+'</tr></tbody>';
+  } else {t.innerHTML="";}
+  if(!window.Chart)return;
+  destroy("radar");
+  var c=baseOpts();
+  charts.radar=new Chart($("#radarChart"),{
+    type:"radar",
+    data:{labels:CRIT,datasets:active.map(function(a){var col=tok(SLOT_TOK[a.i]);return {label:a.it.name,data:a.it.s,borderColor:col,backgroundColor:col+"1f",borderWidth:2,borderDash:SLOT_DASH[a.i],pointStyle:SLOT_PT[a.i],pointRadius:4,pointHoverRadius:6,pointBackgroundColor:col,pointBorderColor:c.surface,pointBorderWidth:2,fill:true};})},
+    options:withAnim("radar",{maintainAspectRatio:false,responsive:true,
+      plugins:{legend:{display:false},tooltip:Object.assign(tooltipOpts(c),{callbacks:{label:function(i){return " "+i.dataset.label+": "+i.raw+" из 5";}}})},
+      scales:{r:{min:0,max:5,ticks:{stepSize:1,color:c.fg2,backdropColor:"transparent",font:{size:11}},grid:{color:c.grid},angleLines:{color:c.grid},pointLabels:{color:c.fg2,font:{size:12,weight:"500"}}}}})
+  });
+}
+
+/* (в) цены */
+var priceSel="table";
+function priceText(r,unit){
+  var s;
+  if(Array.isArray(r.v)){s=(r.from?"от ":"")+fmt(r.v[0])+"–"+fmt(r.v[1]);}
+  else{s=(r.from?"от ":(r.approx?"≈":""))+fmt(r.v);}
+  return s+" "+unit+(r.est?" · оценка":"");
+}
+function renderPriceTabs(){
+  var box=$("#priceTabs");box.innerHTML="";
+  PRICES.forEach(function(p){
+    var b=el("button",{type:"button","class":"chip",role:"tab","aria-selected":String(p.id===priceSel),"aria-pressed":String(p.id===priceSel)},esc(p.tab));
+    b.addEventListener("click",function(){priceSel=p.id;renderPriceTabs();renderPrice();});
+    box.appendChild(b);
+  });
+}
+function renderPrice(){
+  var p=PRICES.filter(function(x){return x.id===priceSel;})[0];
+  $("#priceTitle").textContent=p.title;
+  $("#priceSub").textContent=p.sub+" Единицы: "+p.unit+".";
+  $("#priceList").innerHTML=p.rows.map(function(r){return '<li class="'+(r.ours?"ours":"")+'"><span>'+esc(r.l)+'</span><span>'+esc(priceText(r,p.unit))+'</span></li>';}).join("");
+  if(!window.Chart)return;
+  destroy("price");
+  var c=baseOpts();
+  var ours=tok("--ours"),comp=tok("--comp");
+  $("#priceBox").style.height=Math.max(160,p.rows.length*40+60)+"px";
+  var data=p.rows.map(function(r){return Array.isArray(r.v)?[r.v[0],r.v[1]]:[r.v,r.v];});
+  charts.price=new Chart($("#priceChart"),{
+    type:"bar",
+    data:{labels:p.rows.map(function(r){return r.l;}),datasets:[{label:p.title,data:data,
+      backgroundColor:p.rows.map(function(r){return r.ours?(r.est?ours+"73":ours):comp;}),
+      borderColor:p.rows.map(function(r){return r.ours?ours:comp;}),borderWidth:p.rows.map(function(r){return r.est?2:0;}),
+      borderRadius:4,borderSkipped:false,minBarLength:6,barPercentage:.7,categoryPercentage:.9}]},
+    options:withAnim("price",{indexAxis:"y",maintainAspectRatio:false,responsive:true,
+      plugins:{legend:{display:false},tooltip:Object.assign(tooltipOpts(c),{displayColors:false,callbacks:{label:function(i){return priceText(p.rows[i.dataIndex],p.unit);}}})},
+      scales:{x:{beginAtZero:true,ticks:{color:c.fg2,callback:function(v){return fmt(v);}},grid:{color:c.grid},border:{color:c.axis},title:{display:true,text:p.unit,color:c.fg2}},
+              y:{ticks:{color:c.fg2,autoSkip:false,callback:function(v,i){var w=$("#priceBox").clientWidth;var n=w<420?17:(w<560?22:36);var l=p.rows[i].l;return l.length>n?l.slice(0,n-1).trim()+"…":l;}},grid:{display:false},border:{color:c.axis}}}})
+  });
+}
+
+/* (г) вложения */
+function renderInvest(){
+  if(!window.Chart)return;
+  destroy("invest");
+  var c=baseOpts();
+  var rows=ITEMS.filter(function(it){return it.inv;}).sort(function(a,b){return (QORDER[a.q]-QORDER[b.q])||(b.inv[1]-a.inv[1]);});
+  $("#investBox").style.height=(rows.length*30+70)+"px";
+  charts.invest=new Chart($("#investChart"),{
+    type:"bar",
+    data:{labels:rows.map(function(r){return r.short;}),datasets:[{label:"Вложения, тыс. ₽",data:rows.map(function(r){return r.inv;}),backgroundColor:rows.map(function(r){return qColor(r.q);}),borderRadius:4,borderSkipped:false,barPercentage:.7,categoryPercentage:.9}]},
+    options:withAnim("invest",{indexAxis:"y",maintainAspectRatio:false,responsive:true,
+      plugins:{legend:{display:false},tooltip:Object.assign(tooltipOpts(c),{callbacks:{title:function(i){return rows[i[0].dataIndex].name;},label:function(i){var r=rows[i.dataIndex];return " "+fmt(r.inv[0])+"–"+fmt(r.inv[1])+" тыс. ₽ (оценка) · "+r.ql;},afterLabel:function(i){return " Срок: "+rows[i.dataIndex].time;}}})},
+      scales:{x:{beginAtZero:true,ticks:{color:c.fg2},grid:{color:c.grid},border:{color:c.axis},title:{display:true,text:"тыс. ₽, оценка",color:c.fg2}},
+              y:{ticks:{color:c.fg2,autoSkip:false,callback:function(v,i){return trunc(rows[i].short,"#investBox");}},grid:{display:false},border:{color:c.axis}}}})
+  });
+}
+
+function renderCharts(){
+  setDefaults();
+  renderTotalChart();renderRadar();renderPrice();renderInvest();
+}
+
+/* ---------- карточки ---------- */
+var cardFilter="all";
+function li(arr){return "<ul>"+arr.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>";}
+function estMark(s){return esc(s)+(s&&s!=="—"&&!/не указан|не требует|минимальн/.test(s)?' <span class="est">оценка</span>':"");}
+function renderCards(){
+  var box=$("#pcards");box.innerHTML="";
+  ITEMS.forEach(function(it){
+    var d=el("details",{"class":"pc","data-q":String(it.q),"data-id":it.id});
+    var scores=CRIT.map(function(c,i){return "<span>"+c+": <b>"+it.s[i]+"</b></span>";}).join("");
+    var prio='<div class="prio"><h4>Приоритет запуска</h4><p><span class="badge q'+it.q+'">'+esc(it.ql)+'</span></p><p style="margin-top:8px">'+esc(it.why)+'</p>'+
+      (it.q!==0?'<dl><dt>До запуска</dt><dd>'+esc(it.todo)+'</dd><dt>Вложения</dt><dd>'+estMark(it.invest)+'</dd><dt>Срок</dt><dd>'+estMark(it.time)+'</dd></dl>':'')+'</div>';
+    d.innerHTML='<summary><span class="nm">'+esc(it.name)+'</span><span class="badge q'+it.q+'">'+esc(it.ql)+'</span><span class="sc-tot">'+it.total+' из 35</span><span class="chev" aria-hidden="true">▼</span></summary>'+
+      '<div class="pc-body">'+
+        '<div class="full scorerow">'+scores+'</div>'+
+        '<div><h4>Рынок и спрос</h4><p>'+esc(it.market)+'</p></div>'+
+        '<div><h4>Цены конкурентов</h4>'+li(it.prices)+'</div>'+
+        '<div><h4>Сильные стороны</h4>'+li(it.strong)+'</div>'+
+        '<div><h4>Слабые стороны</h4>'+li(it.weak)+'</div>'+
+        '<div class="full">'+prio+'</div>'+
+      '</div>';
+    d._text=(it.name+" "+it.market+" "+it.prices.join(" ")+" "+it.strong.join(" ")+" "+it.weak.join(" ")+" "+it.why+" "+it.todo).toLowerCase();
+    box.appendChild(d);
+  });
+  box.appendChild(el("div",{"class":"empty",id:"cardEmpty",hidden:""},"Ничего не найдено. Измените фильтр или запрос."));
+  filterCards();
+}
+function filterCards(){
+  var q=($("#cardSearch").value||"").trim().toLowerCase();
+  var n=0;
+  document.querySelectorAll("details.pc").forEach(function(d){
+    var ok=(cardFilter==="all"||d.getAttribute("data-q")===cardFilter)&&(!q||d._text.indexOf(q)>=0);
+    d.hidden=!ok;if(ok)n++;
+  });
+  $("#cardEmpty").hidden=n>0;
+  $("#cardCount").textContent="Показано: "+n+" из "+ITEMS.length;
+}
+makeQueueFilter($("#cardFilters"),function(v){cardFilter=v;filterCards();});
+$("#cardSearch").addEventListener("input",filterCards);
+$("#toggleAll").addEventListener("click",function(){
+  var vis=[].slice.call(document.querySelectorAll("details.pc")).filter(function(d){return !d.hidden;});
+  var anyClosed=vis.some(function(d){return !d.open;});
+  vis.forEach(function(d){d.open=anyClosed;});
+  this.textContent=anyClosed?"Свернуть все":"Раскрыть все";
+});
+
+/* ---------- ненадёжные данные и источники ---------- */
+$("#unrelList").innerHTML=UNRELIABLE.map(function(u){return "<li><b>"+esc(u[0])+":</b> "+esc(u[1])+"</li>";}).join("");
+$("#srcCount").textContent=SOURCES.length;
+$("#srcList").innerHTML=SOURCES.map(function(s){return '<li><a href="'+esc(s[1])+'" target="_blank" rel="noopener noreferrer">'+esc(s[0])+'</a><span class="u">'+esc(s[1].replace(/^https?:\/\/(www\.)?/,"").split("/")[0])+'</span></li>';}).join("");
+
+/* ---------- запуск ---------- */
+renderCards();
+renderCmpChips();
+renderPriceTabs();
+renderTable();
+var saved="auto";
+try{saved=localStorage.getItem("rynok-dpk-theme")||"auto";}catch(e){}
+applyTheme(saved);
+var lastBucket=bucket(),rt=null;
+function bucket(){var w=window.innerWidth;return w<480?0:(w<620?1:2);}
+window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){var b=bucket();if(b!==lastBucket){lastBucket=b;renderCharts();}},250);});
+if(window.matchMedia){
+  var mq=window.matchMedia("(prefers-color-scheme: dark)");
+  var onMq=function(){renderCharts();};
+  if(mq.addEventListener){mq.addEventListener("change",onMq);}else if(mq.addListener){mq.addListener(onMq);}
+}
+
+/* ---------- оживление отчёта ---------- */
+/* диаграммы: построить с анимацией при первом появлении */
+onFirstView($("#totalBox"),function(){if(!seen.total){seen.total=true;renderTotalChart();}},0.25);
+onFirstView($("#radarChart").parentNode,function(){if(!seen.radar){seen.radar=true;renderRadar();}},0.25);
+onFirstView($("#priceBox"),function(){if(!seen.price){seen.price=true;renderPrice();}},0.25);
+onFirstView($("#investBox"),function(){if(!seen.invest){seen.invest=true;renderInvest();}},0.25);
+
+/* ключевые цифры: счёт до значения (итог уже написан в разметке) */
+function countUp(node){
+  var list=[],w=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null,false),n;
+  while((n=w.nextNode())){if(/\d/.test(n.nodeValue)){list.push({n:n,s:n.nodeValue});}}
+  if(!list.length||document.visibilityState==="hidden")return;
+  var dur=1200,t0=null;
+  setTimeout(function(){list.forEach(function(o){o.n.nodeValue=o.s;});},dur+400);
+  function frame(ts){
+    if(t0===null)t0=ts;
+    var u=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-u,3);
+    list.forEach(function(o){
+      o.n.nodeValue=u>=1?o.s:o.s.replace(/\d+(?:,\d+)?/g,function(m){
+        var dec=(m.split(",")[1]||"").length,v=parseFloat(m.replace(",","."))*e;
+        return dec?v.toFixed(dec).replace(".",","):String(Math.round(v));
+      });
+    });
+    if(u<1)requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+if(!reduceMotion&&hasIO){
+  document.querySelectorAll(".kpi .v, .leaders span:last-child, .tile .v").forEach(function(node){onFirstView(node,function(){countUp(node);},0.6);});
+}
+
+/* полоски баллов в рейтинге: плавное заполнение */
+if(!reduceMotion){
+  onFirstView($("#rateTable"),function(){
+    var t=$("#rateTable");t.classList.add("fill-anim");
+    setTimeout(function(){t.classList.remove("fill-anim");},ITEMS.length*45+1200);
+  },0.15);
+}
+
+/* дорожная карта: поочерёдная подсветка этапов */
+var road=$(".road"),phases=[].slice.call(document.querySelectorAll(".road .phase")),roadTimers=[];
+phases.forEach(function(ph){var st=ph.querySelector(".stripe");if(st){ph.style.setProperty("--pc",st.style.background);}});
+function playRoad(){
+  roadTimers.forEach(clearTimeout);roadTimers=[];
+  road.classList.add("playing");
+  phases.forEach(function(ph,i){
+    roadTimers.push(setTimeout(function(){phases.forEach(function(p){p.classList.remove("lit");});ph.classList.add("lit");},i*1400));
+  });
+  roadTimers.push(setTimeout(function(){phases.forEach(function(p){p.classList.remove("lit");});road.classList.remove("playing");},phases.length*1400+400));
+}
+$("#roadPlay").addEventListener("click",playRoad);
+if(!reduceMotion){onFirstView(road,playRoad,0.35);}
+})();
+</script>
+<script>
+/* ---------- 3D: материалы системы и модели изделий (three.js r128, PBR) ---------- */
+(function(){
+"use strict";
+var stageEl=document.getElementById("m3dStage");
+if(!stageEl)return;
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+var reduce=!!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+var ITEMS=(window.RynokDPK&&window.RynokDPK.items)||[];
+function item(id){for(var i=0;i<ITEMS.length;i++){if(ITEMS[i].id===id)return ITEMS[i];}return null;}
+function now(){return (window.performance&&performance.now)?performance.now():Date.now();}
+
+/* изделия в порядке рейтинга */
+var PRODUCTS=[
+ {id:"kashpo",nm:"Кашпо",
+  text:"Квадратные кашпо 40×40 см трёх высот. Стенки — те же бруски с листами, что у тумбы стола; углы стянуты стеклопластиковыми стержнями. Внутри грунт и растения.",
+  act:["Вырастить растения","Вырастить растения"]},
+ {id:"mebel",nm:"Садовая мебель",
+  text:"Стол на 4 человека: 2,4 × 1,02 м, высота 74 см. По краям — тумбы с полками для хранения, посередине стойка, сверху доски. Четыре табурета-тумбы 40×40 см с откидными крышками.",
+  act:["Открыть крышки табуретов","Закрыть крышки табуретов"]},
+ {id:"naves",nm:"Навес над столом",
+  text:"Тот же стол и 8 угловых стоек внутри тумб. Двускатная крыша с уклоном 18°, створки из сотового поликарбоната, рулонные шторы вдоль длинных сторон. На зиму створки снимают.",
+  act:["Опустить шторы","Поднять шторы"]},
+ {id:"besedka",nm:"Беседка-конструктор",
+  text:"Навес на 8 человек (крыша около 5,3 × 2,2 м) прямо на газоне, без стола: скамьи из табуретов, по бокам и с торцов опущены прозрачные шторы. Крыша сезонная — снег не держит.",
+  act:["Поднять шторы","Опустить шторы"]},
+ {id:"gryadki",nm:"Высокая грядка",
+  text:"Грядка 1 × 2 м в 4 ряда брусков (около 40 см). Стержни уходят в землю и держат углы и середину. Сверху откидная крышка-парник из двух створок. Лист в стенках показан условно: под грунт нужен более прочный лист — решает владелец.",
+  act:["Открыть крышку-парник","Закрыть крышку-парник"]},
+ {id:"shirmy",nm:"Ширма",
+  text:"Панель около 1 × 1,8 м: бруски с листом в пазах, втулки и стержни по краям, две стойки из трёх брусков на опорах. Высокую ширму без расчёта на ветер продавать рискованно.",
+  act:null},
+ {id:"baki",nm:"Павильон для баков",
+  text:"Короб около 1,5 × 0,8 × 1,3 м на два бака: стенки с листами, спереди две дверцы, сверху крышка-створка на петлях. Зимой створку 4 мм засыпает снегом — нужна другая крышка (решает владелец).",
+  act:["Открыть крышку и дверцы","Закрыть крышку и дверцы"]},
+ {id:"bar",nm:"Барная стойка",
+  text:"Две высокие тумбы с полками и столешница на высоте около 1,1 м. Только стойка — без гриля, огня и воды: ДПК рядом с огнём ставить нельзя.",
+  act:null}
+];
+var curId="kashpo",ready=false;
+
+/* ---- подписи и переключатель (работают и без 3D) ---- */
+var pickEl=$("m3dPick"),titleEl=$("m3dTitle"),badgeEl=$("m3dBadge"),textEl=$("m3dText"),msgEl=$("m3dMsg");
+var btnBuild=$("m3dBuild"),btnAct=$("m3dAct"),btnSpin=$("m3dSpin");
+function prodById(id){for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].id===id)return PRODUCTS[i];}return PRODUCTS[0];}
+function renderPick(){
+  pickEl.innerHTML="";
+  PRODUCTS.forEach(function(p){
+    var it=item(p.id)||{q:0,total:"?"};
+    var b=document.createElement("button");
+    b.type="button";b.className="chip";b.setAttribute("aria-pressed",String(p.id===curId));
+    b.innerHTML='<span class="dot q'+it.q+'"></span><span class="pk"><b>'+esc(p.nm)+'</b><small>очередь '+it.q+' · '+it.total+' из 35</small></span>';
+    b.addEventListener("click",function(){if(curId!==p.id){select(p.id);}});
+    pickEl.appendChild(b);
+  });
+}
+function renderCaption(){
+  var p=prodById(curId),it=item(p.id)||{q:0,total:"?"};
+  titleEl.textContent=p.nm;
+  badgeEl.className="badge q"+it.q;
+  badgeEl.textContent="Очередь "+it.q+" · балл "+it.total+" из 35";
+  textEl.textContent=p.text;
+}
+function select(id){curId=id;renderPick();renderCaption();if(ready){buildCurrent(true);}}
+function failAll(t){
+  msgEl.textContent=t;msgEl.hidden=false;$("m3dHint").hidden=true;
+  [btnBuild,btnAct,btnSpin].forEach(function(b){b.disabled=true;});
+  document.querySelectorAll("[data-shot] .shot-ph").forEach(function(s){s.textContent="Изображение не построилось: "+t;});
+  var nm=$("nodeMsg");if(nm){nm.textContent=t;nm.hidden=false;}
+  var nb=$("nodeBuild");if(nb){nb.disabled=true;}
+}
+renderPick();renderCaption();
+
+var T=window.THREE;
+if(!T||!T.OrbitControls){failAll("для 3D нужен интернет (библиотека three.js). Остальная страница работает.");return;}
+var renderer;
+try{renderer=new T.WebGLRenderer({antialias:true});}
+catch(e){failAll("этот браузер не показывает 3D (нет WebGL). Остальная страница работает.");return;}
+ready=true;
+
+/* =====================================================================
+   Общая библиотека: процедурные текстуры, PBR-материалы, геометрии
+   ===================================================================== */
+var MM=0.001,DEG=Math.PI/180,SLOPE=18*DEG,TAN=Math.tan(SLOPE);
+function lin(hex){return new T.Color(hex).convertSRGBToLinear();}
+function rng(seed){var s=seed%2147483647;if(s<=0)s+=2147483646;return function(){s=s*16807%2147483647;return (s-1)/2147483646;};}
+function cv(w,h){var c=document.createElement("canvas");c.width=w;c.height=h;return c;}
+function tx(c,srgb,rx,ry){var t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;if(srgb){t.encoding=T.sRGBEncoding;}t.anisotropy=8;if(rx){t.repeat.set(rx,ry||1);}return t;}
+function setupRenderer(r){
+  r.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  r.physicallyCorrectLights=true;
+  r.outputEncoding=T.sRGBEncoding;
+  r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=1.0;
+  r.shadowMap.enabled=true;r.shadowMap.type=T.PCFSoftShadowMap;
+}
+
+/* брашированный ДПК: продольные волокна, затемнение кромок */
+function woodCanvas(){
+  var W=1024,H=256,c=cv(W,H),g=c.getContext("2d"),r=rng(11);
+  g.fillStyle="#c9c9c9";g.fillRect(0,0,W,H);
+  for(var i=0;i<1300;i++){
+    var y=r()*H,x=r()*W,L=60+r()*760,v=Math.round(172+r()*80),dy=(r()-0.5)*1.5;
+    g.strokeStyle="rgba("+v+","+v+","+v+","+(0.07+r()*0.22).toFixed(2)+")";g.lineWidth=0.5+r()*1.5;
+    for(var k=-1;k<=0;k++){g.beginPath();g.moveTo(x+k*W,y);g.lineTo(x+k*W+L,y+dy);g.stroke();}
+  }
+  var id=g.getImageData(0,0,W,H),d=id.data;
+  for(var p=0;p<d.length;p+=4){var n=(r()-0.5)*16;d[p]+=n;d[p+1]+=n;d[p+2]+=n;}
+  g.putImageData(id,0,0);
+  var gr=g.createLinearGradient(0,0,0,H);
+  gr.addColorStop(0,"rgba(0,0,0,0.6)");gr.addColorStop(0.05,"rgba(0,0,0,0.12)");gr.addColorStop(0.09,"rgba(0,0,0,0)");
+  gr.addColorStop(0.91,"rgba(0,0,0,0)");gr.addColorStop(0.95,"rgba(0,0,0,0.12)");gr.addColorStop(1,"rgba(0,0,0,0.6)");
+  g.fillStyle=gr;g.fillRect(0,0,W,H);
+  return c;
+}
+/* срез ДПК: древесная мука в полимере */
+function cutCanvas(){
+  var W=256,c=cv(W,W),g=c.getContext("2d"),r=rng(5);
+  g.fillStyle="#8b7d70";g.fillRect(0,0,W,W);
+  for(var i=0;i<5000;i++){var v=r();g.fillStyle=v<0.5?"rgba(60,48,40,0.5)":(v<0.85?"rgba(170,150,128,0.45)":"rgba(40,32,28,0.6)");g.fillRect(r()*W,r()*W,1+r()*2,1+r()*1.5);}
+  return c;
+}
+function soilCanvas(){
+  var W=512,c=cv(W,W),g=c.getContext("2d"),r=rng(21),pal=["#2a1e16","#4a3627","#5a4533","#1d1510","#6b5a47","#3a2a1f"];
+  g.fillStyle="#35271d";g.fillRect(0,0,W,W);
+  for(var i=0;i<14000;i++){g.fillStyle=pal[(r()*pal.length)|0];var s=0.6+r()*2.8;g.beginPath();g.arc(r()*W,r()*W,s,0,6.283);g.fill();}
+  for(var j=0;j<90;j++){g.fillStyle="rgba(120,110,100,0.55)";g.beginPath();g.ellipse(r()*W,r()*W,2+r()*4,1.5+r()*3,r()*3,0,6.283);g.fill();}
+  return c;
+}
+function lawnCanvas(){
+  var W=1024,c=cv(W,W),g=c.getContext("2d"),r=rng(31);
+  var pal=["#4a5733","#5c6a3e","#6c7847","#7b8452","#55623a","#8a8c5c","#646f40","#737a4c"];
+  g.fillStyle="#58663c";g.fillRect(0,0,W,W);
+  for(var i=0;i<70;i++){var x=r()*W,y=r()*W,rad=40+r()*120,dark=r()<0.5;
+    for(var ox=-1;ox<=1;ox++){for(var oy=-1;oy<=1;oy++){var px=x+ox*W,py=y+oy*W;if(px+rad<0||px-rad>W||py+rad<0||py-rad>W)continue;
+      var gd=g.createRadialGradient(px,py,0,px,py,rad);gd.addColorStop(0,dark?"rgba(40,52,28,0.2)":"rgba(130,128,80,0.2)");gd.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gd;g.fillRect(px-rad,py-rad,rad*2,rad*2);}}}
+  g.lineCap="round";
+  for(var k=0;k<52000;k++){
+    var bx=r()*W,by=r()*W,a=-Math.PI/2+(r()-0.5)*1.1,l=3+r()*9;
+    g.strokeStyle=pal[(r()*pal.length)|0];g.lineWidth=0.7+r()*0.9;
+    var ex=bx+Math.cos(a)*l,ey=by+Math.sin(a)*l;
+    for(var ox=-1;ox<=1;ox++){for(var oy=-1;oy<=1;oy++){
+      if((ox&&(bx>12&&bx<W-12))||(oy&&(by>12&&by<W-12)))continue;
+      g.beginPath();g.moveTo(bx+ox*W,by+oy*W);g.lineTo(ex+ox*W,ey+oy*W);g.stroke();}}
+  }
+  return c;
+}
+function leafCanvas(narrow){
+  var W=narrow?64:256,H=512,c=cv(W,H),g=c.getContext("2d"),cx=W/2;
+  g.beginPath();
+  if(narrow){g.moveTo(cx-W*0.42,H);g.quadraticCurveTo(cx-W*0.3,H*0.4,cx,4);g.quadraticCurveTo(cx+W*0.3,H*0.4,cx+W*0.42,H);}
+  else{g.moveTo(cx,H-6);g.bezierCurveTo(W*0.02,H*0.72,W*0.08,H*0.22,cx,6);g.bezierCurveTo(W*0.92,H*0.22,W*0.98,H*0.72,cx,H-6);}
+  g.closePath();
+  var gr=g.createLinearGradient(0,0,W,0);gr.addColorStop(0,"#bdbdbd");gr.addColorStop(0.5,"#f2f2f2");gr.addColorStop(1,"#b5b5b5");
+  g.fillStyle=gr;g.fill();
+  g.save();g.clip();
+  g.strokeStyle="rgba(255,255,255,0.55)";g.lineWidth=narrow?2:5;g.beginPath();g.moveTo(cx,H);g.lineTo(cx,10);g.stroke();
+  if(!narrow){g.strokeStyle="rgba(0,0,0,0.13)";g.lineWidth=2;
+    for(var i=1;i<9;i++){var y=H-i*52;g.beginPath();g.moveTo(cx,y);g.quadraticCurveTo(cx-50,y-30,cx-110,y-70);g.moveTo(cx,y);g.quadraticCurveTo(cx+50,y-30,cx+110,y-70);g.stroke();}}
+  g.restore();
+  return c;
+}
+function rodCanvas(){
+  var W=256,c=cv(W,W),g=c.getContext("2d"),r=rng(41);
+  g.fillStyle="#d8d8d8";g.fillRect(0,0,W,W);
+  for(var i=0;i<900;i++){var x=r()*W,v=Math.round(170+r()*80);g.strokeStyle="rgba("+v+","+v+","+v+",0.35)";g.lineWidth=0.5+r();g.beginPath();g.moveTo(x,0);g.lineTo(x,W);g.stroke();}
+  g.strokeStyle="rgba(110,100,80,0.16)";g.lineWidth=3;
+  for(var k=-8;k<16;k++){g.beginPath();g.moveTo(k*32,0);g.lineTo(k*32+W,W);g.stroke();}
+  return c;
+}
+function spangleCanvas(){
+  var W=256,c=cv(W,W),g=c.getContext("2d"),r=rng(51);
+  g.fillStyle="#9a9a9a";g.fillRect(0,0,W,W);
+  for(var i=0;i<260;i++){var v=Math.round(110+r()*120);g.fillStyle="rgba("+v+","+v+","+v+",0.5)";g.beginPath();
+    var x=r()*W,y=r()*W,n=5+(r()*3|0);for(var k=0;k<n;k++){var a=k/n*6.283,rr=6+r()*16;g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr);}g.fill();}
+  return c;
+}
+function ribCanvas(){
+  var c=cv(16,4),g=c.getContext("2d");g.fillStyle="#b8b8b8";g.fillRect(0,0,16,4);g.fillStyle="#ffffff";g.fillRect(0,0,2,4);g.fillStyle="#d2d2d2";g.fillRect(2,0,1,4);
+  return c;
+}
+function blobCanvas(){
+  var W=128,c=cv(W,W),g=c.getContext("2d"),gd=g.createRadialGradient(W/2,W/2,0,W/2,W/2,W/2);
+  g.fillStyle="#000";g.fillRect(0,0,W,W);
+  gd.addColorStop(0,"rgb(215,215,215)");gd.addColorStop(0.45,"rgb(125,125,125)");gd.addColorStop(1,"rgb(0,0,0)");
+  g.fillStyle=gd;g.fillRect(0,0,W,W);return c;
+}
+
+var CAN={wood:woodCanvas(),cut:cutCanvas(),soil:soilCanvas(),lawn:lawnCanvas(),leaf:leafCanvas(false),blade:leafCanvas(true),rod:rodCanvas(),spangle:spangleCanvas(),rib:ribCanvas(),blob:blobCanvas()};
+var TX={
+  woodC:tx(CAN.wood,true),woodL:tx(CAN.wood,false),
+  cutC:tx(CAN.cut,true),
+  soilC:tx(CAN.soil,true,3,3),soilL:tx(CAN.soil,false,3,3),
+  lawnC:tx(CAN.lawn,true),lawnL:tx(CAN.lawn,false),
+  leaf:tx(CAN.leaf,true),blade:tx(CAN.blade,true),
+  rodC:tx(CAN.rod,true,1,10),rodL:tx(CAN.rod,false,1,10),
+  spangle:tx(CAN.spangle,false,2,2),
+  ribPC:tx(CAN.rib,true,200,1),ribPCL:tx(CAN.rib,false,200,1),
+  ribSh:tx(CAN.rib,true,110,1),ribShL:tx(CAN.rib,false,110,1),
+  blob:tx(CAN.blob,false)
+};
+TX.blob.wrapS=TX.blob.wrapT=T.ClampToEdgeWrapping;
+
+function stdM(o){return new T.MeshStandardMaterial(o);}
+function phys(o){return new T.MeshPhysicalMaterial(o);}
+function woodM(hex){return stdM({color:lin(hex),map:TX.woodC,roughness:0.92,roughnessMap:TX.woodL,bumpMap:TX.woodL,bumpScale:0.0025,metalness:0});}
+function leafM(hex,t){var m=stdM({color:lin(hex),map:t||TX.leaf,alphaTest:0.5,side:T.DoubleSide,roughness:0.62,emissive:lin("#0a1405")});
+  m.userData.depth=new T.MeshDepthMaterial({depthPacking:T.RGBADepthPacking,map:t||TX.leaf,alphaTest:0.5});return m;}
+var SHEETS={milk:["#ece9e1",0.28],ivory:["#e0d1ae",0.22],green:["#7da463",0.2]};
+var M={
+  lag:woodM("#2c2622"),
+  bush:woodM("#3d332b"),
+  board:woodM("#352d28"),
+  cut:stdM({color:lin("#ffffff"),map:TX.cutC,roughness:0.95}),
+  rod:stdM({color:lin("#d9cda9"),map:TX.rodC,roughness:0.58,bumpMap:TX.rodL,bumpScale:0.0015}),
+  rodEnd:stdM({color:lin("#e3d8b8"),roughness:0.75}),
+  steel:stdM({color:lin("#cfd3d6"),metalness:1,roughness:0.4,roughnessMap:TX.spangle}),
+  steelDark:stdM({color:lin("#6f7478"),metalness:1,roughness:0.5}),
+  alu:stdM({color:lin("#b9bec2"),metalness:1,roughness:0.32}),
+  pc:phys({color:lin("#f4f8f8"),map:TX.ribPC,bumpMap:TX.ribPCL,bumpScale:0.0012,roughness:0.16,metalness:0,transmission:0.72,reflectivity:0.56,transparent:true,side:T.DoubleSide,depthWrite:false,envMapIntensity:1.2}),
+  pcMacro:phys({color:lin("#f6f9f9"),roughness:0.12,metalness:0,transmission:0.78,reflectivity:0.56,transparent:true,side:T.DoubleSide,depthWrite:false,envMapIntensity:1.3}),
+  sheet:phys({color:lin(SHEETS.milk[0]),map:TX.ribSh,bumpMap:TX.ribShL,bumpScale:0.001,roughness:0.5,metalness:0,transmission:SHEETS.milk[1],reflectivity:0.5,transparent:true,side:T.DoubleSide,depthWrite:false}),
+  sheetMacro:phys({color:lin("#e0d1ae"),roughness:0.45,metalness:0,transmission:0.3,reflectivity:0.5,transparent:true,side:T.DoubleSide,depthWrite:false}),
+  pvcMacro:phys({color:lin("#e6efef"),roughness:0.06,metalness:0,transmission:0.8,reflectivity:0.7,transparent:true,side:T.DoubleSide,depthWrite:false,envMapIntensity:2}),
+  pvc:phys({color:lin("#f3f7f7"),roughness:0.04,metalness:0,transmission:0.94,reflectivity:0.62,transparent:true,side:T.DoubleSide,depthWrite:false,envMapIntensity:1.6}),
+  hem:stdM({color:lin("#34373a"),roughness:0.55}),
+  soil:stdM({color:lin("#ffffff"),map:TX.soilC,roughness:1,bumpMap:TX.soilL,bumpScale:0.004}),
+  lawn:stdM({color:lin("#ffffff"),map:TX.lawnC,roughness:1,bumpMap:TX.lawnL,bumpScale:0.003}),
+  stem:stdM({color:lin("#4b6630"),roughness:0.7}),
+  bud:stdM({color:lin("#5b4322"),roughness:0.8}),
+  binA:stdM({color:lin("#3c5946"),roughness:0.55}),
+  binB:stdM({color:lin("#4f5961"),roughness:0.55}),
+  binLid:stdM({color:lin("#2b2f32"),roughness:0.5}),
+  blob:new T.MeshBasicMaterial({color:0x000000,alphaMap:TX.blob,transparent:true,opacity:0.5,depthWrite:false})
+};
+M.leaves=[leafM("#4a7031"),leafM("#5d853a"),leafM("#3e6129"),leafM("#6b8c44")];
+M.lettuce=[leafM("#7fa04c"),leafM("#93b35c"),leafM("#6d9142")];
+M.blades=[leafM("#6f8a45",TX.blade),leafM("#8a9a58",TX.blade),leafM("#5c7a3a",TX.blade)];
+M.petals=[leafM("#c79745"),leafM("#b3695a")];
+
+/* UV: волокна (координата u) идут вдоль длинной оси детали */
+function remapUV(g,long,us,vs,off){
+  var P=g.attributes.position,N=g.attributes.normal,U=g.attributes.uv,li={x:0,y:1,z:2}[long];
+  for(var i=0;i<P.count;i++){
+    var p=[P.getX(i),P.getY(i),P.getZ(i)],n=[Math.abs(N.getX(i)),Math.abs(N.getY(i)),Math.abs(N.getZ(i))];
+    var ni=n[0]>=n[1]&&n[0]>=n[2]?0:(n[1]>=n[2]?1:2),u,v;
+    if(ni===li){var o=[0,1,2].filter(function(k){return k!==li;});u=p[o[0]];v=p[o[1]];}
+    else{u=p[li];v=p[3-li-ni];}
+    U.setXY(i,(u+off)*us,(v+off)*vs);
+  }
+  U.needsUpdate=true;return g;
+}
+function boxG(long){return remapUV(new T.BoxGeometry(1,1,1),long,1,1,0.5);}
+var G={bx:boxG("x"),by:boxG("y"),bz:boxG("z"),
+  cyl:new T.CylinderGeometry(0.5,0.5,1,20),hex:new T.CylinderGeometry(0.5,0.5,1,6),sph:new T.SphereGeometry(0.5,16,12),
+  plane:new T.PlaneGeometry(1,1)};
+G.leaf=(function(){var g=new T.PlaneGeometry(1,1,1,4);g.translate(0,0.5,0);var P=g.attributes.position;
+  for(var i=0;i<P.count;i++){var y=P.getY(i),x=P.getX(i);P.setZ(i,0.16*y*y+0.08*x*x);}g.computeVertexNormals();return g;})();
+
+/* полый профиль лаги по карточке: 50×35, 3 камеры, канавка сверху, две направляющие снизу (мм) */
+function profileShape(){
+  var s=new T.Shape(),pts=[[-25,3],[-19,3],[-19,0],[-13,0],[-13,3],[13,3],[13,0],[19,0],[19,3],[25,3],[25,35],[5,35],[5,31],[-5,31],[-5,35],[-25,35]];
+  s.moveTo(pts[0][0],pts[0][1]);for(var i=1;i<pts.length;i++){s.lineTo(pts[i][0],pts[i][1]);}s.lineTo(pts[0][0],pts[0][1]);
+  [[-21,7,-8.8,29],[-5.2,7,5.2,27],[8.8,7,21,29]].forEach(function(h){
+    var p=new T.Path(),r=1.2;p.moveTo(h[0]+r,h[1]);p.lineTo(h[2]-r,h[1]);p.quadraticCurveTo(h[2],h[1],h[2],h[1]+r);
+    p.lineTo(h[2],h[3]-r);p.quadraticCurveTo(h[2],h[3],h[2]-r,h[3]);p.lineTo(h[0]+r,h[3]);p.quadraticCurveTo(h[0],h[3],h[0],h[3]-r);
+    p.lineTo(h[0],h[1]+r);p.quadraticCurveTo(h[0],h[1],h[0]+r,h[1]);s.holes.push(p);});
+  return s;
+}
+function profileGeo(L){
+  var g=new T.ExtrudeGeometry(profileShape(),{depth:L,bevelEnabled:true,bevelThickness:0.7,bevelSize:0.45,bevelSegments:2,curveSegments:3});
+  return remapUV(g,"z",1/Math.max(L,120),1/50,0);
+}
+/* сотовый лист 4 мм: две обшивки + рёбра через 6 мм (w — поперёк рёбер, len — вдоль) */
+function twinWallGeo(w,len){
+  var list=[],mk=function(sx,sy,sz,x,y,z){var m=new T.Mesh(G.bx);m.scale.set(sx,sy,sz);m.position.set(x,y,z);list.push(m);};
+  mk(w,0.5,len,0,1.75,0);mk(w,0.5,len,0,-1.75,0);
+  for(var x=-w/2+1;x<=w/2-0.5;x+=6){mk(0.45,3,len,x,0,0);}
+  return mergeMeshes(list);
+}
+/* слияние однотипных деталей в одну геометрию: меньше вызовов отрисовки */
+function mergeMeshes(meshes){
+  var nv=0,ni=0;
+  meshes.forEach(function(m){m.updateMatrix();var g=m.geometry;nv+=g.attributes.position.count;ni+=g.index?g.index.count:g.attributes.position.count;});
+  var pos=new Float32Array(nv*3),nor=new Float32Array(nv*3),uv=new Float32Array(nv*2),idx=new Uint32Array(ni),vo=0,io=0,v=new T.Vector3(),nm=new T.Matrix3();
+  meshes.forEach(function(m){
+    var g=m.geometry,P=g.attributes.position,N=g.attributes.normal,U=g.attributes.uv;nm.getNormalMatrix(m.matrix);
+    for(var i=0;i<P.count;i++){
+      v.fromBufferAttribute(P,i).applyMatrix4(m.matrix);pos[(vo+i)*3]=v.x;pos[(vo+i)*3+1]=v.y;pos[(vo+i)*3+2]=v.z;
+      v.fromBufferAttribute(N,i).applyMatrix3(nm).normalize();nor[(vo+i)*3]=v.x;nor[(vo+i)*3+1]=v.y;nor[(vo+i)*3+2]=v.z;
+      if(U){uv[(vo+i)*2]=U.getX(i);uv[(vo+i)*2+1]=U.getY(i);}
+    }
+    if(g.index){for(var j=0;j<g.index.count;j++){idx[io++]=g.index.getX(j)+vo;}}
+    else{for(var k=0;k<P.count;k++){idx[io++]=vo+k;}}
+    vo+=P.count;
+  });
+  var out=new T.BufferGeometry();
+  out.setAttribute("position",new T.BufferAttribute(pos,3));out.setAttribute("normal",new T.BufferAttribute(nor,3));out.setAttribute("uv",new T.BufferAttribute(uv,2));
+  out.setIndex(new T.BufferAttribute(idx,1));out.computeBoundingSphere();out.computeBoundingBox();
+  return out;
+}
+function mk(geo,mat,sx,sy,sz,x,y,z){var m=new T.Mesh(geo,mat);m.scale.set(sx*MM,sy*MM,sz*MM);m.position.set(x*MM,y*MM,z*MM);
+  if(!mat.transparent){m.castShadow=true;m.receiveShadow=true;}return m;}
+function bgeo(w,h,d){return (w>=h&&w>=d)?G.bx:(h>=d?G.by:G.bz);}
+function bx(w,h,d,mat,x,y,z){return mk(bgeo(w,h,d),mat,w,h,d,x,y,z);}
+function cy(dia,len,mat,x,y,z,axis,geo){var m=mk(geo||G.cyl,mat,dia,len,dia,x,y,z);
+  if(axis==="x"){m.rotation.z=Math.PI/2;}else if(axis==="z"){m.rotation.x=Math.PI/2;}return m;}
+function grp(x,y,z){var g=new T.Group();g.position.set(x*MM,y*MM,z*MM);return g;}
+
+/* небо и окружение для отражений */
+var SUN_DIR=new T.Vector3(-0.5,0.75,0.45).normalize();
+function skyMaterial(top,hor,bot,sunK){
+  return new T.ShaderMaterial({side:T.BackSide,depthWrite:false,fog:false,
+    uniforms:{top:{value:top},hor:{value:hor},bot:{value:bot},sunDir:{value:SUN_DIR},sunK:{value:sunK}},
+    vertexShader:"varying vec3 vD;void main(){vD=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}",
+    fragmentShader:"uniform vec3 top;uniform vec3 hor;uniform vec3 bot;uniform vec3 sunDir;uniform float sunK;varying vec3 vD;"+
+      "void main(){vec3 d=normalize(vD);float h=d.y;vec3 c=h>0.0?mix(hor,top,pow(h,0.55)):mix(hor,bot,pow(-h,0.3));"+
+      "float s=max(dot(d,sunDir),0.0);c+=vec3(1.0,0.95,0.86)*(pow(s,500.0)*sunK+pow(s,10.0)*0.10);gl_FragColor=linearToOutputTexel(vec4(c,1.0));}"});
+}
+function outdoorEnv(r){
+  var pm=new T.PMREMGenerator(r),es=new T.Scene();
+  es.add(new T.Mesh(new T.SphereGeometry(10,32,16),skyMaterial(new T.Color(0.42,0.6,0.95),new T.Color(0.95,0.97,1.0),new T.Color(0.12,0.16,0.08),0)));
+  var sun=new T.Mesh(new T.SphereGeometry(0.6,16,8),new T.MeshBasicMaterial({color:new T.Color(40,36,30)}));
+  sun.position.copy(SUN_DIR).multiplyScalar(9);es.add(sun);
+  var t=pm.fromScene(es,0.02).texture;pm.dispose();
+  es.traverse(function(o){if(o.geometry){o.geometry.dispose();}});
+  return t;
+}
+function studioEnv(r){
+  var pm=new T.PMREMGenerator(r),t;
+  if(T.RoomEnvironment){var room=new T.RoomEnvironment();t=pm.fromScene(room,0.04).texture;room.traverse(function(o){if(o.geometry){o.geometry.dispose();}});}
+  else{pm.dispose();return outdoorEnv(r);}
+  pm.dispose();return t;
+}
+
+/* =====================================================================
+   Сцена изделий
+   ===================================================================== */
+setupRenderer(renderer);
+renderer.domElement.setAttribute("role","img");
+stageEl.insertBefore(renderer.domElement,stageEl.firstChild);
+var HOR="#e2e8e8";
+var scene=new T.Scene();
+scene.environment=outdoorEnv(renderer);
+scene.fog=new T.Fog(new T.Color(HOR),10,40);
+var sky=new T.Mesh(new T.SphereGeometry(1,40,20),skyMaterial(lin("#6f98c6"),lin(HOR),lin("#cdd3c6"),0.9));
+sky.renderOrder=-1;scene.add(sky);
+var camera=new T.PerspectiveCamera(36,1,0.05,200);
+var hemi=new T.HemisphereLight(lin("#dce9ff"),lin("#56663a"),0.35);scene.add(hemi);
+var sun=new T.DirectionalLight(lin("#fff0dc"),2.7);
+sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-0.0003;sun.shadow.normalBias=0.015;
+scene.add(sun);scene.add(sun.target);
+var lawnGeo=new T.PlaneGeometry(240,240,120,120);
+(function(){var P=lawnGeo.attributes.position,col=new Float32Array(P.count*3);
+  for(var i=0;i<P.count;i++){var x=P.getX(i),y=P.getY(i);
+    var n=0.5+0.22*Math.sin(x*0.9+Math.sin(y*0.7)*1.7)+0.16*Math.sin(y*1.3+x*0.4)+0.12*Math.sin(x*2.9-y*2.3);
+    var k=0.8+0.28*Math.max(0,Math.min(1,n));col[i*3]=k*1.03;col[i*3+1]=k;col[i*3+2]=k*0.93;}
+  lawnGeo.setAttribute("color",new T.BufferAttribute(col,3));})();
+M.lawn.vertexColors=true;
+var lawn=new T.Mesh(lawnGeo,M.lawn);
+lawn.rotation.x=-Math.PI/2;lawn.receiveShadow=true;
+TX.lawnC.repeat.set(170,170);TX.lawnL.repeat.set(170,170);
+scene.add(lawn);
+var root=new T.Group();scene.add(root);
+
+var controls=new T.OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;controls.dampingFactor=0.08;controls.maxPolarAngle=86*DEG;
+controls.autoRotate=!reduce;controls.autoRotateSpeed=0.8;controls.screenSpacePanning=true;
+
+var S={BASE:1,WALL:2,ROD:3,IN:4,TOP:5,POST:6,PROG:7,GABLE:8,ROOF:9,CURT:10,PLANT:11};
+var parts=[],own=[],cur=null;
+/* деталь сцены: stage — очередь появления при сборке, sub — порядок внутри очереди */
+function put(obj,stage,sub){root.add(obj);parts.push({o:obj,st:stage,k:stage*1000+(sub!=null?900+sub:Math.round(obj.position.y*1000/60)),y:obj.position.y});return obj;}
+/* мягкая контактная тень под изделием */
+function contact(cx,cz,w,d){var m=new T.Mesh(G.plane,M.blob);m.rotation.x=-Math.PI/2;m.scale.set(w*1.35*MM,d*1.35*MM,1);m.position.set(cx*MM,0.004,cz*MM);m.renderOrder=1;root.add(m);return m;}
+
+/* стенки из брусков 50×30: ряды через ~120 мм, втулки в углах, листы в пазах, стержни через углы */
+function walls(o){
+  var y0=o.y0||0,st=o.st||S.WALL,sides=o.sides||{f:1,b:1,l:1,r:1};
+  var n=Math.max(1,Math.round((o.h-30)/120)),p=(o.h-30)/n;
+  var hx=o.w/2,hz=o.d/2,lx=o.w-100,lz=o.d-100;
+  var cols=[[-1,-1],[1,-1],[1,1],[-1,1]].map(function(c){return [o.cx+c[0]*(hx-25),o.cz+c[1]*(hz-25)];});
+  if(o.splitX){cols.push([o.cx,o.cz-hz+25],[o.cx,o.cz+hz-25]);}
+  if(o.flat){cols=[[o.cx-hx+25,o.cz],[o.cx+hx-25,o.cz]];}
+  function alongX(z,y,h,mat,thick){
+    if(o.splitX){var sl=(o.w-150)/2;put(bx(sl,h,thick,mat,o.cx-(sl/2+25),y,z),st);put(bx(sl,h,thick,mat,o.cx+(sl/2+25),y,z),st);}
+    else{put(bx(lx,h,thick,mat,o.cx,y,z),st);}
+  }
+  for(var i=0;i<=n;i++){
+    var yc=y0+i*p+15,last=(i===n);
+    cols.forEach(function(c){put(bx(50,30,50,M.bush,c[0],yc,c[1]),st);});
+    [["f",1],["b",-1]].forEach(function(s){var v=sides[s[0]];if(!v||(v==="top"&&!last))return;alongX(o.cz+s[1]*(hz-25),yc,30,M.lag,50);});
+    [["l",-1],["r",1]].forEach(function(s){if(!sides[s[0]])return;put(bx(50,30,lz,M.lag,o.cx+s[1]*(hx-25),yc,o.cz),st);});
+    if(!last&&o.sheet!==false){
+      var sh=p-30,ys=y0+i*p+30+sh/2;
+      [["f",1],["b",-1]].forEach(function(s){if(sides[s[0]]!==1)return;alongX(o.cz+s[1]*(hz-25),ys,sh+12,M.sheet,4);});
+      [["l",-1],["r",1]].forEach(function(s){if(!sides[s[0]])return;put(bx(4,sh+12,lz,M.sheet,o.cx+s[1]*(hx-25),ys,o.cz),st);});
+    }
+  }
+  var below=o.below||0,up=o.cap?12:0,len=o.h+below+up;
+  cols.forEach(function(c){
+    put(cy(12,len,M.rod,c[0],y0-below+len/2,c[1]),S.ROD);
+    if(o.cap){put(cy(19,10,M.steel,c[0],y0+o.h+5,c[1],null,G.hex),S.ROD);}
+  });
+  if(o.splitX&&o.tie){put(bx(50,30,o.d-100,M.lag,o.cx,y0+o.h-15,o.cz),S.ROD);}
+  if(!o.noContact&&!y0){contact(o.cx,o.cz,o.w,Math.max(o.d,120));}
+}
+function deck(x,y,z,lx,lz,t){
+  var g=grp(x,y,z),nb=Math.max(2,Math.round((lz+6)/146)),bw=(lz-(nb-1)*6)/nb;
+  for(var k=0;k<nb;k++){g.add(bx(lx,t,bw,M.board,0,0,-lz/2+bw/2+k*(bw+6)));}
+  return g;
+}
+/* стойка из трёх брусков на ребро вплотную, сечение 30×150 */
+function post3(x,z,y0,h,along,st,sub){
+  var g=grp(x,y0+h/2,z);
+  for(var k=-1;k<=1;k++){g.add(along==="z"?bx(30,h,49,M.lag,0,0,k*50):bx(49,h,30,M.lag,k*50,0,0));}
+  if(!y0||y0<20){contact(x,z,along==="z"?60:180,along==="z"?180:60);}
+  return put(g,st,sub);
+}
+/* створка: рама из лаги + сотовый поликарбонат; s — в какую сторону по z от петли */
+function sash(g,cx,len,U,s,y){
+  y=y||0;
+  g.add(bx(len,30,50,M.lag,cx,y,s*25));
+  g.add(bx(len,30,50,M.lag,cx,y,s*(U-25)));
+  g.add(bx(50,30,U-100,M.lag,cx-(len/2-25),y,s*U/2));
+  g.add(bx(50,30,U-100,M.lag,cx+(len/2-25),y,s*U/2));
+  g.add(bx(len-100,4,U-100+12,M.pc,cx,y,s*U/2));
+}
+function stool(x,z,rotY){
+  walls({cx:x,cz:z,w:397,d:397,h:425});
+  var piv=grp(x,425,z);piv.rotation.y=rotY||0;
+  var hinge=new T.Group();hinge.position.set(0,0,-198.5*MM);piv.add(hinge);
+  hinge.add(deck(0,12.5,198.5,397,397,25));
+  put(piv,S.TOP);cur.stoolLids.push(hinge);
+  return piv;
+}
+function tumba(cx,cz,w,d,h,shelves,shelfD){
+  walls({cx:cx,cz:cz,w:w,d:d,h:h});
+  (shelves||[]).forEach(function(fy){put(bx(w-100,18,shelfD||(d-100),M.board,cx,fy,cz),S.IN);});
+}
+function soil(cx,cz,w,d,top){put(bx(w-104,top-10,d-104,M.soil,cx,10+(top-10)/2,cz),S.IN);}
+
+/* растения: листья-плоскости с альфа-картой, собраны в одну геометрию на материал */
+function plant(x,y,z,kind,k){
+  k=k||1;
+  var g=grp(x,y,z),items=[],r=rng(Math.round(x*7+z*13+y*3)+kind.length*101),up=new T.Vector3(0,1,0);
+  function leaf(mat,w,h,px,py,pz,tilt,yaw,roll){var m=new T.Mesh(G.leaf,mat);m.scale.set(w*MM*k,h*MM*k,w*MM*k);m.position.set(px*MM*k,py*MM*k,pz*MM*k);m.rotation.set(tilt,yaw,roll||0,"YXZ");items.push(m);}
+  function stemTo(mat,dia,base,dir,len){var m=new T.Mesh(G.cyl,mat);m.scale.set(dia*MM*k,len*MM*k,dia*MM*k);
+    m.position.set((base.x+dir.x*len/2)*MM*k,(base.y+dir.y*len/2)*MM*k,(base.z+dir.z*len/2)*MM*k);m.quaternion.setFromUnitVectors(up,dir);items.push(m);}
+  if(kind==="flowers"){
+    for(var i=0;i<8;i++){
+      var a=i*2.39996+r(),t=0.12+r()*0.3,h=160+r()*120,d=new T.Vector3(Math.sin(t)*Math.cos(a),Math.cos(t),Math.sin(t)*Math.sin(a)),b=new T.Vector3(Math.cos(a)*15,0,Math.sin(a)*15);
+      stemTo(M.stem,5,b,d,h);
+      for(var q=0;q<3;q++){var ly=h*(0.2+q*0.2);leaf(M.leaves[(i+q)%4],34,70,b.x+d.x*ly,d.y*ly,b.z+d.z*ly,0.9+r()*0.4,a+(q%2?1.3:-1.3)+r()*0.4);}
+      var top=new T.Vector3(b.x+d.x*h,d.y*h,b.z+d.z*h),pm=M.petals[i%2];
+      for(var pp=0;pp<7;pp++){leaf(pm,22,34,top.x,top.y,top.z,1.25,pp/7*6.283+r()*0.2);}
+      var c=new T.Mesh(G.sph,M.bud);c.scale.set(14*MM*k,9*MM*k,14*MM*k);c.position.set(top.x*MM*k,(top.y+3)*MM*k,top.z*MM*k);items.push(c);
+    }
+    for(var j=0;j<10;j++){leaf(M.leaves[j%4],40,90,Math.cos(j)*30,0,Math.sin(j)*30,1.1+r()*0.3,j*0.63+r());}
+  }else if(kind==="shrub"){
+    for(var s2=0;s2<4;s2++){stemTo(M.stem,10,new T.Vector3(0,0,0),new T.Vector3((r()-0.5)*0.5,1,(r()-0.5)*0.5).normalize(),200);}
+    for(var l=0;l<300;l++){
+      var th=r()*6.283,ph=Math.acos(2*r()-1),rad=120+r()*90;
+      leaf(M.leaves[l%4],20,32,Math.sin(ph)*Math.cos(th)*rad,280+Math.cos(ph)*rad*0.85,Math.sin(ph)*Math.sin(th)*rad,r()*3.1,r()*6.283,r()*3.1);
+    }
+  }else if(kind==="grass"){
+    for(var gi=0;gi<46;gi++){var ga=r()*6.283;leaf(M.blades[gi%3],13,240+r()*170,Math.cos(ga)*20*r(),0,Math.sin(ga)*20*r(),0.08+r()*0.45,ga);}
+  }else if(kind==="lettuce"){
+    for(var li=0;li<16;li++){var la=li*2.39996,inner=li>9;leaf(M.lettuce[li%3],inner?70:95,inner?95:135,0,4,0,inner?0.35+r()*0.3:0.95+r()*0.35,la);}
+  }
+  var by={};
+  items.forEach(function(m){var id=m.material.uuid;(by[id]=by[id]||{m:m.material,l:[]}).l.push(m);});
+  Object.keys(by).forEach(function(id){
+    var geo=mergeMeshes(by[id].l);own.push(geo);
+    var mesh=new T.Mesh(geo,by[id].m);mesh.castShadow=true;mesh.receiveShadow=true;
+    if(by[id].m.userData.depth){mesh.customDepthMaterial=by[id].m.userData.depth;}
+    g.add(mesh);
+  });
+  put(g,S.PLANT);cur.plants.push(g);
+  return g;
+}
+function kashpo(x,z,h,kind){
+  walls({cx:x,cz:z,w:400,d:400,h:h,cap:true});
+  soil(x,z,400,400,h-45);
+  plant(x,h-45,z,kind||"flowers",1);
+}
+
+/* рулонная штора: труба Ø64, полотно ПВХ с лёгкими волнами; alongZ — торцевая */
+function curtainGeo(len,h){
+  var seg=Math.max(10,Math.round(len/45)),g=new T.PlaneGeometry(len*MM,h*MM,seg,6),P=g.attributes.position;
+  for(var i=0;i<P.count;i++){var x=P.getX(i);P.setZ(i,Math.sin(x/0.24*Math.PI*2)*0.011+Math.sin(x/0.61*Math.PI*2)*0.006);}
+  g.translate(0,-h*MM/2,0);g.computeVertexNormals();own.push(g);return g;
+}
+function curtain(x,y,z,len,h,alongZ){
+  var g=grp(x,y,z);
+  g.add(cy(64,len,M.alu,0,0,0,alongZ?"z":"x"));
+  var cm=new T.Mesh(curtainGeo(len,h),M.pvc);cm.position.y=-34*MM;if(alongZ){cm.rotation.y=Math.PI/2;}g.add(cm);
+  var bar=cy(22,len,M.hem,0,-45-h,0,alongZ?"z":"x");g.add(bar);
+  put(g,S.CURT);cur.curtains.push({m:cm,bar:bar,h:h});
+}
+function setCurtains(v){
+  cur.cv=v;
+  cur.curtains.forEach(function(c){var s=Math.max(0.012,v);c.m.scale.y=s;c.m.visible=v>0.02;c.bar.position.y=(-45-c.h*s)*MM;});
+}
+
+/* навес: стойки, прогон в две нитки, фронтоны, двускатная крыша 18°, шторы */
+function canopy(o){
+  var L=o.L,ridge=o.postTop+(o.progZ+15)*TAN+16;
+  o.posts.forEach(function(p,i){
+    post3(p[0],p[1],o.postY0||0,o.postTop-(o.postY0||0),o.along,S.POST,i);
+    if(o.anchors){put(cy(130,8,M.steel,p[0],4,p[1]),S.BASE);}
+  });
+  var yLo=o.progY[0]+25,yHi=o.progY[1]-25;
+  [-1,1].forEach(function(s){
+    put(bx(L,50,30,M.lag,0,yLo,s*o.progZ),S.PROG,0);
+    put(bx(L,50,30,M.lag,0,yHi,s*o.progZ),S.PROG,1);
+  });
+  o.posts.forEach(function(p){
+    var s=p[1]>0?1:-1,zc=(p[1]+s*o.progZ)/2+s*10,ln=Math.abs(o.progZ-p[1])+60;
+    [yLo,yHi].forEach(function(y){put(cy(12,ln,M.steel,p[0],y,zc,"z"),S.PROG,1);});
+  });
+  var hw=o.progZ+15;
+  o.gableX.forEach(function(gx){
+    put(bx(30,50,2*(o.progZ-15),M.lag,gx,yHi,0),S.GABLE);
+    var sh=new T.Shape();sh.moveTo(-hw,0);sh.lineTo(hw,0);sh.lineTo(0,hw*TAN);sh.lineTo(-hw,0);
+    var geo=new T.ShapeGeometry(sh),U=geo.attributes.uv;for(var i=0;i<U.count;i++){U.setXY(i,U.getX(i)/1000,U.getY(i)/1000);}own.push(geo);
+    var m=new T.Mesh(geo,M.pc);m.scale.set(MM,MM,MM);m.rotation.y=Math.PI/2;m.position.set(gx*MM,o.progY[1]*MM,0);
+    put(m,S.GABLE);
+    put(bx(30,hw*TAN-30,50,M.lag,gx,o.progY[1]+(hw*TAN-30)/2,0),S.GABLE);
+  });
+  var pl=L/o.nPan,idx=0;
+  for(var k=0;k<o.nPan;k++){
+    [1,-1].forEach(function(s){
+      var g=grp(-L/2+pl/2+k*pl,ridge,0);g.rotation.x=s*SLOPE;
+      sash(g,0,pl-8,1000,s);
+      put(g,S.ROOF,idx++);
+    });
+  }
+  put(bx(L,36,110,M.lag,0,ridge+30,0),S.ROOF,99);
+  var rz=o.rollZ,ry=ridge-(rz-32)*TAN-15-32-8,ch=ry-34-60-11,cl=L/o.nCurt;
+  [-1,1].forEach(function(s){for(var c=0;c<o.nCurt;c++){curtain(-L/2+cl/2+c*cl,ry,s*rz,cl-40,ch,false);}});
+  if(o.ends){o.ends.forEach(function(ex){curtain(ex,o.endY,0,o.endLen,o.endY-34-60-11,true);});}
+}
+
+/* ---- изделия ---- */
+var BUILD={
+  kashpo:function(){
+    kashpo(-620,0,330,"grass");kashpo(0,0,450,"flowers");kashpo(620,0,570,"shrub");
+    cur.act=function(){growPlants();};
+  },
+  mebel:function(){
+    buildTable(false);
+    [[-330,1],[330,1],[-330,-1],[330,-1]].forEach(function(p){stool(p[0],p[1]*758.5,p[1]>0?0:Math.PI);});
+    cur.act=function(on){cur.stoolLids.forEach(function(h){tweenRot(h,"x",on?-80*DEG:0,900);});};
+  },
+  naves:function(){
+    buildTable(true);
+    [[-330,1],[330,1],[-330,-1],[330,-1]].forEach(function(p){stool(p[0],p[1]*560,p[1]>0?0:Math.PI);});
+    var L=2404,tl=517,xs=[L/2-50-15,L/2-tl+50+15],posts=[];
+    [-1,1].forEach(function(sx){xs.forEach(function(x){[-1,1].forEach(function(sz){posts.push([sx*x,sz*385]);});});});
+    canopy({L:2600,nPan:2,nCurt:2,postTop:2265,progZ:475,progY:[2000,2250],along:"z",posts:posts,gableX:[-1285,1285],rollZ:900});
+    setCurtains(0);
+    cur.act=function(on){tweenCurt(on?1:0);};
+  },
+  besedka:function(){
+    var posts=[];
+    [-2500,-833,833,2500].forEach(function(x){[-1,1].forEach(function(s){posts.push([x,s*870]);});});
+    canopy({L:5300,nPan:4,nCurt:2,postTop:2370,progZ:900,progY:[2120,2370],along:"x",posts:posts,anchors:true,postY0:8,
+      gableX:[-2630,2630],rollZ:952,ends:[-2600,2600],endY:2284,endLen:1680});
+    [-600,-200,200,600].forEach(function(x){stool(x,620,0);stool(x,-620,Math.PI);});
+    kashpo(-2150,0,450,"flowers");kashpo(2150,0,570,"shrub");
+    setCurtains(1);
+    cur.act=function(on){tweenCurt(on?0:1);};
+  },
+  gryadki:function(){
+    walls({cx:0,cz:0,w:2000,d:1000,h:390,below:300,splitX:true,tie:true});
+    soil(0,0,2000,1000,345);
+    for(var i=0;i<4;i++){for(var j=0;j<2;j++){plant(-690+i*460,345,-200+j*400,"lettuce",1);}}
+    var piv=grp(0,390,-500);
+    [-1,1].forEach(function(k){sash(piv,k*500,996,1000,1,15);});
+    put(piv,S.ROOF);
+    [-1,1].forEach(function(k){[-300,300].forEach(function(dx){put(cy(16,70,M.steel,k*500+dx,398,-512,"x"),S.ROOF);});});
+    cur.act=function(on){tweenRot(piv,"x",on?-70*DEG:0,1100);};
+  },
+  shirmy:function(){
+    [-1,1].forEach(function(s){
+      put(bx(50,30,600,M.lag,s*515,15,0),S.BASE);
+      [-250,250].forEach(function(z){put(cy(40,6,M.steel,s*515,3,z),S.BASE);});
+      post3(s*515,0,30,1830,"z",S.POST);
+      contact(s*515,0,80,600);
+    });
+    walls({cx:0,cz:0,w:1000,d:50,h:1780,y0:40,sides:{f:1,b:0,l:0,r:0},cap:true,flat:true});
+    [70,930,1790].forEach(function(y){[-1,1].forEach(function(s){
+      put(cy(12,70,M.steel,s*515,y,0,"x"),S.POST);
+      put(cy(19,8,M.steel,s*534,y,0,"x",G.hex),S.POST);
+    });});
+  },
+  baki:function(){
+    walls({cx:0,cz:0,w:1500,d:800,h:1250,sides:{f:"top",b:1,l:1,r:1}});
+    [[-355,M.binA],[355,M.binB]].forEach(function(b){
+      put(cy(580,1000,b[1],b[0],500,0),S.IN);
+      put(cy(610,40,M.binLid,b[0],1020,0),S.IN);
+    });
+    [-1,1].forEach(function(s){
+      var piv=grp(s*700,0,375),dw=695,dh=1210,sx=-s;
+      piv.add(bx(30,dh,50,M.lag,sx*15,dh/2,0));
+      piv.add(bx(30,dh,50,M.lag,sx*(dw-15),dh/2,0));
+      var n=Math.round((dh-30)/120),p=(dh-30)/n;
+      for(var i=0;i<=n;i++){
+        piv.add(bx(dw-60,30,50,M.lag,sx*dw/2,i*p+15,0));
+        if(i<n){piv.add(bx(dw-60,p-30+12,4,M.sheet,sx*dw/2,i*p+30+(p-30)/2,0));}
+      }
+      piv.add(cy(20,160,M.steel,sx*(dw-60),dh*0.55,40));
+      put(piv,S.TOP,s>0?1:0);
+      cur.doors.push({g:piv,open:s*100*DEG});
+    });
+    var lid=grp(0,1250,-430);
+    sash(lid,0,1560,860,1,15);
+    put(lid,S.ROOF);
+    cur.act=function(on){
+      tweenRot(lid,"x",on?-75*DEG:0,1100);
+      cur.doors.forEach(function(d){tweenRot(d.g,"y",on?d.open:0,1100);});
+    };
+  },
+  bar:function(){
+    [-1,1].forEach(function(s){tumba(s*691.5,0,517,600,1070,[330,700]);});
+    put(deck(0,1085,25,1900,650,30),S.TOP);
+  }
+};
+function buildTable(withPosts){
+  var L=2404,W=1020,th=710,tl=517;
+  [-1,1].forEach(function(s){tumba(s*(L/2-tl/2),0,tl,W,th,[320],withPosts?600:null);});
+  put(bx(50,30,900,M.lag,0,15,0),S.IN);
+  [-300,300].forEach(function(z){post3(0,z,30,th-60,"z",S.IN);});
+  put(bx(50,30,900,M.lag,0,th-15,0),S.IN);
+  put(deck(0,th+15,0,L,W,30),S.TOP);
+}
+/* одинаковые детали одного ряда сливаются в одну геометрию */
+function consolidate(){
+  var buckets={},keep=[];
+  parts.forEach(function(p){
+    var o=p.o;
+    if(o.isMesh&&!Array.isArray(o.material)){var key=p.k+"|"+o.material.uuid;(buckets[key]=buckets[key]||{k:p.k,st:p.st,mat:o.material,l:[]}).l.push(o);}
+    else{keep.push(p);}
+  });
+  Object.keys(buckets).forEach(function(key){
+    var b=buckets[key];
+    if(b.l.length<2){keep.push({o:b.l[0],st:b.st,k:b.k,y:b.l[0].position.y});return;}
+    b.l.forEach(function(m){root.remove(m);});
+    var geo=mergeMeshes(b.l);own.push(geo);
+    var mm=new T.Mesh(geo,b.mat);mm.castShadow=b.l[0].castShadow;mm.receiveShadow=b.l[0].receiveShadow;
+    root.add(mm);keep.push({o:mm,st:b.st,k:b.k,y:0});
+  });
+  parts=keep;
+}
+
+/* ---- анимации ---- */
+var anim=null,tweens=[],modelR=1,lastChange=0,visible=false,running=false,shownOnce=false;
+function ease(u){return u<0.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;}
+function assemble(){
+  var keys=[];
+  parts.forEach(function(p){if(keys.indexOf(p.k)<0)keys.push(p.k);});
+  keys.sort(function(a,b){return a-b;});
+  var slot=Math.max(45,Math.min(170,3600/keys.length)),dur=reduce?1:560;
+  if(reduce){slot=Math.min(slot,70);}
+  var end=0;
+  parts.forEach(function(p){p.start=keys.indexOf(p.k)*slot;p.dur=dur;end=Math.max(end,p.start+dur);p.o.visible=false;});
+  anim={t0:now(),drop:reduce?0:Math.max(0.45,modelR*0.45),end:end};
+  kick();
+}
+function stepAssembly(t){
+  if(!anim)return;
+  var dt=t-anim.t0;
+  parts.forEach(function(p){
+    var u=(dt-p.start)/p.dur;
+    if(u<0){p.o.visible=false;return;}
+    p.o.visible=true;
+    if(u>=1){p.o.position.y=p.y;}else{var e=1-Math.pow(1-u,3);p.o.position.y=p.y+anim.drop*(1-e);}
+  });
+  if(dt>anim.end){parts.forEach(function(p){p.o.visible=true;p.o.position.y=p.y;});anim=null;}
+}
+function tween(key,from,to,dur,apply){
+  tweens=tweens.filter(function(t){return t.key!==key;});
+  if(reduce||dur<=0){apply(to);kick();return;}
+  tweens.push({key:key,f:from,t:to,d:dur,s:now(),a:apply});kick();
+}
+function tweenRot(obj,axis,to,dur){tween(obj.uuid+axis,obj.rotation[axis],to,dur,function(v){obj.rotation[axis]=v;});}
+function tweenCurt(to){tween("curt",cur.cv,to,1400,setCurtains);}
+function stepTweens(t){
+  tweens=tweens.filter(function(tw){if(t<tw.s)return true;var u=Math.min(1,(t-tw.s)/tw.d);tw.a(tw.f+(tw.t-tw.f)*ease(u));return u<1;});
+}
+function growPlants(){
+  cur.plants.forEach(function(g,i){
+    tweens=tweens.filter(function(t){return t.key!==g.uuid+"g";});
+    if(reduce){g.scale.setScalar(1);return;}
+    g.scale.setScalar(0.001);
+    tweens.push({key:g.uuid+"g",f:0.001,t:1,d:1800,s:now()+i*250,a:function(v){g.scale.setScalar(Math.max(0.001,v));}});
+  });
+  kick();
+}
+
+/* ---- сборка текущего изделия ---- */
+function clearModel(){
+  while(root.children.length){root.remove(root.children[0]);}
+  own.forEach(function(g){g.dispose();});own=[];parts=[];tweens=[];anim=null;
+}
+function buildCurrent(play){
+  clearModel();
+  cur={plants:[],curtains:[],doors:[],stoolLids:[],cv:0,state:0,act:null};
+  BUILD[curId]();
+  consolidate();
+  fit();
+  var p=prodById(curId);
+  if(p.act){btnAct.hidden=false;btnAct.textContent=p.act[0];}else{btnAct.hidden=true;}
+  renderer.domElement.setAttribute("aria-label","3D-модель: "+p.nm);
+  if(play&&shownOnce&&!reduce){assemble();}
+  kick();
+}
+function fit(){
+  scene.updateMatrixWorld(true);
+  var box=new T.Box3();
+  parts.forEach(function(p){box.expandByObject(p.o);});
+  box.min.y=Math.max(box.min.y,0);
+  var c=box.getCenter(new T.Vector3()),sz=box.getSize(new T.Vector3());
+  var r=Math.max(0.3,sz.length()/2);modelR=r;
+  var w=stageEl.clientWidth||600,h=stageEl.clientHeight||400;
+  camera.aspect=w/h;
+  var vf=camera.fov*DEG,hf=2*Math.atan(Math.tan(vf/2)*camera.aspect),f=Math.min(vf,hf);
+  var ZOOM={gryadki:1.3,baki:1.45,shirmy:1.05,bar:1.1};
+  var dist=r/Math.sin(f/2)*(ZOOM[curId]||1);
+  var dir=new T.Vector3(0.62,(curId==="gryadki"||curId==="baki")?0.75:0.5,1).normalize();
+  c.y=Math.min(c.y,sz.y*0.45+0.05);
+  controls.target.copy(c);
+  camera.position.copy(c).addScaledVector(dir,dist);
+  camera.near=Math.max(0.02,dist/60);camera.far=Math.max(dist*20,60);camera.updateProjectionMatrix();
+  controls.minDistance=r*0.5;controls.maxDistance=dist*2.2;
+  scene.fog.near=dist*2.6;scene.fog.far=dist*7.5;
+  sky.scale.setScalar(camera.far*0.85);
+  sun.position.copy(c).addScaledVector(SUN_DIR,r*3+2);
+  sun.target.position.copy(c);
+  var sc=sun.shadow.camera;sc.left=-r*1.25;sc.right=r*1.25;sc.top=r*1.25;sc.bottom=-r*1.25;sc.near=0.1;sc.far=r*6+8;sc.updateProjectionMatrix();
+  controls.update();
+}
+
+/* тема страницы меняет только рамку вокруг сцены: у сцены своё небо */
+function onTheme(){kick();}
+document.addEventListener("rynok:theme",onTheme);
+
+/* ---- цикл отрисовки: только пока сцена на экране и что-то движется ---- */
+function size(){
+  var w=stageEl.clientWidth,h=stageEl.clientHeight;
+  if(!w||!h)return;
+  renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();kick();
+}
+function frame(){
+  if(!visible){running=false;return;}
+  var t=now();
+  stepAssembly(t);stepTweens(t);
+  controls.update();
+  sky.position.copy(camera.position);
+  renderer.render(scene,camera);
+  if(controls.autoRotate||anim||tweens.length||t-lastChange<1200){requestAnimationFrame(frame);}else{running=false;}
+}
+function kick(){lastChange=now();if(visible&&!running){running=true;requestAnimationFrame(frame);}}
+controls.addEventListener("change",function(){lastChange=now();if(visible&&!running){running=true;requestAnimationFrame(frame);}});
+controls.addEventListener("start",function(){if(controls.autoRotate){controls.autoRotate=false;btnSpin.setAttribute("aria-pressed","false");}kick();});
+
+btnBuild.addEventListener("click",function(){shownOnce=true;assemble();});
+btnAct.addEventListener("click",function(){
+  var p=prodById(curId);if(!cur||!cur.act)return;
+  if(curId==="kashpo"){cur.act();return;}
+  cur.state=1-cur.state;cur.act(cur.state===1);btnAct.textContent=p.act[cur.state];
+});
+btnSpin.setAttribute("aria-pressed",String(controls.autoRotate));
+btnSpin.addEventListener("click",function(){controls.autoRotate=!controls.autoRotate;btnSpin.setAttribute("aria-pressed",String(controls.autoRotate));kick();});
+document.querySelectorAll("[data-sheet]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var c=SHEETS[b.getAttribute("data-sheet")];
+    M.sheet.color.copy(lin(c[0]));M.sheet.transmission=c[1];
+    document.querySelectorAll("[data-sheet]").forEach(function(x){x.setAttribute("aria-pressed",String(x===b));});
+    kick();
+  });
+});
+
+size();
+buildCurrent(false);
+if("ResizeObserver" in window){new ResizeObserver(function(){size();}).observe(stageEl);}else{window.addEventListener("resize",size);}
+if("IntersectionObserver" in window){
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    visible=e.isIntersecting;
+    if(visible){if(!shownOnce){shownOnce=true;if(!reduce){assemble();}}kick();}
+  });},{threshold:0.05}).observe(stageEl);
+}else{visible=true;shownOnce=true;kick();}
+
+/* =====================================================================
+   Раздел «Материал»: макро-снимки деталей и узел стенки в разборе
+   ===================================================================== */
+var nodeEl=$("nodeStage");
+if(!nodeEl)return;
+var r2;
+try{r2=new T.WebGLRenderer({antialias:true});}catch(e){r2=null;}
+if(!r2){document.querySelectorAll("[data-shot] .shot-ph").forEach(function(s){s.textContent="Изображение не построилось (нет WebGL).";});return;}
+setupRenderer(r2);
+r2.domElement.setAttribute("role","img");r2.domElement.setAttribute("aria-label","Узел стенки в разборе");
+nodeEl.insertBefore(r2.domElement,nodeEl.firstChild);
+r2.domElement.style.visibility="hidden";
+var studioTex=studioEnv(r2);
+var PROFILE300=null;
+
+function studio(bounds){
+  var s=new T.Scene();
+  s.background=new T.Color("#e7e5e0");
+  s.environment=studioTex;
+  var gnd=new T.Mesh(new T.PlaneGeometry(6,6),new T.ShadowMaterial({opacity:0.26}));gnd.rotation.x=-Math.PI/2;gnd.receiveShadow=true;s.add(gnd);
+  var key=new T.DirectionalLight(lin("#fff4e6"),2.4);key.position.set(-0.55,1.1,0.75);key.castShadow=true;
+  key.shadow.mapSize.set(2048,2048);key.shadow.bias=-0.0002;key.shadow.normalBias=0.002;
+  var b=bounds||0.3,kc=key.shadow.camera;kc.left=-b;kc.right=b;kc.top=b;kc.bottom=-b;kc.near=0.1;kc.far=4;
+  s.add(key);s.add(key.target);
+  s.add(new T.HemisphereLight(lin("#ffffff"),lin("#bdb6ac"),0.25));
+  return s;
+}
+function blobAt(s,x,z,w,d,op){var m=new T.Mesh(G.plane,op?new T.MeshBasicMaterial({color:0,alphaMap:TX.blob,transparent:true,opacity:op,depthWrite:false}):M.blob);
+  m.rotation.x=-Math.PI/2;m.scale.set(w,d,1);m.position.set(x,0.0008,z);s.add(m);return m;}
+function lagPiece(L){var g=profileGeo(L);var m=new T.Mesh(g,[M.cut,M.lag]);m.scale.setScalar(MM);m.castShadow=true;m.receiveShadow=true;return m;}
+function hexNutGeo(){
+  var s=new T.Shape(),R=10.97;for(var i=0;i<6;i++){var a=i/6*6.283+Math.PI/6;if(i===0){s.moveTo(Math.cos(a)*R,Math.sin(a)*R);}else{s.lineTo(Math.cos(a)*R,Math.sin(a)*R);}}
+  s.closePath();var h=new T.Path();h.absarc(0,0,6,0,6.283,true);s.holes.push(h);
+  return new T.ExtrudeGeometry(s,{depth:10,bevelEnabled:true,bevelThickness:0.8,bevelSize:0.8,bevelSegments:2,curveSegments:16});
+}
+function threadGeo(len){
+  var pts=[new T.Vector2(0,0),new T.Vector2(5.3,0)];
+  for(var y=0.9;y<len-0.9;y+=1.75){pts.push(new T.Vector2(6,y),new T.Vector2(5.1,y+0.875));}
+  pts.push(new T.Vector2(5.3,len),new T.Vector2(0,len));
+  return new T.LatheGeometry(pts,32);
+}
+function sm(geo,mat,x,y,z){var m=new T.Mesh(geo,mat);m.scale.setScalar(MM);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;return m;}
+
+var SHOTS={
+  lag:function(s){
+    var m=lagPiece(300);m.rotation.y=Math.PI/2;m.position.set(-0.15,0,0.0);s.add(m);
+    var m2=lagPiece(160);m2.rotation.y=Math.PI/2+0.5;m2.position.set(-0.13,0,-0.09);s.add(m2);
+    blobAt(s,0,0,0.36,0.09);blobAt(s,-0.07,-0.07,0.2,0.08);
+    return {cam:[0.27,0.13,0.2],target:[0.06,0.012,-0.015],fov:30};
+  },
+  bush:function(s){
+    var m=lagPiece(50);m.rotation.y=Math.PI/2;m.position.set(-0.025,0,0);s.add(m);
+    s.add(sm(G.cyl,M.rod,0,0,0));var rod=s.children[s.children.length-1];rod.material=[M.rod,M.rodEnd,M.rodEnd];rod.scale.set(0.012,0.11,0.012);rod.position.set(0,0.055,0);
+    var m2=lagPiece(50);m2.rotation.set(0,-0.35,0);m2.position.set(-0.075,0,-0.02);s.add(m2);
+    blobAt(s,0,0,0.1,0.1);blobAt(s,-0.075,0,0.09,0.09);
+    return {cam:[0.15,0.15,0.21],target:[-0.03,0.035,0],fov:30};
+  },
+  rod:function(s){
+    var a=sm(G.cyl,[M.rod,M.rodEnd,M.rodEnd],0,0.006,0);a.scale.set(0.012,0.3,0.012);a.rotation.set(0,0.35,Math.PI/2);s.add(a);
+    var b=sm(G.cyl,[M.rod,M.rodEnd,M.rodEnd],0.02,0.006,0.05);b.scale.set(0.012,0.2,0.012);b.rotation.set(0,-0.5,Math.PI/2);s.add(b);
+    var c=lagPiece(50);c.rotation.y=0.3;c.position.set(-0.12,0,-0.06);s.add(c);
+    blobAt(s,0,0,0.3,0.05,0.35);blobAt(s,0.02,0.05,0.2,0.05,0.35);
+    return {cam:[0.2,0.15,0.3],target:[0.0,0.01,0.0],fov:30};
+  },
+  pc:function(s){
+    var base=lagPiece(220);base.rotation.y=Math.PI/2;base.position.set(-0.11,0,-0.04);s.add(base);
+    var ins=new T.Mesh(twinWallGeo(200,120),M.sheetMacro);ins.scale.setScalar(MM);ins.rotation.set(Math.PI/2,0,0);ins.position.set(0,0.031+0.06,-0.04);s.add(ins);
+    var roof=new T.Mesh(twinWallGeo(170,130),M.pcMacro);roof.scale.setScalar(MM);roof.rotation.set(0,0.55,0);roof.position.set(0.02,0.004,0.07);roof.castShadow=true;s.add(roof);
+    blobAt(s,0,-0.04,0.26,0.07);
+    return {cam:[0.27,0.19,0.35],target:[0.0,0.055,0.0],fov:32};
+  },
+  pvc:function(s){
+    var y=0.36,L=360,h=300,cz=0.036;
+    var tube=sm(G.cyl,M.alu,0,y,0);tube.scale.set(0.064,L*MM,0.064);tube.rotation.z=Math.PI/2;s.add(tube);
+    [34.5,35.7,36.9].forEach(function(r){var w=new T.Mesh(new T.CylinderGeometry(r,r,L-24,48,1,true),M.pvcMacro);w.scale.setScalar(MM);w.rotation.z=Math.PI/2;w.position.y=y;s.add(w);});
+    [-1,1].forEach(function(k){var br=sm(G.bx,M.steel,k*0.186,y+0.03,-0.01);br.scale.set(0.005,0.09,0.06);s.add(br);});
+    var cm=new T.Mesh(curtainGeoLocal(L-24,h),M.pvcMacro);cm.position.set(0,y,cz);s.add(cm);
+    var hem=sm(G.bx,M.hem,0,y-h*MM-0.012,cz);hem.scale.set((L-24)*MM,0.028,0.003);s.add(hem);
+    [-1,1].forEach(function(k){var sd=sm(G.bx,M.hem,k*(L-24)/2*MM,y-h*MM/2,cz);sd.scale.set(0.014,h*MM,0.003);s.add(sd);});
+    for(var i=-2;i<=2;i++){var gr=new T.Mesh(new T.TorusGeometry(5,1.4,8,20),M.steel);gr.scale.setScalar(MM);gr.position.set(i*0.07,y-h*MM-0.012,cz+0.002);s.add(gr);}
+    blobAt(s,0,0.03,0.44,0.14,0.22);
+    return {cam:[0.42,0.34,0.78],target:[0,0.2,0.02],fov:34};
+  },
+  steel:function(s){
+    var st=sm(threadGeo(140),M.steel,-0.09,0.006,0.04);st.rotation.z=-Math.PI/2;s.add(st);
+    var nut=sm(hexNutGeo(),M.steel,-0.02,0.011,0.04);st.position.y=0.011;nut.rotation.y=Math.PI/2;s.add(nut);
+    var wr=new T.Mesh(new T.LatheGeometry([new T.Vector2(6.5,0),new T.Vector2(12,0),new T.Vector2(12,2.5),new T.Vector2(6.5,2.5),new T.Vector2(6.5,0)],32),M.steel);
+    wr.scale.setScalar(MM);wr.position.set(0.035,0,0.07);wr.castShadow=true;s.add(wr);
+    var ns=new T.Shape();ns.moveTo(-110,-20);ns.lineTo(110,-20);ns.lineTo(110,20);ns.lineTo(-110,20);ns.lineTo(-110,-20);
+    [-80,-30,30,80].forEach(function(x){var h=new T.Path();h.absarc(x,0,6.5,0,6.283,true);ns.holes.push(h);});
+    var ins=sm(new T.ExtrudeGeometry(ns,{depth:5,bevelEnabled:true,bevelThickness:0.6,bevelSize:0.6,bevelSegments:2,curveSegments:16}),M.steel,0.0,0.0,-0.05);
+    ins.rotation.x=-Math.PI/2;ins.rotation.z=0.12;s.add(ins);
+    var hg=new T.Group();hg.position.set(0.085,0.0,0.035);hg.rotation.y=-0.6;
+    [-1,1].forEach(function(k){var lf=sm(G.bx,M.steel,k*0.021,0.0012,0);lf.scale.set(0.04,0.0022,0.06);lf.rotation.z=k*0.12;hg.add(lf);
+      [-0.018,0.018].forEach(function(z){var hole=sm(G.cyl,M.steelDark,k*0.024,0.0024,z);hole.scale.set(0.006,0.0006,0.006);hg.add(hole);});});
+    var kn=sm(G.cyl,M.steel,0,0.004,0);kn.scale.set(0.008,0.06,0.008);kn.rotation.x=Math.PI/2;hg.add(kn);s.add(hg);
+    blobAt(s,0,0,0.36,0.22,0.3);
+    return {cam:[0.08,0.2,0.24],target:[0.01,0,0.01],fov:34};
+  }
+};
+function curtainGeoLocal(len,h){
+  var seg=Math.round(len/12),g=new T.PlaneGeometry(len*MM,h*MM,seg,8),P=g.attributes.position;
+  for(var i=0;i<P.count;i++){var x=P.getX(i),y=P.getY(i);P.setZ(i,Math.sin(x/0.075*Math.PI*2)*0.004*(0.4+0.6*(0.5-y/(h*MM))));}
+  g.translate(0,-h*MM/2,0);g.computeVertexNormals();return g;
+}
+function disposeScene(s){s.traverse(function(o){if(o.geometry&&!isShared(o.geometry)){o.geometry.dispose();}});}
+function isShared(g){for(var k in G){if(G[k]===g)return true;}return false;}
+function renderShot(id){
+  var s=studio(0.32),cfg=SHOTS[id](s);
+  var W=1200,H=800;
+  r2.setPixelRatio(1);r2.setSize(W,H,false);
+  var cam=new T.PerspectiveCamera(cfg.fov||30,W/H,0.005,20);
+  cam.position.fromArray(cfg.cam);cam.lookAt(new T.Vector3().fromArray(cfg.target));
+  r2.render(s,cam);
+  var url=r2.domElement.toDataURL("image/jpeg",0.9);
+  disposeScene(s);
+  return url;
+}
+
+/* ---- узел стенки в разборе ---- */
+var nScene=studio(0.45),nCam=new T.PerspectiveCamera(32,1,0.01,20);
+var nControls=new T.OrbitControls(nCam,r2.domElement);
+nControls.enableDamping=true;nControls.dampingFactor=0.08;nControls.maxPolarAngle=86*DEG;nControls.target.set(0.09,0.15,0.09);
+nCam.position.set(0.78,0.56,0.74);nControls.minDistance=0.25;nControls.maxDistance=1.6;
+var NODE=[],Y0=40,PITCH=125;
+function nodePart(obj,step,off,label){obj.userData.fin=obj.position.clone();obj.userData.off=new T.Vector3(off[0],off[1],off[2]);NODE.push({o:obj,step:step,label:label});nScene.add(obj);return obj;}
+(function buildNode(){
+  PROFILE300=profileGeo(300);
+  var bushGeo=profileGeo(50);
+  function bar(alongX,y){var m=new T.Mesh(PROFILE300,[M.cut,M.lag]);m.scale.setScalar(MM);m.castShadow=true;m.receiveShadow=true;
+    if(alongX){m.rotation.y=Math.PI/2;m.position.set(25*MM,y*MM,0);}else{m.position.set(0,y*MM,25*MM);}return m;}
+  function bush(y){var m=new T.Mesh(bushGeo,[M.cut,M.bush]);m.scale.setScalar(MM);m.rotation.y=Math.PI/2;m.position.set(-25*MM,y*MM,0);m.castShadow=true;m.receiveShadow=true;return m;}
+  var sheetGeo=twinWallGeo(290,97);
+  function sheet(alongX,y){var m=new T.Mesh(sheetGeo,M.sheetMacro);m.scale.setScalar(MM);m.rotation.set(Math.PI/2,alongX?0:Math.PI/2,0,"YXZ");
+    m.position.set(alongX?(25+150)*MM:0,(y+31+48.5)*MM,alongX?0:(25+150)*MM);return m;}
+  nodePart(bar(true,Y0),1,[0.11,0,0],"1");
+  nodePart(bar(false,Y0),1,[0,0,0.11],"1");
+  nodePart(sheet(true,Y0),2,[0,0.13,0],"2");
+  nodePart(sheet(false,Y0),2,[0,0.13,0],"2");
+  nodePart(bush(Y0),3,[-0.07,0.06,-0.07],"3");
+  var rod=new T.Mesh(G.cyl,[M.rod,M.rodEnd,M.rodEnd]);rod.scale.set(12*MM,300*MM,12*MM);rod.position.set(0,(Y0-20+150)*MM,0);rod.castShadow=true;
+  nodePart(rod,4,[0,0.17,0],"4");
+  nodePart(bar(true,Y0+PITCH),5,[0.06,0.2,0],"5");
+  nodePart(bar(false,Y0+PITCH),5,[0,0.2,0.06],"5");
+  nodePart(bush(Y0+PITCH),5,[-0.05,0.3,-0.05],"5");
+  blobAt(nScene,0.12,0.12,0.5,0.5,0.35);
+})();
+var marks=[1,2,3,4,5].map(function(n){var s=document.createElement("span");s.className="nmark";s.textContent=n;s.setAttribute("aria-hidden","true");nodeEl.appendChild(s);return s;});
+var stepsEl=$("nodeSteps"),nodeBtn=$("nodeBuild");
+var nState={t:0,target:0,from:0,s0:0,dur:1},nVisible=false,nRunning=false,nLast=0,nAssembled=false;
+/* t: 0 — всё разобрано, 5 — собрано; каждая деталь едет в свою единицу времени */
+function applyNode(t){
+  NODE.forEach(function(p){
+    var u=Math.min(1,Math.max(0,t-(p.step-1))),e=ease(u);
+    p.o.position.copy(p.o.userData.fin).addScaledVector(p.o.userData.off,1-e);
+  });
+  var act=Math.min(5,Math.floor(t)+1),moving=nState.t!==nState.target;
+  if(stepsEl){[].forEach.call(stepsEl.children,function(li,i){li.classList.toggle("on",moving&&i+1===act);li.classList.toggle("done",i+1<=Math.floor(t+0.001));});}
+}
+function placeMarks(){
+  var w=nodeEl.clientWidth,h=nodeEl.clientHeight,v=new T.Vector3();
+  var AN=[[0,0.2,0.036,0],[2,0.07,0.02,0],[4,0.025,0.04,0],[5,0,0.1,0],[7,0,0.036,0.2]];
+  AN.forEach(function(a,i){
+    v.copy(NODE[a[0]].o.position);v.x+=a[1];v.y+=a[2];v.z+=a[3];
+    v.project(nCam);
+    marks[i].style.transform="translate("+Math.round((v.x*0.5+0.5)*w-11)+"px,"+Math.round((-v.y*0.5+0.5)*h-11)+"px)";
+    marks[i].style.opacity=(shotsDone&&v.z<1)?"1":"0";
+  });
+}
+function nodeGo(to){
+  nState.from=nState.t;nState.target=to;nState.s0=now();nState.dur=Math.abs(to-nState.t)*650;
+  if(reduce){nState.t=to;applyNode(to);}
+  nodeBtn.textContent=to>=5?"Разобрать узел":"Собрать узел";
+  nKick();
+}
+function nFrame(){
+  if(!nVisible){nRunning=false;return;}
+  var t=now();
+  if(nState.t!==nState.target){
+    var u=nState.dur>0?Math.min(1,(t-nState.s0)/nState.dur):1;
+    nState.t=nState.from+(nState.target-nState.from)*u;applyNode(nState.t);
+    if(u>=1){nState.t=nState.target;applyNode(nState.t);}
+  }
+  nControls.update();
+  r2.render(nScene,nCam);placeMarks();
+  if(nState.t!==nState.target||t-nLast<1200){requestAnimationFrame(nFrame);}else{nRunning=false;}
+}
+function nKick(){nLast=now();if(nVisible&&!nRunning&&shotsDone){nRunning=true;requestAnimationFrame(nFrame);}}
+nControls.addEventListener("change",function(){nLast=now();if(nVisible&&!nRunning&&shotsDone){nRunning=true;requestAnimationFrame(nFrame);}});
+nControls.addEventListener("start",nKick);
+nodeBtn.addEventListener("click",function(){nodeGo(nState.target>=5?0:5);});
+function nSize(){var w=nodeEl.clientWidth,h=nodeEl.clientHeight;if(!w||!h)return;r2.setPixelRatio(Math.min(window.devicePixelRatio||1,2));r2.setSize(w,h,false);nCam.aspect=w/h;nCam.updateProjectionMatrix();nKick();}
+applyNode(0);
+
+/* снимки строятся, когда раздел подходит к экрану; затем включается живой узел */
+var shotsDone=false,shotsStarted=false;
+function makeShots(){
+  if(shotsStarted)return;shotsStarted=true;
+  var list=[].slice.call(document.querySelectorAll("[data-shot]")),i=0;
+  function next(){
+    if(i>=list.length){shotsDone=true;nSize();applyNode(nState.t);r2.domElement.style.visibility="visible";
+      if(!nAssembled&&nVisible){nAssembled=true;if(!reduce){setTimeout(function(){nodeGo(5);},600);}else{nodeGo(5);}}
+      nKick();return;}
+    var fig=list[i++],id=fig.getAttribute("data-shot"),ph=fig.querySelector(".shot-ph"),img=fig.querySelector("img");
+    try{img.src=renderShot(id);img.hidden=false;ph.hidden=true;}
+    catch(err){ph.textContent="Изображение не построилось.";if(window.console){console.warn(err);}}
+    setTimeout(next,40);
+  }
+  next();
+}
+var matSec=$("material");
+if("IntersectionObserver" in window){
+  new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){makeShots();}});},{rootMargin:"900px 0px"}).observe(matSec||nodeEl);
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    nVisible=e.isIntersecting;
+    if(nVisible&&shotsDone&&!nAssembled){nAssembled=true;setTimeout(function(){nodeGo(5);},reduce?0:600);}
+    nKick();
+  });},{threshold:0.2}).observe(nodeEl);
+}else{nVisible=true;makeShots();}
+if("ResizeObserver" in window){new ResizeObserver(function(){if(shotsDone){nSize();}}).observe(nodeEl);}
+else{window.addEventListener("resize",function(){if(shotsDone){nSize();}});}
+})();
+</script>
+
+</body></html>
