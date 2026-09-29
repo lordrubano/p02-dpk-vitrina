@@ -1,0 +1,1210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Материал и поставщики ДПК</title>
+<meta name="description" content="Что такое ДПК, какие у него свойства, кто в России делает лаги, брус, уголки, листы для вставок и стеклопластиковые стержни, и что брать для P-02. Данные на 29.09.2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#f6f5f0; --surface:#ffffff; --surface-2:#f0eee7; --surface-3:#e8e5dc;
+  --ink:#1b1a17; --ink-2:#4d4b46; --muted:#77746c; --line:#e0ddd3; --line-2:#cfcbbf;
+  --accent:#8a5a2b; --accent-soft:#f3e7da; --accent-ink:#ffffff;
+  --good:#1a7f37; --good-bg:#e7f4ea; --warn:#a15c07; --warn-bg:#fdf1de; --bad:#b42318; --bad-bg:#fdeceb;
+  --info:#1f5fae; --info-bg:#e6effa;
+  --series-1:#2a78d6; --series-2:#eb6834; --grid:#e6e3da;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#131311; --surface:#1c1c19; --surface-2:#24231f; --surface-3:#2d2c27;
+    --ink:#f2f1ec; --ink-2:#c9c7bd; --muted:#9a978d; --line:#33322c; --line-2:#45433b;
+    --accent:#d9a066; --accent-soft:#33271b; --accent-ink:#1b1a17;
+    --good:#4cc36f; --good-bg:#10261a; --warn:#f2a33a; --warn-bg:#2b200f; --bad:#f97066; --bad-bg:#2d1513;
+    --info:#6ea8ff; --info-bg:#132136;
+    --series-1:#3987e5; --series-2:#d95926; --grid:#2e2d28;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg:#131311; --surface:#1c1c19; --surface-2:#24231f; --surface-3:#2d2c27;
+    --ink:#f2f1ec; --ink-2:#c9c7bd; --muted:#9a978d; --line:#33322c; --line-2:#45433b;
+    --accent:#d9a066; --accent-soft:#33271b; --accent-ink:#1b1a17;
+    --good:#4cc36f; --good-bg:#10261a; --warn:#f2a33a; --warn-bg:#2b200f; --bad:#f97066; --bad-bg:#2d1513;
+    --info:#6ea8ff; --info-bg:#132136;
+    --series-1:#3987e5; --series-2:#d95926; --grid:#2e2d28;
+    --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+html,body{max-width:100%;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--info);text-underline-offset:2px;overflow-wrap:anywhere}
+h1,h2,h3,h4{line-height:1.2;margin:0 0 .5em;text-wrap:balance}
+h1{font-size:clamp(1.7rem,4.5vw,2.6rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(1.35rem,3.4vw,1.9rem);font-weight:700;margin-top:0}
+h3{font-size:1.12rem;font-weight:600}
+p{margin:0 0 .8em}
+small,.small{font-size:.86rem}
+.muted{color:var(--muted)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+/* nav */
+.topnav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+.topnav .wrap{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:thin;padding-top:8px;padding-bottom:8px}
+.topnav a{flex:0 0 auto;text-decoration:none;color:var(--ink-2);font-size:.88rem;padding:6px 10px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.topnav a:hover{border-color:var(--line-2);color:var(--ink)}
+.topnav .brand{font-weight:700;color:var(--accent);padding-left:0}
+section{padding:36px 0 12px}
+section + section{border-top:1px solid var(--line)}
+.lead{font-size:1.06rem;color:var(--ink-2);max-width:78ch}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);min-width:0}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.badge{display:inline-block;font-size:.76rem;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-3);color:var(--ink-2);margin:0 4px 4px 0;white-space:nowrap}
+.b-good{background:var(--good-bg);color:var(--good)}
+.b-warn{background:var(--warn-bg);color:var(--warn)}
+.b-bad{background:var(--bad-bg);color:var(--bad)}
+.b-info{background:var(--info-bg);color:var(--info)}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:8px;margin:12px 0}
+.callout.bad{border-color:var(--bad);background:var(--bad-bg)}
+.callout.warn{border-color:var(--warn);background:var(--warn-bg)}
+.callout.good{border-color:var(--good);background:var(--good-bg)}
+.callout p:last-child{margin-bottom:0}
+/* hero */
+.hero{padding-top:22px}
+.hero-grid{display:grid;gap:18px;grid-template-columns:1fr}
+figure{margin:0}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.fig img{display:block;width:100%;height:auto;background:var(--surface-2)}
+.fig .fallback{display:none;padding:18px;background:repeating-linear-gradient(135deg,var(--surface-2) 0 12px,var(--surface-3) 12px 24px);color:var(--ink-2)}
+.fig.noimg img{display:none}
+.fig.noimg .fallback{display:block}
+.fig figcaption{padding:10px 14px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line)}
+.hero .fig img{max-height:520px;object-fit:cover}
+.hero .fallback{min-height:240px;display:none}
+.hero .fig.noimg .fallback{display:flex;flex-direction:column;justify-content:center;gap:8px}
+.hero-fallback-title{font-size:clamp(1.3rem,3.4vw,2rem);font-weight:700;color:var(--ink)}
+.profile-mini{width:100%;max-width:360px;height:auto}
+.concl{counter-reset:c;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin-top:18px;padding:0;list-style:none}
+.concl li{counter-increment:c;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 14px 14px 52px;position:relative;box-shadow:var(--shadow)}
+.concl li::before{content:counter(c);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.9rem;display:grid;place-items:center}
+.concl li.hot{border-color:var(--bad)}
+.concl li.hot::before{background:var(--bad);color:#fff}
+.concl b{color:var(--ink)}
+/* flow */
+#flow svg{width:100%;height:auto;display:block}
+.flow-box{fill:var(--surface);stroke:var(--line-2)}
+.flow-num{fill:var(--accent)}
+.flow-numtxt{fill:var(--accent-ink);font-weight:700}
+.flow-title{fill:var(--ink);font-weight:600}
+.flow-note{fill:var(--muted)}
+.flow-arrow{stroke:var(--accent);fill:none;stroke-width:2}
+.flow-head{fill:var(--accent)}
+/* tables */
+.tbl-wrap{overflow:auto;max-width:100%;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);max-height:72vh}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.86rem}
+th,td{padding:7px 9px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+thead th{position:sticky;top:0;background:var(--surface-2);z-index:2;font-weight:600;color:var(--ink-2);white-space:nowrap}
+thead th.sortable{cursor:pointer;user-select:none}
+thead th.sortable::after{content:" ↕";color:var(--muted);font-weight:400}
+thead th.asc::after{content:" ↑";color:var(--accent)}
+thead th.desc::after{content:" ↓";color:var(--accent)}
+tbody tr:hover td{background:var(--surface-2)}
+#t-lag td:nth-child(2),#t-lag td:nth-child(12),#t-lag td:nth-child(13){min-width:190px}
+#t-lag td:nth-child(14){min-width:120px}
+#t-acc td,#t-sheet td,#t-rod td{min-width:96px}
+#t-sheet td:nth-child(5),#t-rod td:nth-child(2){min-width:170px}
+td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.nowrap{white-space:nowrap}
+tr.hl td{background:color-mix(in srgb,var(--accent-soft) 70%,transparent)}
+.simple td,.simple th{font-size:.9rem}
+.simple thead th{white-space:normal}
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:10px 0 12px}
+.filters label{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--muted);min-width:0;flex:1 1 150px}
+.filters select,.filters input{font:inherit;font-size:.92rem;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink);width:100%;min-width:0}
+.filters .count{flex:1 1 100%;font-size:.85rem;color:var(--muted)}
+button.btn{font:inherit;font-size:.88rem;padding:8px 12px;border-radius:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);cursor:pointer}
+button.btn:hover{border-color:var(--accent)}
+/* cards makers */
+.maker h3{margin-bottom:4px}
+.maker .meta{font-size:.84rem;color:var(--muted);margin-bottom:8px}
+.maker ul{margin:.3em 0 .6em;padding-left:1.1em}
+.maker li{margin:.15em 0}
+.maker .links{font-size:.84rem}
+details.maker summary{cursor:pointer;list-style:none}
+details.maker summary::-webkit-details-marker{display:none}
+details.maker summary h3::after{content:" ▸";color:var(--muted)}
+details.maker[open] summary h3::after{content:" ▾"}
+/* charts */
+.chart-box{position:relative;height:340px}
+.chart-legend{font-size:.84rem;color:var(--ink-2);display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+/* calculators */
+.calc{display:grid;gap:10px}
+.calc .row{display:flex;flex-wrap:wrap;gap:10px}
+.calc label{display:flex;flex-direction:column;font-size:.8rem;color:var(--muted);flex:1 1 130px}
+.calc input{font:inherit;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink);width:100%}
+.calc-out{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.calc-out div{background:var(--surface-2);border-radius:8px;padding:8px 10px;font-size:.86rem}
+.calc-out b{display:block;font-size:1.15rem}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.9rem}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0}
+.big{font-size:1.6rem;font-weight:700;line-height:1.1}
+.steps{padding-left:1.2em}
+.steps li{margin:.35em 0}
+.two{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))}
+.diam svg{width:100%;height:auto;display:block;max-width:640px;margin:0 auto}
+.d-ink{fill:var(--ink)}
+.d-muted{fill:var(--muted)}
+.d-rod{fill:var(--accent);opacity:.85}
+.d-rod2{fill:var(--series-1);opacity:.8}
+.d-rib{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:3 3}
+.d-hole{fill:none;stroke:var(--ink);stroke-width:1.6}
+.d-hole-fill{fill:var(--surface-2)}
+.d-bad{fill:var(--bad)}
+.d-good{fill:var(--good)}
+.drawings .fig img{background:#fff}
+.src-list{columns:2 320px;column-gap:28px;font-size:.86rem;padding-left:1.1em}
+.src-list li{break-inside:avoid;margin:0 0 .4em}
+footer{padding:28px 0 40px;color:var(--muted);font-size:.85rem}
+@media (max-width:600px){
+  body{font-size:15px}
+  section{padding:26px 0 8px}
+  .chart-box{height:300px}
+  th,td{padding:6px 7px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Разделы">
+  <div class="wrap">
+    <a class="brand" href="#top">ДПК</a>
+    <a href="#vyvody">Выводы</a>
+    <a href="#material">Что за материал</a>
+    <a href="#svoystva">Характеристики</a>
+    <a href="#zavody">Заводы</a>
+    <a href="#p02">Для P-02</a>
+    <a href="#listy">Листы</a>
+    <a href="#sterzhni">Стержни</a>
+    <a href="#chertezhi">Чертежи</a>
+    <a href="#proverit">Проверить</a>
+    <a href="#istochniki">Источники</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="muted small" style="margin-bottom:6px">Сводка для Андрея · данные с сайтов на 29.09.2026 · все цены розничные</p>
+    <h1>Материал и поставщики ДПК</h1>
+    <p class="lead">ДПК (древесно-полимерный композит) — это пластик, наполовину и больше набитый древесной мукой. Ниже: как его делают, чем он хорош и плох, кто в России продаёт лаги и брус, листы для вставок и стеклопластиковые стержни, и что из этого брать для кашпо и мебели P-02.</p>
+    <div class="hero-grid">
+      <figure class="fig" id="fig-hero">
+        <img src="img/hero.jpg" alt="Срез пустотелого профиля из ДПК" onerror="this.closest('figure').classList.add('noimg')">
+        <div class="fallback">
+          <div class="hero-fallback-title">Пустотелая лага ДПК 50×30</div>
+          <svg class="profile-mini" viewBox="0 0 260 170" role="img" aria-label="Схема сечения пустотелой лаги 50 на 30 мм с четырьмя рёбрами">
+            <rect x="20" y="30" width="220" height="132" rx="6" fill="var(--accent)" opacity=".85"/>
+            <rect x="42" y="52" width="46" height="88" rx="3" fill="var(--surface-2)"/>
+            <rect x="107" y="52" width="46" height="88" rx="3" fill="var(--surface-2)"/>
+            <rect x="172" y="52" width="46" height="88" rx="3" fill="var(--surface-2)"/>
+            <text x="130" y="20" text-anchor="middle" font-size="13" fill="var(--ink-2)">50 мм</text>
+            <text x="252" y="100" font-size="13" fill="var(--ink-2)" transform="rotate(90 252 100)" text-anchor="middle">30 мм</text>
+          </svg>
+          <div class="small">Здесь будет настоящее фото среза профиля (файл <code>img/hero.jpg</code>). Пока — схема: стенки и рёбра около 5 мм, внутри «окошки»-камеры.</div>
+        </div>
+        <figcaption id="cap-hero">Фото: [источник и лицензия — указать при добавлении файла]. Кандидаты из записок: «Durchgefärbtes Montageprofil aus Hiendl NFC» (IPHB, Викисклад, CC BY-SA 4.0) или фото карточки лаги ДекМастер (владелец ООО «ДЕКМАСТЕР», разрешения нет — только с согласия).</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<section id="vyvody">
+  <div class="wrap">
+    <h2>Главное за минуту</h2>
+    <ol class="concl">
+      <li class="hot"><b>363 ₽ у ДекМастера — это за метр, а не за хлыст 4 м.</b> У дилера прямо: «363 ₽ за 1 м.п., 1 089 ₽ за 3 м»; на dekmaster.ru — «от 269 ₽» за метр. Хлыст 4 м стоит 1 076–1 452 ₽. В проектах P-02 заложено 363 ₽ за хлыст — лага занижена примерно в 4 раза.</li>
+      <li class="hot"><b>Готовой лаги 50×30 со сквозными отверстиями под стержни и пазом под лист не продаёт никто.</b> Ближе всего — брус ITP 60×28 «с отверстием» (диаметр не указан). Паз и отверстия придётся делать самим или заказывать свой профиль.</li>
+      <li><b>ДПК-лага — «не несущая».</b> Так прямо пишут Terradeck, MultiDeck, Terrapol, М-Пласт, Holzhof: она должна лежать на опорах через 30–40 см. В 10–18 раз мягче стальной трубы 40×20 или соснового бруска 50×50, и под постоянной нагрузкой медленно «оседает» (ползучесть).</li>
+      <li><b>ДПК горит.</b> Обычная группа в документах — Г4 (сильногорючий), В3, Д3, Т3–Т4. Лучше найдено только у Polywood (Г2 по сертификату до 2028) и заявлено у Невского композита (Г2). Г1 у серийного ДПК нет ни у кого.</li>
+      <li><b>Расширение большое:</b> хлыст 4 м при перепаде 60 °C «ходит» на 7–17 мм (обычно около 12). Стекло­пластиковый стержень — всего на 2 мм. Отверстия и стыки надо делать с запасом.</li>
+      <li><b>Солнце:</b> в первый сезон цвет меняется на 10–30 %. У ДекМастера нет защитного слоя (коэкструзии) и 70 % муки — самый «открытый» вариант. Лаг с коэкструзией на рынке нет вообще, она бывает только у досок.</li>
+      <li><b>Вес «1 кг» в карточке ДекМастера — ошибка или очень тонкие стенки.</b> У 20 других лаг такого размера 1,1–1,5 кг на метр (4,5–6 кг на хлыст). Хлыст надо взвесить до любых расчётов.</li>
+      <li><b>Для вставок</b> — монолитный поликарбонат 3–4 мм с УФ-слоем с двух сторон (Woggel от 2 189 ₽/м², Полигаль Колибри от 2 353 ₽/м²), с зазором на расширение ~3 мм. <b>Для стержней Ø12</b> — «ТУ»-вариант «по ребру» в прямых хлыстах (УралАрмоПром, 30 ₽/м) или гладкий ССО-12: «ГОСТ»-вариант Ø12 по виткам толще 13 мм и в отверстие 13 мм может не пройти.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="material">
+  <div class="wrap">
+    <h2>Что это за материал и как его делают</h2>
+    <p class="lead">По ГОСТ Р 59555-2021 в ДПК должно быть не меньше 30 % древесной муки и <b>первичный</b> (не переработанный) пластик — полиэтилен (ПЭ, он же ПНД/HDPE), полипропилен (ПП) или ПВХ. На практике муки 40–70 %, пластика 24–40 %, остальное — добавки. Лага ДекМастер: 70 % муки и 30 % ПНД.</p>
+    <div class="card" id="flow" aria-label="Схема производства"></div>
+    <p class="small muted" style="margin-top:8px">Экструдер — машина со шнеками, которая плавит смесь и давит её через фильеру. Фильера — стальная «формочка» с вырезанным профилем; новая стоит около 10 000 $ и делается месяцами, поэтому свой профиль заказывают только большими партиями.</p>
+
+    <div class="grid g3" style="margin-top:14px">
+      <div class="card">
+        <h3>Из чего состоит</h3>
+        <ul class="steps">
+          <li><b>Древесная мука</b> «М-180» (частицы ~0,07 мм) из опилок и отходов пеллетных заводов; 20–22 ₽/кг.</li>
+          <li><b>Пластик</b>: ПНД марок 273-83 и 276-73, 85–88 тыс. ₽/т. 97 % российского ПНД — Татарстан и Башкирия («Казаньоргсинтез», «Нижнекамскнефтехим», «Салават»).</li>
+          <li><b>Добавки</b>: «клей» между мукой и пластиком (совместитель), антиоксидант, светостабилизаторы и сажа/диоксид титана от солнца, воск и стеараты для текучести, пигменты, иногда мел и антипирены. Откуда добавки — неизвестно; Terrapol пишет «импортные».</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Сколько стоит сырьё в 1 м лаги</h3>
+        <p class="big">≈50–60 ₽</p>
+        <p class="small">1,3 кг × 70 % муки × 21 ₽ ≈ 19 ₽ плюс 1,3 кг × 30 % ПНД × 87 ₽ ≈ 34 ₽ (оценка). В рознице метр лаги 150–450 ₽ — у заводов большой запас, при опте можно торговаться. По цене качество не угадать.</p>
+      </div>
+      <div class="card">
+        <h3>ПЭ, ПП, ПВХ, МПК — в чём разница</h3>
+        <dl class="kv">
+          <dt>ПЭ (ПНД)</dt><dd>Большинство заводов. Мягче, не бьётся, но сильнее расширяется и ползёт; горит и плавится.</dd>
+          <dt>ПП</dt><dd>Terrapol, корейский Woodvex. Легче (плотность ~1,08), хуже на морозе.</dd>
+          <dt>ПВХ</dt><dd>Savewood, Невский композит, Lecole. Жёстче, меньше расширяется, «самозатухает», но хрупче на морозе и мягчеет выше +40…+60 °C, при пожаре выделяет хлор.</dd>
+          <dt>МПК</dt><dd>Роскомпозит, МПК-линейки ITP и Woodgrand: вместо дерева каменная мука. Не гниёт, почти не впитывает воду, цвет стабилен; тяжелее (1,6–1,8 г/см³) и сильнее греется.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:14px">
+      <figure class="fig">
+        <img src="img/wpc_hollow.jpg" alt="Пустотелые и вспененные профили ДПК в разрезе" loading="lazy" onerror="this.closest('figure').classList.add('noimg')">
+        <div class="fallback">Фото пустотелых профилей ещё не добавлено (<code>img/wpc_hollow.jpg</code>). <a href="https://commons.wikimedia.org/wiki/File:Alveolaire-moussee.jpg" target="_blank" rel="noopener">Посмотреть на Викискладе</a>.</div>
+        <figcaption>Пустотелые и вспененные доски ДПК в разрезе. Фото: Geolam, <a href="https://commons.wikimedia.org/wiki/File:Alveolaire-moussee.jpg" target="_blank" rel="noopener">Викисклад</a>, лицензия CC BY-SA 3.0 (нужно указывать автора и лицензию).</figcaption>
+      </figure>
+      <figure class="fig">
+        <img src="img/wpc_samples.jpg" alt="Образцы материала ДПК" loading="lazy" onerror="this.closest('figure').classList.add('noimg')">
+        <div class="fallback">Фото образцов ещё не добавлено (<code>img/wpc_samples.jpg</code>). <a href="https://commons.wikimedia.org/wiki/File:Wood_plastic_composite.JPG" target="_blank" rel="noopener">Посмотреть на Викискладе</a>.</div>
+        <figcaption>Образцы ДПК крупным планом. Фото: VarunRajendran, <a href="https://commons.wikimedia.org/wiki/File:Wood_plastic_composite.JPG" target="_blank" rel="noopener">Викисклад</a>, CC BY-SA 3.0. Запасные кадры: <a href="https://commons.wikimedia.org/wiki/File:Exstusion_Line_Wood_Plast_by_Giovannicciotta.jpg" target="_blank" rel="noopener">линия экструзии</a> (CC BY-SA 4.0).</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="svoystva">
+  <div class="wrap">
+    <h2>Характеристики</h2>
+    <p class="lead">Норма — из ГОСТ Р 59555-2021. «Что бывает» — лабораторные протоколы НИЦ «ДПК» на <b>террасные доски</b> (их заказывают сами заводы, образцы лучшие). На лагу независимых протоколов не найдено ни у одного завода.</p>
+    <div class="tbl-wrap" style="max-height:none">
+      <table class="simple" id="t-props">
+        <thead><tr><th>Показатель</th><th>Норма ГОСТ</th><th>Что бывает у досок</th><th>Наша лага (ДекМастер 50×30) — чего ждать</th><th>Простыми словами</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="grid g3" style="margin-top:16px">
+      <div class="card">
+        <h3>🔥 Горит ли</h3>
+        <p><b>Да.</b> Буквы в документах: <b>Г</b> — горючесть (Г1 слабо … Г4 сильно горит), <b>В</b> — как легко загорается (В1 трудно … В3 легко), <b>Д</b> — дым (Д1 мало … Д3 много), <b>Т</b> — ядовитость дыма (Т1 … Т4 очень опасно), <b>РП</b> — бежит ли пламя по поверхности.</p>
+        <p class="small">Найдено: ДекМастер Г4/В3/Д3/Т3 (на доски, лага не названа); ITP Г4/В3/Д3/Т4/РП4; Woodgrand Г4/В3/Д3/Т4/РП4; Greenwerk Г4; Terradeck В2/Д3/Т2/РП2 (Г не читается); Роскомпозит МПК Г3; <b>Polywood Г2/В2/Д2/Т2</b>; Невский композит Г2 (по сайту). У Savewood Г1 — только под заказ с минералом вместо дерева. Рядом с мангалом — негорючие вставки.</p>
+      </div>
+      <div class="card">
+        <h3>☀️ Солнце и выцветание</h3>
+        <p>В первый сезон любой ДПК светлеет или сереет на 10–30 %, потом цвет почти замирает. Сильнее всего — тёмные цвета и неброшированные поверхности.</p>
+        <p class="small"><b>Коэкструзия</b> — тонкий слой чистого пластика с УФ-защитой поверх профиля. Есть только у досок: Woodgrand 150×22 (слой 1 мм), Lecole (ПВХ), Greenwerk, ТехноПарк, DeckLine, ТехноДПК, Sequoia, Ecodecking Skay (Китай). <b>У лаг — ни у кого.</b> Жалобы на шелушение и «мел» через 2–3 года на юге: MultiPlast/MultiDeck (Волгоград, 2020), «Регион» (Ростов), DeckLine (2025) — единичные отзывы.</p>
+      </div>
+      <div class="card">
+        <h3>💧 Вода, мороз, плесень</h3>
+        <p>Впитывает мало: за сутки 0,3–1,6 % (норма ≤2 %), набухает до 0,5 %. <b>Но ГОСТ прямо запрещает погружать ДПК в воду и держать в контакте с почвой</b> — кашпо с землёй формально вне гарантии.</p>
+        <p class="small">Мука — еда для плесени: сырость выше 70 %, листья, тень. Отдельной нормы на мороз нет: заводы пишут от −40…+70 до −60…+75 °C, цифры разные. На морозе ДПК хрупче (ПВХ сильнее ПЭ).</p>
+      </div>
+      <div class="card">
+        <h3>🌡 Жара и расширение</h3>
+        <p>ДПК на полиэтилене растягивается на 30–70 миллионных долей на градус — в 6–14 раз больше дерева вдоль волокон и в 2,5–6 раз больше стали.</p>
+        <div class="calc" id="calc-exp">
+          <div class="row">
+            <label>Длина детали, мм<input type="number" id="ce-len" value="4000" min="0" step="10" inputmode="numeric"></label>
+            <label>Перепад температур, °C<input type="number" id="ce-dt" value="60" min="0" step="5" inputmode="numeric"></label>
+          </div>
+          <div class="calc-out" id="ce-out"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🪵 Жёсткость и ползучесть</h3>
+        <p>Модуль упругости ДПК 2–5,5 ГПа против 10–12 у сосны и 210 у стали. Прогиб лаги 50×30 под 50 кг: 2,3 мм на пролёте 40 см и уже 18 мм на 80 см (оценка).</p>
+        <p class="small"><b>Ползучесть</b> — медленное оседание под постоянным грузом, сильнее на жаре. В голландском опыте при 50 °C три образца из четырёх сломались за 3 недели. <b>Поэтому нужны стержни:</b> стеклопластик в опыте с ПВХ-ДПК поднял предельную нагрузку на 257 % и снизил ползучесть. Полнотелый брус 50×30 плашмя жёстче пустотелой лаги всего в ~1,2 раза — выручает не он, а стержень.</p>
+      </div>
+      <div class="card">
+        <h3>⏳ Сколько прослужит</h3>
+        <p>По методике НИЦ «ДПК»: если после 20 циклов «ускоренного старения» прочность упала не больше чем на 5 % — срок больше 10 лет; до 10 % — больше 5 лет; <b>до 20 % (граница ГОСТ) — всего не меньше 2 лет.</b></p>
+        <p class="small">Гарантии: ДекМастер лага 1 год (по дилеру; на другие изделия 5 лет), Holzhof 2, Ecodecking 2, ТехноПарк 2, Woodgrand 3, Greenwerk 3, Polydeck 3, Варяжский 5, MultiDeck лага 5, Grand Line 5, Terrapol 10, MasterDeck 10 (доска), Savewood 15. Гарантии почти всегда исключают распил, землю и воду.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:22px">Сравнение с деревом, металлом и пластиком</h3>
+    <div class="grid g2">
+      <div class="card">
+        <h4 style="margin:0 0 4px">Цена погонного метра, ₽ (диапазон по магазинам)</h4>
+        <div class="chart-legend"><span><i class="sw" style="background:var(--series-2)"></i>ДПК и МПК</span><span><i class="sw" style="background:var(--series-1)"></i>другие материалы</span></div>
+        <div class="chart-box"><canvas id="ch-price" aria-label="Диаграмма цен за метр"></canvas></div>
+        <p class="small muted">Полоска — от самой низкой до самой высокой найденной цены. ДекМастер 50×30: 269–363 ₽/м.</p>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 4px">Жёсткость на изгиб, во сколько раз больше, чем у лаги ДПК 50×30</h4>
+        <div class="chart-legend"><span><i class="sw" style="background:var(--series-2)"></i>ДПК</span><span><i class="sw" style="background:var(--series-1)"></i>другие материалы</span></div>
+        <div class="chart-box"><canvas id="ch-stiff" aria-label="Диаграмма жёсткости"></canvas></div>
+        <p class="small muted">Оценка по формулам (жёсткость = модуль × момент инерции сечения), лага лежит плашмя, стенки 5 мм, E = 3 ГПа.</p>
+      </div>
+    </div>
+    <div class="tbl-wrap" style="margin-top:12px;max-height:none">
+      <table class="simple" id="t-alt">
+        <thead><tr><th>Материал</th><th>Цена, ₽/м</th><th>Вес, кг/м</th><th>Жёсткость E, ГПа</th><th>Расширение 4 м на 60 °C</th><th>Горючесть</th><th>Минусы для нас</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="zavody">
+  <div class="wrap">
+    <h2>Заводы и ассортимент</h2>
+    <p class="lead">Все лаги и брусья, которые нашли у российских производителей и крупных продавцов. Цены за метр — с сайтов на 29.09.2026 (где указано иначе — дата в строке). «₽ за хлыст» — цена одной палки той длины, что в строке. Нажмите на заголовок столбца, чтобы отсортировать.</p>
+    <div class="filters" id="f-lag">
+      <label>Поиск<input type="search" id="fl-q" placeholder="завод, размер, слово…"></label>
+      <label>Размер<select id="fl-size"><option value="all">все размеры</option><option value="near">около 50×30 (±10 и ±5 мм)</option><option value="exact">ровно 50×30 / 30×50</option></select></label>
+      <label>Тип сечения<select id="fl-hol"><option value="all">любое</option><option value="полая">пустотелые</option><option value="полнотелая">полнотелые</option><option value="н/д">не указано</option></select></label>
+      <label>Основа<select id="fl-base"><option value="all">любая</option><option>ПЭ</option><option>ПП</option><option>ПВХ</option><option>МПК</option><option>н/д</option><option value="ПС">полистирол (не ДПК)</option></select></label>
+      <label>Что<select id="fl-kind"><option value="all">лаги и брус</option><option value="лага">только лаги</option><option value="брус">только брус</option></select></label>
+      <div class="count" id="fl-count"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table id="t-lag">
+        <thead><tr>
+          <th class="sortable" data-k="m">Завод</th>
+          <th class="sortable" data-k="a">Изделие</th>
+          <th class="sortable" data-k="sz">Сечение, мм</th>
+          <th>Длина</th>
+          <th class="sortable" data-k="t">Пустот.</th>
+          <th>Камеры</th>
+          <th>Стенка, мм</th>
+          <th class="sortable" data-k="kg">кг/м</th>
+          <th class="sortable" data-k="b">Основа</th>
+          <th>Коэкстр.</th>
+          <th>Цвета</th>
+          <th>Пожар</th>
+          <th>Гарантия</th>
+          <th class="sortable asc" data-k="p">₽/м</th>
+          <th class="sortable" data-k="ps">₽ за хлыст</th>
+          <th>Дата</th>
+          <th>Ссылка</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:6px">Выделены строки 50×30 / 30×50. «оц.» — наша оценка, не цифра завода. Вес «кг/м» почти никто не публикует; где он от дилера — сказано в примечании при наведении на строку.</p>
+
+    <h3 style="margin-top:26px">Уголки, заглушки, столбы и балясины</h3>
+    <p class="small"><b>Заглушки торца пустотелой лаги как товара нет ни у кого.</b> Есть заглушки под брус 70×40 (Savewood, 168 ₽) и 40×90 (Ecodecking, 120 ₽), под балясины и доски. Торцы 50×30 придётся закрывать уголком или накладкой или делать самим.</p>
+    <div class="filters" id="f-acc">
+      <label>Поиск<input type="search" id="fa-q" placeholder="завод, размер…"></label>
+      <label>Что<select id="fa-type"><option value="all">всё</option><option>уголок</option><option>заглушка</option><option>столб</option><option>балясина</option><option>перила</option></select></label>
+      <div class="count" id="fa-count"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table id="t-acc">
+        <thead><tr><th class="sortable asc" data-k="m">Завод</th><th class="sortable" data-k="ty">Что</th><th>Размер, мм</th><th>кг/м</th><th>Цвета</th><th class="sortable" data-k="p">₽/м</th><th>Цена как на сайте</th><th>Примечание</th><th>Ссылка</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:26px">Кто есть кто: карточки заводов</h3>
+    <div class="filters">
+      <label>Показать<select id="fm-type"><option value="all">всех</option><option value="завод">только настоящие заводы</option><option value="5030">у кого есть 50×30 или 30×50</option><option value="risk">с тревожными пометками</option></select></label>
+      <button class="btn" id="fm-open" type="button">Раскрыть все</button>
+    </div>
+    <div class="grid g3" id="makers"></div>
+  </div>
+</section>
+
+<section id="p02">
+  <div class="wrap">
+    <h2>Что это значит для P-02</h2>
+    <div class="callout bad">
+      <p><b>Цена лаги в расчётах P-02 занижена примерно в 4 раза.</b> 363 ₽ — это за метр (дилер: «363 ₽ за 1 м.п., 1 089 ₽ за 3 м»; сам ДекМастер: «от 269 ₽»). Хлыст 4 м стоит 1 076–1 452 ₽, а не 363 ₽.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><h3>Брусок 497 мм (8 из хлыста)</h3><p class="big">≈182 ₽</p><p class="small">при 363 ₽/м (≈135 ₽ при 269 ₽/м), а в расчётах стоит ≈45 ₽.</p></div>
+      <div class="card"><h3>Комплект (≈81 м ДПК, карта поставщиков)</h3><p class="big">≈29 400 ₽</p><p class="small">при 363 ₽/м; ≈21 800 ₽ при 269 ₽/м; ≈20 500 ₽ у Ecodecking (253 ₽/м). Если считать 363 ₽ за хлыст — выходило бы ≈7 350 ₽.</p></div>
+      <div class="card"><h3>Вес хлыста</h3><p class="big">5–6 кг</p><p class="small">ожидаем по рынку (1,1–1,5 кг/м). В карточке ДекМастера «1 кг» — не верить, пока не взвесим. От веса зависят прочность, упаковка и доставка.</p></div>
+    </div>
+    <div class="two" style="margin-top:14px">
+      <div class="card">
+        <h3>Что брать (кандидаты на образцы)</h3>
+        <ul class="steps">
+          <li><b>Пустотелая лага ровно 50×30:</b> Ecodecking «Экстра» (253 ₽/м, 1,5 кг/м — толстые стенки), Polywood профиль 50×30 (380 ₽/м, 1,27 кг/м, одна камера, пожарная Г2), Polydeck Орёл (280 ₽/м), Goodeck (230 ₽/м), NanoWood (255 ₽/м), ДекМастер (269–363 ₽/м). Рядом по размеру: ITP 50×35 (267 ₽/м, 1,2 кг/м), Greenwerk 30×50 (300 ₽/м, 2 камеры, гарантия 3 года), Невский 55×30 на ПВХ (303 ₽/м).</li>
+          <li><b>Полнотелый брус 50×30</b> (сверлить и фрезеровать проще, торцы не нужно закрывать): Polydeck 450, ITP 562, Terradeck 695, Savewood 50×31 700, Polywood 800 ₽/м. Дороже в 1,5–3 раза и тяжелее (1,8–2,1 кг/м).</li>
+          <li><b>Свой профиль с пазом и отверстиями</b> — только заказом новой фильеры: Holzhof (контрактное производство), Hideck (Пермь, «любое сечение»), ITP, Lecole, Мербау, Polywood. Партии обычно от тысяч метров.</li>
+          <li><b>Лист</b> — Woggel 4 мм (или Полигаль Колибри), <b>стержень</b> — УралАрмоПром АСП-12 хлыстами 2–3 м или гладкий ССО-12 (подробно ниже).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>На что смотреть при выборе лаги</h3>
+        <ul class="steps">
+          <li><b>Цена за метр или за штуку</b> — у половины сайтов единица подписана небрежно.</li>
+          <li><b>Внутренняя камера</b> должна быть шире 13 мм по короткой стороне, если стержень идёт через камеру; у 50×30 со стенками 5 мм камера около 20 мм — хватает.</li>
+          <li><b>Допуски</b>: по ТУ Polywood сечение ±2 мм, кривизна до 5–6 мм на метр; у Невского композита ширина ±1 мм, высота ±0,5 мм. Для паза под лист это важно — мерить образец.</li>
+          <li><b>Одна партия на заказ</b> — оттенок муки плавает от партии к партии.</li>
+          <li><b>Гарантия письменно</b> на применение «на виду, с распилом, рядом с землёй» — стандартные гарантии это исключают.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="listy">
+  <div class="wrap">
+    <h2>Листы для вставок в паз</h2>
+    <p class="lead">Вставке нужны: толщина 3–6 мм, защита от солнца <b>с обеих сторон</b> (обе стороны на улице) и зазор на расширение. Лучший выбор — монолитный (сплошной) поликарбонат 4 мм; если паз уже 3,5 мм — 3 мм.</p>
+    <div class="filters">
+      <label>Тип<select id="fs-type"><option value="all">все</option><option value="монолитный ПК">монолитный поликарбонат</option><option value="сотовый ПК">сотовый поликарбонат</option><option value="прочее">другие материалы</option></select></label>
+      <div class="count" id="fs-count"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table id="t-sheet">
+        <thead><tr><th class="sortable" data-k="m">Производитель</th><th>Марка</th><th>Тип</th><th>Толщины</th><th>Цвета</th><th>Защита от солнца</th><th>Пожар</th><th>Гарантия</th><th class="sortable asc" data-k="p">₽/м² (≈4 мм)</th><th>Паспорт / страница</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="two" style="margin-top:14px">
+      <div class="card">
+        <h3>Рекомендация</h3>
+        <ol class="steps">
+          <li><b>База: Woggel (КИН), 4 мм</b> — 2 189 ₽/м² прозрачный, 2 298 бронза, 2 407 тёмная бронза; есть дымчатый графит и коричневый под цвет ДПК; гарантия 20 лет. Проверить: двусторонний ли УФ-слой (в паспорте и письменно) и реальную толщину — по весу 4,2 кг/м² лист может быть тоньше 4 мм.</li>
+          <li><b>Премиум по документам: Полигаль Восток</b> — Колибри 4 мм (2 353 ₽/м²) или Моногаль бронза 40 % (2 601 ₽/м²). УФ с двух сторон написан прямо, ГОСТ 72007-2025, пожарный Г3 (FR-версия Г1), гарантия 14–15 лет.</li>
+          <li><b>Если нужен «молочный» (скрыть землю):</b> Novattro опал/молочный (СафПласт, цена по запросу), Полидин «молочный» (15–25 лет, цена по запросу), Borrex опал (1 890–2 520 ₽/м²), Полигаль Колибри белый 30 % 3 мм (1 852 ₽/м²). Слоновой кости в листах ПК не нашли.</li>
+          <li><b>Не брать:</b> вспененный ПВХ UNEXT (сам завод пишет — не для прямого солнца), ПЭТ-Г (нет УФ), акрил (хрупче, царапается), HPL (в 3–5 раз дороже), сотовый ПК (в каналах грязь и конденсат).</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Зазор на расширение листа</h3>
+        <p class="small">Поликарбонат растягивается на 0,065 мм на метр на каждый градус. Тёмный лист на солнце греется сильнее — закладываем запас.</p>
+        <div class="calc">
+          <div class="row">
+            <label>Ширина вставки, мм<input type="number" id="cs-len" value="500" min="0" step="10" inputmode="numeric"></label>
+            <label>Перепад, °C<input type="number" id="cs-dt" value="70" min="0" step="5" inputmode="numeric"></label>
+            <label>Толщина листа по замеру, мм<input type="number" id="cs-th" value="4" min="0" step="0.1" inputmode="decimal"></label>
+          </div>
+          <div class="calc-out" id="cs-out"></div>
+        </div>
+        <p class="small muted" style="margin-top:8px">Плёнку снимать после сборки. У листов с УФ только с одной стороны — защищённой стороной наружу (у вставки обе стороны на солнце, поэтому брать двусторонние).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sterzhni">
+  <div class="wrap">
+    <h2>Стержни Ø12 (стеклопластик и базальт)</h2>
+    <p class="lead">Стержень работает как шпилька-стяжка сквозь стопку брусков. Прочности у любого Ø12 хватает с огромным запасом (десятки килоньютонов). Выбор решают <b>посадка в отверстие 13 мм, прямизна, солнце на торце и цена</b>.</p>
+    <div class="two">
+      <div class="card diam">
+        <h3>Почему «Ø12» бывает разной толщины</h3>
+        <svg viewBox="0 0 600 300" role="img" aria-label="Сравнение диаметров стержней с отверстием 13 мм">
+          <g font-size="19">
+            <g transform="translate(100,95)">
+              <circle r="71.5" class="d-hole-fill"/>
+              <circle r="74" class="d-rib" style="stroke:var(--bad)"/>
+              <circle r="60" class="d-rod"/>
+              <circle r="71.5" class="d-hole" stroke-dasharray="6 4"/>
+              <text y="112" text-anchor="middle" class="d-ink" font-weight="600">«ГОСТ» Ø12</text>
+              <text y="137" text-anchor="middle" class="d-muted">по виткам ≈13–14</text>
+              <text y="164" text-anchor="middle" class="d-bad" font-weight="600">может не пройти</text>
+            </g>
+            <g transform="translate(300,95)">
+              <circle r="71.5" class="d-hole-fill"/>
+              <circle r="60.5" class="d-rib"/>
+              <circle r="49.5" class="d-rod"/>
+              <circle r="71.5" class="d-hole" stroke-dasharray="6 4"/>
+              <text y="112" text-anchor="middle" class="d-ink" font-weight="600">«ТУ» по ребру</text>
+              <text y="137" text-anchor="middle" class="d-muted">по виткам 11–12</text>
+              <text y="164" text-anchor="middle" class="d-good" font-weight="600">проходит</text>
+            </g>
+            <g transform="translate(500,95)">
+              <circle r="71.5" class="d-hole-fill"/>
+              <circle r="68.2" class="d-rod2"/>
+              <circle r="71.5" class="d-hole" stroke-dasharray="6 4"/>
+              <text y="112" text-anchor="middle" class="d-ink" font-weight="600">гладкий ССО-12</text>
+              <text y="137" text-anchor="middle" class="d-muted">12 ± 0,4 мм</text>
+              <text y="164" text-anchor="middle" class="d-good" font-weight="600">свободно</text>
+            </g>
+          </g>
+        </svg>
+        <div class="chart-legend" style="margin-bottom:8px"><span><i class="sw" style="background:var(--accent)"></i>тело стержня</span><span><i class="sw" style="border:2px dashed var(--accent)"></i>навивка (витки)</span><span><i class="sw" style="background:var(--series-1)"></i>гладкий пруток</span><span><i class="sw" style="border:2px dashed var(--ink)"></i>отверстие 13 мм в ДПК</span></div>
+        <p class="small">По ГОСТ 31938-2022 «номинальный диаметр» — это диаметр гладкого круга с той же площадью (для Ø12 — 113 мм², масса ≥0,232 кг/м). Наружный размер по виткам всегда больше. МЗПКК прямо различает: «ГОСТ — по стержню, без нити», «ТУ — по ребру, с нитью» (0,15 кг/м). У продавца Армада «ТУ Ø12»: по рёбрам 11,0 мм, по стволу 9,0 мм. Покупатели Etiz «Ø12» намеряли 11 мм.</p>
+      </div>
+      <div class="card">
+        <h3>Рекомендация</h3>
+        <ol class="steps">
+          <li><b>По цене: УралАрмоПром АСП-12 «Стандарт»</b> в прямых хлыстах 2 или 3 м — 30 ₽/м, 0,150 кг/м («по ребру»), эпоксидная смола; единственный завод с короткими хлыстами 1–3 м в каталоге (бухты после размотки кривые). Запас: Композит 21 (хлысты 3 м, 1 107 МПа), МЗПКК «ТУ» (39 ₽/м, но в бухтах).</li>
+          <li><b>Аккуратно и ровно: гладкий «Пулгласс» ССО-12</b> (Рускомпозит/Стеклонит) — 12 ± 0,4 мм, режут 200–3 000 мм с точностью ±5 мм; гладкий не цепляет ДПК. Цена по запросу, у похожих гладких 160–535 ₽/м. Альтернатива — БЗС (≥1 100 МПа, любая длина).</li>
+          <li><b>Красиво, без витков: Гален ROCKBAR АКБ-12</b> (базальт, песчаная поверхность) — 76,80 ₽/м; наружный диаметр не опубликован, нужен образец.</li>
+          <li><b>Не брать</b> «ГОСТ»-вариант 0,232 кг/м под отверстие 13 мм (МЗПКК ГОСТ, Армпласт ГОСТ, Ивановские ГОСТ) — сверлить пришлось бы 14–15 мм.</li>
+        </ol>
+        <div class="callout warn">
+          <p><b>Торец на солнце.</b> Смола стеклопластика под ультрафиолетом мелится и становится хрупкой, волокна «вылезают». УФ-стойкой арматуры не заявляет никто. Верхний торец закрыть колпачком из УФ-стойкого пластика на клею или гайкой с широкой шайбой и покрасить срез УФ-стойким лаком (это вариант на согласование, не новая деталь без вашего решения). Резьбу на стеклопластике не нарезать. Длительно — не выше +60…+70 °C: чёрный ДПК на солнце бывает горячее.</p>
+        </div>
+      </div>
+    </div>
+    <div class="filters" style="margin-top:14px">
+      <label>Показать<select id="fr-type"><option value="all">все</option><option value="ребристая">ребристые (арматура)</option><option value="гладкий">гладкие прутки</option></select></label>
+      <div class="count" id="fr-count"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table id="t-rod">
+        <thead><tr><th class="sortable" data-k="m">Производитель</th><th>Изделие</th><th>Тип</th><th>Ø по бумаге</th><th>Ø на деле</th><th>Прочность, МПа</th><th>кг/м</th><th>Прямые куски</th><th class="sortable asc" data-k="p">₽/м</th><th>В отверстие 13 мм</th><th>Ссылка</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="chertezhi" class="drawings">
+  <div class="wrap">
+    <h2>Чертежи сечений</h2>
+    <p class="lead">Публичные чертежи с размерами есть только у Grand Line и ТехноПарк ДПК; у Polywood — альбом технических решений в PDF. Картинки — собственность заводов (права не оговорены): только для сравнения, не для публикации.</p>
+    <div class="grid g2" id="drawings"></div>
+    <p class="small" style="margin-top:10px">Ещё чертежи Grand Line: <a href="https://www.grandline.ru/file/pim/s/chertezh-laga-montazhnaya-reyka-dpk-gl-35kh40mm-1641030.jpg" target="_blank" rel="noopener">лага 35×40</a>, <a href="https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/ugol-gl-56-56.jpg" target="_blank" rel="noopener">угол 56×56</a>, <a href="https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/gryadochnaya-doska-gl-150-30.jpg" target="_blank" rel="noopener">грядочная 150×30</a>, <a href="https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/stolb-gl-100-100.jpg" target="_blank" rel="noopener">столб 100×100</a> — все на странице <a href="https://www.grandline.ru/dokumenty/chertezhi/" target="_blank" rel="noopener">grandline.ru/dokumenty/chertezhi</a>. Polywood: <a href="https://www.polywood.ru/upload/iblock/f60/0mxa6vjh72x0549n1i9opm2znpm860t4/ATR_Polywood.pdf" target="_blank" rel="noopener">альбом ТР 12167 (PDF)</a>. Holzhof: <a href="https://holzhof.ru/wp-content/themes/holzhof/dist/img/catalog/planters/eco-150/size.png" target="_blank" rel="noopener">размеры грядки Eco</a>. Фото сечений: <a href="https://dpk-t.ru/uploadedFiles/eshopimages/big/laga-osn.jpg" target="_blank" rel="noopener">WPC-ТеХно лага 40×30 (2 камеры)</a>, <a href="https://techno-deck.ru/33-small_dpk/laga-montazhnaja-iz-dpk.jpg" target="_blank" rel="noopener">ТехноДек 35×45</a>, <a href="https://masterdeck.ru/files/gallery/245/big/laga-1001590664_1593094685.jpg" target="_blank" rel="noopener">MasterDeck 40×30</a>, <a href="https://green-werk.ru/upload/dev2fun.imagecompress/webp/iblock/27f/plxcskyyzomifz3oi68xyeq9dir496wk/IMG_0095.webp" target="_blank" rel="noopener">Greenwerk 30×50 (2 камеры)</a>, <a href="https://static.tildacdn.com/tild3662-6538-4961-b838-326265633335/laga111-500x500_1.png" target="_blank" rel="noopener">Harvex 30×40</a>.</p>
+  </div>
+</section>
+
+<section id="proverit">
+  <div class="wrap">
+    <h2>Что проверить на образцах и звонками</h2>
+    <div class="two">
+      <div class="card">
+        <h3>На образцах (своими руками)</h3>
+        <ol class="steps">
+          <li><b>Взвесить хлыст 4 м</b> каждой лаги: ждём 5–6 кг. По ГОСТ масса метра может отличаться от заявленной только на −5…+10 %.</li>
+          <li><b>Распилить и замерить</b> штангенциркулем: наружный размер, стенки, рёбра, камеры (50×30 или 50×35 — у ДекМастера в карточке и сертификате разное).</li>
+          <li><b>Кипячение</b>: кусок 200 мм взвесить, кипятить 2 часа, обтереть, взвесить — прибавка до 5 %; замерить набухание.</li>
+          <li><b>Солнце и земля</b>: кусок на месяц на солнце на влажной земле — цвет, налёт, плесень.</li>
+          <li><b>Стержни</b>: замерить наружный диаметр по виткам в 5 точках, просверлить в ДПК отверстие 13 мм и протащить; положить хлыст 2 м на ровный стол — измерить прогиб; взвесить метр.</li>
+          <li><b>Лист</b>: замерить реальную толщину; паз = толщина по замеру + 0,5–1 мм; найти, с какой стороны УФ-слой.</li>
+          <li><b>Нагрузка</b>: брусок на двух опорах 500 мм, груз 50 кг на неделю в жару — замерить, насколько просел и вернулся ли.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Звонками и письмами</h3>
+        <ol class="steps">
+          <li><b>ДекМастер</b> (8-499-346-70-89, info@dekmaster.ru): цена за метр или за хлыст и оптовая; чертёж сечения; вес метра; адрес завода; пожарный протокол <i>именно на лагу</i>; состав (первичный ли ПНД); гарантия письменно; почему юрлицо 2023 при «8 лет на рынке».</li>
+          <li><b>Все кандидаты на лагу</b> (Ecodecking, Polywood, Polydeck, Goodeck, ITP, Greenwerk): чертёж и вес, размер камеры, одна партия на заказ, цена от 1 000 м.</li>
+          <li><b>Свой профиль</b>: Holzhof (8-800-775-34-23, контрактное производство), Hideck (+7 952 322-71-19), ITP (+7 495 104-55-95), Роскомпозит (+7 495 136-87-76) — стоимость фильеры и минимальная партия профиля с пазом и отверстиями.</li>
+          <li><b>Листы</b>: КИН — двусторонний ли УФ у Woggel; СафПласт и Полидин — цена опала/молочного 3–4 мм; порезка в размер.</li>
+          <li><b>Стержни</b>: УралАрмоПром — наружный диаметр АСП-12 числом; Рускомпозит/Стеклонит — цена и минимальная партия ССО-12; Армастек — бесплатные образцы.</li>
+          <li><b>Пожар</b>: у каждого завода — протокол на конкретное изделие, а не «на линейку».</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="istochniki">
+  <div class="wrap">
+    <h2>Источники</h2>
+    <p class="small muted">Все страницы открывались 29.09.2026. Файлы (фото, PDF) не скачивались; группы горючести из сканов читались распознаванием текста — перед закупкой сверять по оригиналу.</p>
+    <ul class="src-list" id="sources"></ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Собрано из заметок «Материал ДПК характеристики» (01–05) и карты поставщиков. Полный текст с выводами — отчёт «Материал ДПК характеристики.md». Цены розничные и быстро меняются; оптовые — только по запросу.</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+"use strict";
+/* ============ ДАННЫЕ ============ */
+// Лаги и брус. m-завод, a-изделие, w×h, L-длина(текст), Ls-длина хлыста для расчёта (м), t-полая/полнотелая/н/д, ch-камеры, wl-стенка,
+// kg-кг/м (число или null), kgt-текст веса, b-основа, cx-коэкстр., col-цвета, f-пожар, g-гарантия, p-₽/м (число), pt-текст цены, ps-текст цены хлыста, d-дата, u-ссылка, n-примечание, k-лага/брус
+const LAGS = [
+ {m:"ДекМастер",a:"Лага монтажная 50×30×4000 (LAGA-50X30X4000)",w:50,h:30,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,kgt:"«1 кг» в карточке — не верить",b:"ПЭ",cx:"нет",col:"не указаны",f:"Г4/В3/Д3/Т3 (сертификат на доски, лага не названа)",g:"1 год (дилер); 5 лет на др. изделия",p:363,pt:"363 розница (dpk-decking, torgsp: 1 089 ₽ за 3 м); «от 269» dekmaster.ru",d:"29.09.2026",u:"https://dpk-decking.ru/laga-dpk-50x30x4000",n:"70 % муки / 30 % ПНД; сертификат соответствия добровольный по ТУ: «Лага 50*35», «Брус 50*30»",k:"лага"},
+ {m:"Holzhof",a:"Лага 50×40 (joist-large)",w:50,h:40,L:"4000",Ls:4,t:"полая",ch:"2 доп. ребра",wl:"н/д",kg:1.4,kgt:"1,4 (дилер 1,2)",b:"ПЭ",cx:"нет",col:"1 (коричневый)",f:"н/д (сертификат Г2 2015–2018 устарел)",g:"2 года",p:310,d:"29.09.2026",u:"https://holzhof.ru/home/catalog-subsystem/joist-large/",n:"канавки под клипсы и кляймеры; «только для подсистемы на регулируемых опорах»",k:"лага"},
+ {m:"Holzhof",a:"Лага 40×35 (joist-small)",w:40,h:35,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:1.1,b:"ПЭ",cx:"нет",col:"1 (коричневый)",f:"н/д",g:"2 года",p:210,d:"29.09.2026",u:"https://holzhof.ru/home/catalog-subsystem/joist-small/",n:"пазы под кляймеры",k:"лага"},
+ {m:"Woodgrand",a:"Лага ДПК 40×25 (полнотелая)",w:40,h:25,L:"4000",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:null,kgt:"≈1,3–1,4 оц.",b:"ПЭ",cx:"нет",col:"1 (чёрный)",f:"Г4/В3/Д3/Т4/РП4 (декларация линейки)",g:"3 года",p:169,pt:"676 ₽ за 4 м",d:"29.09.2026",u:"https://woodgrand.ru/katalog/laga-dpk-40x25mm/",k:"лага"},
+ {m:"Woodgrand",a:"Усиленная лага 40×55",w:40,h:55,L:"4000",Ls:4,t:"полая",ch:"с ребром жёсткости",wl:"6",kg:null,b:"ПЭ",cx:"нет",col:"1 (антрацит)",f:"Г4/В3/Д3/Т4/РП4 (декл.)",g:"3 года",p:299,pt:"1 196 ₽ за 4 м",d:"29.09.2026",u:"https://woodgrand.ru/katalog/laga-dpk-40x55mm/",n:"стенки 6 мм «держат саморез»",k:"лага"},
+ {m:"Woodgrand",a:"Брус лавочный 40×30",w:40,h:30,L:"3000, 4000",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:1.63,b:"ПЭ",cx:"нет",col:"5",f:"Г4/В3/Д3/Т4/РП4 (декл.)",g:"3 года (МПК-цвета 5)",p:449,d:"29.09.2026",u:"https://woodgrand.ru/katalog/brus-lavochnyy-40x30/",n:"терракот/орех/grigio, вероятно, МПК; шаг опор ≤50 см",k:"брус"},
+ {m:"Варяжский композит",a:"Лага ДПК 50×40",w:50,h:40,L:"3000, 4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:1.36,b:"ПЭ",cx:"нет",col:"1 (венге)",f:"н/д (сертификатов на сайте нет)",g:"5 лет",p:374,pt:"от 374",d:"29.09.2026",u:"https://varyag-composit.ru/catalog/terrasnaya-doska-i-komplektuyushchie/krepezh-dlya-terrasnoy-doski/laga-dpk-50x40-mm/",n:"60 % муки / 30 % ПНД",k:"лага"},
+ {m:"Terrapol",a:"Лага для террасной доски 50×35 (oid=330)",w:50,h:35,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,kgt:"н/д (дилер: 1,24)",b:"ПП",cx:"нет",col:"не указаны",f:"Г4 (доска, у дилера)",g:"10 лет (сайт); 1–2 г. у дилеров",p:447,pt:"1 788 ₽ за 4 м (дилеры 240–267 ₽/м)",d:"29.09.2026",u:"https://terrapol.ru/product/Soputstvuyushie-tovari/komplektuyushchie-dlya-terrasnoy-doski/lagi/laga/?oid=330",n:"«лага не несущая» (у дилера)",k:"лага"},
+ {m:"Savewood",a:"Универсальный профиль (лага) 48×33",w:48,h:33,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"ПВХ",cx:"нет",col:"не выбираются",f:"н/д (Г1 — только с минералом, под заказ)",g:"15 лет",p:261,d:"29.09.2026",u:"https://www.savewood.ru/product/aksessuary/universalnyj-profil-laga/",n:"60 % муки / 40 % ПВХ",k:"лага"},
+ {m:"Savewood",a:"Лага усиленная 50×40",w:50,h:40,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"ПВХ",cx:"нет",col:"по заказу",f:"н/д",g:"15 лет",p:420,d:"29.09.2026",u:"https://www.savewood.ru/product/aksessuary/laga-usilennaya/",k:"лага"},
+ {m:"Savewood",a:"Брус лавочный полнотелый 50×31",w:50,h:31,L:"4000",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"ПВХ",cx:"нет",col:"7",f:"н/д",g:"15 лет",p:700,d:"29.09.2026",u:"https://www.savewood.ru/product/universalnye-profili/brus-lavochniy-dpk/",k:"брус"},
+ {m:"Savewood",a:"Брус 50×31 пустотелый (балясина)",w:50,h:31,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"ПВХ",cx:"нет",col:"7",f:"н/д",g:"15 лет",p:370,d:"29.09.2026",u:"https://www.savewood.ru/product/zabory-i-ograzhdeniya/balyasina/",k:"брус"},
+ {m:"Savewood",a:"Брус лавочный пустотелый 70×40",w:70,h:40,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"ПВХ",cx:"нет",col:"7",f:"н/д",g:"15 лет",p:522,d:"29.09.2026",u:"https://www.savewood.ru/product/zabory-i-ograzhdeniya/brus-lavochnyj-dpk-70x40-mm/",n:"есть заглушка 70×40 — 168 ₽/шт",k:"брус"},
+ {m:"Ecodecking",a:"Лага монтажная «Экстра» 50×30",w:50,h:30,L:"3000, 4000",Ls:4,t:"н/д",ch:"н/д (по весу почти сплошная)",wl:"н/д",kg:1.5,b:"н/д",cx:"нет",col:"не указаны",f:"н/д (есть сертификат ПБ, не прочитан)",g:"2 года",p:253,d:"29.09.2026",u:"https://eco-decking.ru/katalog/komplektuyushchie/laga_montazhnaya_ecodecking_ekstra_50kh30/",n:"«для коммерческих объектов»; −45…+50 °C",k:"лага"},
+ {m:"Ecodecking",a:"Лага монтажная «Титан» 60×35",w:60,h:35,L:"3000, 4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:1.7,b:"н/д",cx:"нет",col:"не указаны",f:"н/д",g:"2 года",p:393,d:"29.09.2026",u:"https://eco-decking.ru/katalog/komplektuyushchie/laga_montazhnaya_ecodecking_titan_60kh35/",k:"лага"},
+ {m:"Ecodecking",a:"Лавочный брус «Некст» 70×35 полнотелый",w:70,h:35,L:"н/д",Ls:null,t:"полнотелая",ch:"0",wl:"—",kg:3.5,b:"н/д",cx:"нет",col:"не указаны",f:"н/д",g:"2 года",p:689,pt:"689 глянец / 776 браш",d:"29.09.2026",u:"https://eco-decking.ru/katalog/lavochnyy-brus-iz-dpk/lavochnyy_brus_ecodecking_nekst_polnotelyy_glyantsevyy_70kh35/",k:"брус"},
+ {m:"Ecodecking",a:"Лавочный брус «Некст» 40×90 пустотелый",w:90,h:40,L:"н/д",Ls:null,t:"полая",ch:"н/д",wl:"н/д",kg:2.2,b:"н/д",cx:"нет",col:"не указаны",f:"н/д",g:"2 года",p:657,d:"29.09.2026",u:"https://eco-decking.ru/katalog/lavochnyy-brus-iz-dpk/lavochnyy_brus_ekodeking_nekst_40kh90/",n:"есть заглушка 40×90 — 120 ₽/шт",k:"брус"},
+ {m:"Grand Line",a:"Лага (монтажная рейка) 35×40",w:40,h:35,L:"3000, 4000",Ls:4,t:"н/д",ch:"см. чертёж",wl:"см. чертёж",kg:null,b:"ПЭ",cx:"нет",col:"1 (венге)",f:"н/д",g:"5 лет",p:275,pt:"825 ₽ за 3 м, 1 100 ₽ за 4 м",d:"29.09.2026",u:"https://www.grandline.ru/laga-montaznaa-rejka-dpk-gl-35h40mm-venge-4m-797394.html",n:"публичный чертёж",k:"лага"},
+ {m:"Grand Line",a:"Лага «новая» 35×50",w:50,h:35,L:"3000, 4000",Ls:4,t:"н/д",ch:"см. чертёж",wl:"см. чертёж",kg:null,b:"ПЭ",cx:"нет",col:"1 (венге)",f:"н/д",g:"5 лет",p:295,pt:"885 ₽ за 3 м, 1 180 ₽ за 4 м",d:"29.09.2026",u:"https://www.grandline.ru/laga-dpk-montaznaa-rejka-grandline-new-35h50mm-3m-venge-553681.html",n:"публичный чертёж",k:"лага"},
+ {m:"Grand Line",a:"Лага 30×50 грядочная, 1,5 м",w:50,h:30,L:"1500",Ls:1.5,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"ПЭ",cx:"нет",col:"1 (венге)",f:"н/д",g:"5 лет",p:null,pt:"под заказ",d:"29.09.2026",u:"https://www.grandline.ru/laga-dpk-montaznaa-rejka-grandline-30h50mm-15-m-venge-396955.html",n:"для грядок со стяжками",k:"лага"},
+ {m:"Grand Line",a:"Брус массив 50×30",w:50,h:30,L:"н/д",Ls:null,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"ПЭ",cx:"нет",col:"н/д",f:"н/д",g:"5 лет",p:null,pt:"в каталоге не найден, есть только чертёж",d:"29.09.2026",u:"https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/brus-gl-massiv-50-30-chertezh.jpg",k:"брус"},
+ {m:"Grand Line",a:"Брус лавочный 80×22 массив",w:80,h:22,L:"3000, 4000",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"ПЭ",cx:"нет",col:"8",f:"н/д",g:"5 лет",p:705,pt:"2 115 ₽ за 3 м, 2 820 ₽ за 4 м (бронза и др. дороже)",d:"29.09.2026",u:"https://www.grandline.ru/brus-lavocnyj-grand-line-80h22mm-massiv-tisnenie-dve-storony-grafit-3m-sth2-452566.html",k:"брус"},
+ {m:"MasterDeck",a:"Монтажная лага 40×30",w:40,h:30,L:"4000",Ls:4,t:"полая",ch:"1 (по фото)",wl:"н/д",kg:null,b:"ПЭ",cx:"нет",col:"1 (тик)",f:"не заявлена («отказное письмо»)",g:"10 лет на доску; лага н/д",p:195,pt:"780 ₽ за 4 м",d:"29.09.2026",u:"https://masterdeck.ru/krepezhnye-elementy/montazhnaya-laga-masterdeck/",n:"состав 60/30/10 (на досках 70/30)",k:"лага"},
+ {m:"Terradeck",a:"Композитная лага 40×30",w:40,h:30,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"В2/Д3/Т2/РП2/КМ3 (Г не читается)",g:"н/д",p:195,d:"29.09.2026",u:"https://terradeck.ru/kompozit-laga-terradeck4030",n:"«не использовать лагу ДПК как несущую и на открытых террасах»",k:"лага"},
+ {m:"Terradeck",a:"Композитная лага 60×40",w:60,h:40,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"как выше",g:"н/д",p:295,d:"29.09.2026",u:"https://terradeck.ru/kompozit-laga-terradeck",k:"лага"},
+ {m:"Terradeck",a:"Лавочный брус 50×30",w:50,h:30,L:"3000, 4000",Ls:4,t:"полнотелая",ch:"0 (по описанию раздела)",wl:"—",kg:null,b:"н/д",cx:"н/д",col:"6",f:"как выше",g:"2 года",p:695,d:"29.09.2026",u:"https://terradeck.ru/brus-50-30",k:"брус"},
+ {m:"Terradeck",a:"Лавочный брус 100×35",w:100,h:35,L:"3000, 4000, 6000",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"н/д",cx:"н/д",col:"6",f:"как выше",g:"2 года",p:930,d:"29.09.2026",u:"https://terradeck.ru/brus-100-35",k:"брус"},
+ {m:"ITP (Ай-Техпласт)",a:"Лага монтажная 50×35",w:50,h:35,L:"до 6000 (3, 4, 6 м)",Ls:4,t:"полая",ch:"н/д (по весу полая)",wl:"н/д",kg:1.22,kgt:"1,2–1,25 (дилер)",b:"н/д",cx:"н/д",col:"1 (венге)",f:"Г4/В3/Д3/Т4/РП4 (декларация до 2028)",g:"5 лет (со слов дилера)",p:267,pt:"267 (венге 278); у дилера 1 112 ₽ за 4 м",d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-173360210801-laga-montazhnaya-5035mm",n:"в декларации и 50×30, и 50×35",k:"лага"},
+ {m:"ITP (Ай-Техпласт)",a:"Брус массив 50×30",w:50,h:30,L:"до 6000",Ls:3,t:"полнотелая",ch:"0",wl:"—",kg:1.8,kgt:"≈1,8 оц.",b:"н/д",cx:"н/д",col:"12",f:"Г4… (линейка)",g:"н/д",p:562,d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-772247979271-brus-massiv-5030mm",k:"брус"},
+ {m:"ITP (Ай-Техпласт)",a:"Брус массив 60×28 с отверстием",w:60,h:28,L:"до 6000",Ls:3,t:"полнотелая",ch:"отверстие, Ø н/д",wl:"—",kg:null,b:"н/д",cx:"н/д",col:"12",f:"Г4… (в декларации)",g:"н/д",p:474,d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-121706626392-brus-massiv-60h28mm-s-otverstiem",n:"единственный найденный брус с отверстием",k:"брус"},
+ {m:"ITP (Ай-Техпласт)",a:"Брус массив 60×28",w:60,h:28,L:"до 6000",Ls:3,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"н/д",cx:"н/д",col:"12",f:"Г4…",g:"н/д",p:567,d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-566518400481-brus-massiv-60h28mm",k:"брус"},
+ {m:"ITP (Ай-Техпласт)",a:"Лавочный брус МПК 50×30",w:50,h:30,L:"до 6000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"МПК",cx:"н/д",col:"6",f:"н/д",g:"н/д",p:564,d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-984187796331-lavochnii-brus-mpk-5030mm",k:"брус"},
+ {m:"ITP (Ай-Техпласт)",a:"Лага монтажная МПК 50×35",w:50,h:35,L:"до 6000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"МПК",cx:"н/д",col:"1 (каштан)",f:"н/д",g:"н/д",p:270,d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-281475896541-laga-montazhnaya-mpk-50h35mm",k:"лага"},
+ {m:"ITP (Ай-Техпласт)",a:"Брус лавочный 80×22",w:80,h:22,L:"до 6000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"12",f:"Г4…",g:"н/д",p:552,pt:"552 (МПК 624)",d:"29.09.2026",u:"https://i-techplast.ru/product/tproduct/322172865-175885603921-brus-lavochnii-8022mm",k:"брус"},
+ {m:"MultiDeck",a:"Лага — подкладочный профиль 60×40",w:60,h:40,L:"3000",Ls:3,t:"полая",ch:"н/д («М-образная»)",wl:"н/д",kg:1.2,b:"ПЭ",cx:"н/д",col:"н/д",f:"н/д",g:"5 лет (Леруа пишет 15)",p:400,pt:"400; Лемана Про 470; s-44 316",d:"29.09.2026",u:"https://multideck.ru/catalog/komplektuyushhie-k-terrasnoj-doske/komplektuyushhie/laga-%E2%80%93-podkladochnyij-profil-multideck",n:"70 % муки / 24 % ПЭ; настил как несущий — не допускается",k:"лага"},
+ {m:"Волга-Декинг",a:"Опорная лага 60×50",w:60,h:50,L:"3000, 4000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:2.0,b:"ПЭ",cx:"н/д",col:"7",f:"н/д (сертификат — скан)",g:"3 года (старый сайт)",p:500,pt:"500 розница / 460 / опт 420",d:"01.09.2026",u:"https://volga-decking.ru/polnotelaya-doska",n:"вес всех изделий есть в прайсе",k:"лага"},
+ {m:"Роскомпозит",a:"Лага МПК 30×50",w:50,h:30,L:"3000",Ls:3,t:"полая",ch:"н/д (по весу полая)",wl:"н/д",kg:1.5,kgt:"1,5 (дилер)",b:"МПК",cx:"нет",col:"1 (чёрный)",f:"Г3 (сертификат МПК)",g:"10 лет (сайт) / 5 лет (mpk-сайт)",p:297,pt:"297 (акция 267); 945 ₽ за 3 м",d:"29.09.2026",u:"https://arkonplast.ru/mpk/412/",n:"камень + ПНД, дерева 0 %",k:"лага"},
+ {m:"Роскомпозит",a:"Лага МПК 35×60",w:60,h:35,L:"3000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:1.7,kgt:"1,7 (дилер)",b:"МПК",cx:"нет",col:"2",f:"Г3",g:"5–10 лет",p:318,d:"29.09.2026",u:"https://arkonplast.ru/mpk/412/",k:"лага"},
+ {m:"Роскомпозит",a:"Брус лавочный МПК 30×50 полнотелый",w:50,h:30,L:"3000",Ls:3,t:"полнотелая",ch:"0",wl:"—",kg:2.4,kgt:"≈2,4 оц.",b:"МПК",cx:"нет",col:"10",f:"Г3",g:"10 лет",p:716,pt:"716–720",d:"29.09.2026",u:"https://decktor.ru/",k:"брус"},
+ {m:"Роскомпозит",a:"Брус лавочный МПК 40×90 пустотелый",w:90,h:40,L:"2000–4000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:2.5,kgt:"2,5 (у др. дилера 3,4)",b:"МПК",cx:"нет",col:"10",f:"Г3",g:"10 лет",p:814,pt:"723–830",d:"29.09.2026",u:"https://decktor.ru/",k:"брус"},
+ {m:"Невский композит",a:"Лага монтажная 55×30",w:55,h:30,L:"3000",Ls:3,t:"н/д",ch:"н/д (по весу полая)",wl:"н/д",kg:1.5,b:"ПВХ",cx:"н/д",col:"н/д",f:"Г2 (по сайту, без протокола)",g:"н/д",p:303,pt:"910 ₽ за 3 м",d:"29.09.2026",u:"https://ncdpk.ru/catalog/decking/laga-montazhnaya.html",n:"40 % муки / 50 % ПВХ; допуски по ТУ: ширина ±1, высота ±0,5 мм",k:"лага"},
+ {m:"ТехноПарк ДПК",a:"Лага двухкамерная Classic 50×40",w:50,h:40,L:"3000, 4000",Ls:4,t:"полая",ch:"2",wl:"н/д",kg:1.4,b:"ПЭ",cx:"нет",col:"1 (коричневый)",f:"н/д",g:"2 года",p:250,pt:"250 РРЦ; sale 220",d:"29.09.2026",u:"https://tpdpk.ru/catalog/komplektuyushie/laga-dpk-50x40/",k:"лага"},
+ {m:"ТехноПарк ДПК",a:"Лага Classic 60×40 (есть чертёж)",w:60,h:40,L:"3000, 4000",Ls:3,t:"полая",ch:"2 (20×30)",wl:"5",kg:1.4,b:"ПЭ",cx:"нет",col:"1–2",f:"н/д",g:"2 года",p:195,pt:"195 со скидкой (было 249)",d:"29.09.2026",u:"https://sale.tpdpk.ru/",n:"чертёж: sale.tpdpk.ru/img/26039684.jpg",k:"лага"},
+ {m:"ТехноПарк ДПК",a:"Лага Strong 60×80",w:80,h:60,L:"3000, 4000",Ls:4,t:"полая",ch:"4",wl:"н/д",kg:2.95,b:"ПЭ",cx:"нет",col:"6",f:"н/д",g:"н/д",p:345,pt:"345 со скидкой (старый снимок)",d:"дата н/д",u:"https://sale.tpdpk.ru/",k:"лага"},
+ {m:"Алтай Декинг",a:"Лага монтажная 50×35 (у дилеров)",w:50,h:35,L:"3000, 4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:1.2,kgt:"1,2 (дилер)",b:"н/д",cx:"нет",col:"1 (венге)",f:"н/д",g:"2 года",p:200,pt:"200; 800 ₽ за 4 м",d:"29.09.2026",u:"https://dmitrov.dpkmarket.com/komplektuyushchie/komplektuyushchie-altay-decking/laga-dpk-altay-decking/",k:"лага"},
+ {m:"WPC-ТеХно",a:"Лага монтажная 40×30",w:40,h:30,L:"3000",Ls:3,t:"полая",ch:"2 (по фото)",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"не регламентируется",f:"н/д",g:"нет (комплектующие исключены)",p:150,pt:"450 ₽ за 3 м",d:"29.09.2026",u:"https://dpk-t.ru/store/terassnaya-doska/laga-montazhnaya-40h30h3000-wpc-tekhno/",k:"лага"},
+ {m:"ТехноДек",a:"Лага монтажная 35×45",w:45,h:35,L:"3000, 4000",Ls:3,t:"полая",ch:"1 + 2 ребра (фото)",wl:"н/д",kg:1.2,kgt:"≈1,2 (по ArtDeco)",b:"н/д",cx:"н/д",col:"н/д",f:"сертификат на ArtDeco, группа н/д",g:"2 года",p:220,pt:"220 (акция, было 231)",d:"29.09.2026",u:"https://techno-deck.ru/shop/komplektuyuschie/laga-montazhnaja-iz-dpk.html",k:"лага"},
+ {m:"ТехноДек",a:"Брус лавочный 57×32",w:57,h:32,L:"н/д",Ls:null,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"шоколад",f:"н/д",g:"н/д",p:486,d:"29.09.2026",u:"https://techno-deck.ru/shop/brus-lavochnyi/brus-lavochnyi-57h32mm-shth4-shokolad.html",k:"брус"},
+ {m:"ТехноДПК (Атерно)",a:"Лага ДПК 30×50",w:50,h:30,L:"3000, 4000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,kgt:"«0,53» без единицы",b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"2 года",p:431,pt:"1 293 ₽ за 3 м",d:"01.07.2026",u:"https://tehnodpk.ru/catalog/komplektuyushchie/laga-dpk",n:"по ЕГРЮЛ — оптовая торговля",k:"лага"},
+ {m:"Polywood",a:"Профиль ДПК 50×30 (опорный)",w:50,h:30,L:"н/д",Ls:null,t:"полая",ch:"1 (по фото)",wl:"н/д",kg:1.27,b:"ПЭ",cx:"н/д",col:"н/д (на фото чёрный)",f:"Г2/В2/Д2/Т2 (сертификат линейки до 2028)",g:"«до 10 лет эксплуатации»",p:380,d:"29.09.2026",u:"https://www.polywood.ru/catalog/polywood-profil-dpk-30x50/",n:"−50…+90 °C; допуски по ТУ ±2 мм",k:"лага"},
+ {m:"Polywood",a:"Лавочный брус 50×30 полнотелый",w:50,h:30,L:"3000",Ls:3,t:"полнотелая",ch:"0",wl:"—",kg:2.1,b:"ПЭ",cx:"н/д",col:"н/д",f:"Г2/В2/Д2/Т2",g:"до 10 лет",p:800,d:"29.09.2026",u:"https://polywood.ru/catalog/polywood-lavochnyy-brus-50x30/",n:"в альбоме ТР — «для скамей, кашпо, МАФ»",k:"брус"},
+ {m:"Polywood",a:"Брус полнотелый 100×35",w:100,h:35,L:"3000",Ls:3,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"ПЭ",cx:"н/д",col:"3",f:"Г2/В2/Д2/Т2",g:"н/д",p:985,pt:"981–990 (дилер)",d:"29.09.2026",u:"https://samara.dpkmarket.com/brus-lavochnyy-dpk-polnotelyy-color-natur/",k:"брус"},
+ {m:"DPK-Profile",a:"Лага 40×30×4000",w:40,h:30,L:"4000",Ls:4,t:"полая",ch:"4 ребра (описание дилера)",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"3",f:"н/д",g:"н/д",p:212.5,pt:"850 ₽ за 4 м",d:"29.09.2026",u:"https://tk-stroyresurs.ru/catalog/terrasnaya_doska/dpk_profile/laga_dlya_terrasnoy_doski_4000kh40kh30/",k:"лага"},
+ {m:"DPK-Profile",a:"Лага Lite 52×52",w:52,h:52,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"3",f:"н/д",g:"н/д",p:162,pt:"162 (сайт не обновляется)",d:"дата н/д",u:"http://www.dpk-profile.ru/resheniya",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага МПК 50×30×3000",w:50,h:30,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"МПК",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:460,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/dlya-terrasnoj-doski-mpk-kerras/laga-mpk-50x30x3000",n:"бренд не указан",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 30×50 (WoodDeck)",w:50,h:30,L:"3000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:330,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/dlya-terrasnoj-doski-kerras2026/laga-pustotelaya-dpk-3000x30x50-mm",n:"страница показывает то 30×50, то 35×45",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 35×50×4000",w:50,h:35,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:330,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/dlya-terrasnoj-doski-vintage-dpk2026/laga-pustotelaya-3000x40x30-mm",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 30×40 (WoodDeck)",w:40,h:30,L:"3000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:360,d:"дата н/д",u:"https://dpk-nsk.ru/katalog/dlya-terrasnoj-doski-wooddeck/laga-pustotelaya-dpk-3000x40x30-mm",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 35×40×4000 (Wooden)",w:40,h:35,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:390,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/laga-pustotelaya-30x40x4000-mm",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 40×55×4000 (Wooden)",w:55,h:40,L:"4000",Ls:4,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:410,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/laga-pustotelaya-40x55x4000-mm",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Лага пустотелая 60×50 (PROdecking)",w:60,h:50,L:"3000–4000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"ПЭ",cx:"н/д",col:"н/д",f:"н/д",g:"н/д",p:510,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/laga-pustotelaya-60x50x(3000-4000)-mm",k:"лага"},
+ {m:"ДПК-НСК (дилер)",a:"Промежуточный профиль CM-Decking 40×40",w:40,h:40,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"3",f:"н/д",g:"н/д",p:290,d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/brusok-dpk-dlya-pergol,-besedok,-navesov/",k:"брус"},
+ {m:"ДПК-НСК (дилер)",a:"Лавочный брус WoodDeck 3D 30×60",w:60,h:30,L:"н/д",Ls:null,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"н/д",cx:"н/д",col:"5",f:"н/д",g:"н/д",p:906,pt:"906–996 (20×80: 780–858)",d:"29.09.2026",u:"https://dpk-nsk.ru/katalog/lavochnyij-brus/",k:"брус"},
+ {m:"Polydeck (Орёл)",a:"Лага ДПК 50×30",w:50,h:30,L:"3, 4, 6 м",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"ПЭ",cx:"н/д",col:"н/д",f:"н/д",g:"3 года",p:280,pt:"280 (Авито «от 200»; опт от 250 000 ₽)",d:"29.09.2026",u:"https://poly-deck.ru/",n:"60 % муки / 40 % ПНД (по доске)",k:"лага"},
+ {m:"Polydeck (Орёл)",a:"Брус лавочный 30×50 полнотелый",w:50,h:30,L:"3, 4, 6 м",Ls:4,t:"полнотелая",ch:"0",wl:"—",kg:null,b:"ПЭ",cx:"н/д",col:"н/д",f:"н/д",g:"3 года",p:450,d:"29.09.2026",u:"https://poly-deck.ru/",k:"брус"},
+ {m:"Greenwerk",a:"Лага подкладочная 30×50",w:50,h:30,L:"3, 4, 6 м",Ls:3,t:"полая",ch:"2 квадратные (фото)",wl:"≈4 оц.",kg:1.17,kgt:"≈1,17 оц.",b:"ПЭ",cx:"нет",col:"1 (венге)",f:"Г4 (сертификат, распознан неточно)",g:"3 года",p:300,pt:"900 ₽ за 3 м",d:"29.09.2026",u:"https://green-werk.ru/product/komplektuyushchie/laga-opornaya/",n:"юрлицо — фанерный завод «Власть труда»",k:"лага"},
+ {m:"Lecole",a:"Лага 60×40 (только 6 м)",w:60,h:40,L:"6000",Ls:6,t:"полая",ch:"1? (фото)",wl:"н/д",kg:1.5,b:"ПВХ",cx:"нет",col:"15",f:"сертификат ПБ 10.11.2025, группа н/д",g:"«гарантийный талон»",p:550,pt:"550 завод; розница 561–657",d:"29.09.2026",u:"https://lecole.su/catalog/laga/laga_lecole/",k:"лага"},
+ {m:"Мербау",a:"Лага ДПК 50×25",w:50,h:25,L:"3000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"3 года",p:182,pt:"547 ₽ за 3 м (скидка)",d:"29.09.2026",u:"https://dpk-merbau.ru/catalog/komplektuyuschie/laga-dpk-50-25-mm/",n:"канавка под кляймеры",k:"лага"},
+ {m:"Мербау",a:"Лага ДПК 50×40",w:50,h:40,L:"3000",Ls:3,t:"полая",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"3 года",p:270,pt:"809 ₽ за 3 м (нет в наличии)",d:"29.09.2026",u:"https://dpk-merbau.ru/catalog/komplektuyuschie/laga-dpk-50-40-mm/",k:"лага"},
+ {m:"Goodeck",a:"Лага 50×30×4000",w:50,h:30,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"н/д",p:230,pt:"920 ₽ за 4 м",d:"29.09.2026",u:"https://goodeck.ru/products/komplektuyushchie/komplektuyushchie-goodeck/laga-50h30x4000/",k:"лага"},
+ {m:"Harvex",a:"Лага LH030 30×40",w:40,h:30,L:"3000",Ls:3,t:"полая",ch:"1 («гантель», фото)",wl:"н/д",kg:1.5,b:"ПЭ",cx:"нет",col:"1 (шоколад)",f:"н/д",g:"н/д",p:175,pt:"175–210 (524–630 ₽ за 3 м)",d:"29.09.2026",u:"https://harvex-deck.com/catalog/laga",n:"65 % муки, 30 % ПНД, 3 % УФ-добавок; вес почти как у сплошной",k:"лага"},
+ {m:"DeckLine",a:"Лага опорная 30×40",w:40,h:30,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:1.1,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"см. PDF",p:165,pt:"496 ₽ за 3 м (Иркутск 459)",d:"29.09.2026",u:"https://deck-line.msk.ru/laga-opornaja-deckline/",k:"лага"},
+ {m:"DeckLine",a:"Лавочный брус 60×30",w:60,h:30,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"н/д",p:637,pt:"637–818 (также 80×20)",d:"29.09.2026",u:"https://deck-line.msk.ru/lavochnyj-brus/",k:"брус"},
+ {m:"GrandDPK / NanoWood",a:"Лага ECO 40×30",w:40,h:30,L:"3000, 4000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"1 (венге)",f:"н/д",g:"н/д",p:257,pt:"771 ₽ за 3 м",d:"29.09.2026",u:"https://granddpk.ru/catalog/laga-montazhnaya-dpk-30h40-mm/",n:"производитель непроверяем",k:"лага"},
+ {m:"GrandDPK / NanoWood",a:"Лага NanoWood Standart 50×30",w:50,h:30,L:"н/д",Ls:null,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"н/д",p:255,d:"29.09.2026",u:"https://ug.granddpk.ru/catalog/dpk-eko-150h25-mm-venge/",n:"производитель непроверяем",k:"лага"},
+ {m:"GrandDPK / NanoWood",a:"Лага NanoWood 48×35",w:48,h:35,L:"4000",Ls:4,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"нет",col:"н/д",f:"н/д",g:"н/д",p:279,pt:"1 116 ₽ за 4 м",d:"29.09.2026",u:"https://nano-wood.ru/",k:"лага"},
+ {m:"WoodDecker",a:"Лага 30×50",w:50,h:30,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:1.3,kgt:"1,3 (одинаково у разных сечений)",b:"ПЭ",cx:"нет",col:"н/д",f:"н/д",g:"3 года",p:262,pt:"786 ₽ за 3 м",d:"29.09.2026",u:"https://wooddecker.ru/model/lagi-dpk/",n:"вероятно, белая этикетка Holzhof",k:"лага"},
+ {m:"WoodDecker",a:"Лага 40×60",w:60,h:40,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:1.3,b:"ПЭ",cx:"нет",col:"н/д",f:"н/д",g:"3 года",p:250,pt:"750 ₽ за 3 м",d:"29.09.2026",u:"https://wooddecker.ru/model/lagi-dpk/",k:"лага"},
+ {m:"Latitudo / EasyDecking",a:"Лага 35×45 (Bruggan/Legro)",w:45,h:35,L:"3000",Ls:3,t:"н/д",ch:"н/д",wl:"н/д",kg:null,b:"н/д",cx:"н/д",col:"н/д",f:"Г2 КМ2 (заявлено)",g:"н/д",p:245,pt:"735 ₽ за 3 м (по курсу евро)",d:"29.09.2026",u:"https://latitudo.ru/catalog/komplektuyushie/lagi-dlya-terrasnoy-doski/",n:"импорт, не своё производство",k:"лага"},
+ {m:"DeckRa (не ДПК)",a:"Лавочный брус 60×30 (вспененный полистирол)",w:60,h:30,L:"до 5000",Ls:null,t:"полнотелая",ch:"0",wl:"—",kg:1.25,kgt:"≈1,1–1,4 оц.",b:"ПС",cx:"нет",col:"н/д",f:"н/д",g:"н/д",p:null,pt:"по запросу",d:"29.09.2026",u:"https://deckra.ru/lavochnyj-brus-deckra/",n:"без древесины; хрупкий, мягчеет от +50 °C; есть 40×40, 70×35 и др.",k:"брус"}
+];
+
+// Уголки, заглушки, столбы, балясины, перила
+const ACC = [
+ ["ДекМастер","уголок","35×70×3000","—","5",219,"от 219 ₽/м","","https://dekmaster.ru/ugolok-torcevoy-35-70-3000/"],
+ ["ДекМастер","балясина","50×50×3000","—","6",448,"1 344 ₽/шт","орех 1 915 ₽/шт","https://dekmaster.ru/balyasina-ograzhdeniya-oreh/"],
+ ["ДекМастер","столб","н/д","—","6",null,"4 911 ₽ (ед. н/д)","","https://dekmaster.ru/stolb-ograzhdeniya-belyj-dub/"],
+ ["Holzhof","уголок","57×57×3000","0,9","7",305,"305 (часть цветов 335) ₽/м","","https://holzhof.ru/home/corner-holzhof/"],
+ ["Holzhof","заглушка","50×32×30 (в балюстру)","—","чёрный",null,"64 ₽/шт","пластик ПП","https://holzhof.ru/home/holzhof-baluster-spacer/"],
+ ["Holzhof","столб","99×99×1000","5 кг/шт","венге",1190,"1 190 ₽/шт","армировать металлическим стаканом","https://holzhof.ru/home/holzhof-post-sleeve/"],
+ ["Woodgrand","уголок","30×50×4000 (МПК)","—","5",420,"1 680 ₽ за 4 м","","https://woodgrand.ru/katalog/ugolok-venge-mpk-30x50-mm/"],
+ ["Woodgrand","уголок","50×70×4000 (МПК)","—","5",630,"2 520 ₽ за 4 м","","https://woodgrand.ru/katalog/ugolok-venge-mpk-50x70-mm/"],
+ ["Woodgrand","заглушка","под доски 140×20…200×24","—","5",null,"440–510 ₽ за 4 шт","под лагу нет","https://woodgrand.ru/katalog/zaglushka-dlya-terrasnoy-doski-dpk-150x22-mm/"],
+ ["Woodgrand","заглушка","перила 80×55 / балясина 50×35","—","5",null,"140 ₽/шт","МПК","https://woodgrand.ru/katalog/zaglushka-mpk-dlya-balyasin-50x35-mm/"],
+ ["Woodgrand","столб","120×120 (МПК)","—","5",1990,"1 990 ₽/м","","https://woodgrand.ru/katalog/stolb-mpk-s-tisneniem-120x120-mm/"],
+ ["Terrapol","уголок","Практик 60×40","—","10",417,"417 ₽/м","","https://terrapol.ru/product/Soputstvuyushie-tovari/komplektuyushchie-dlya-terrasnoy-doski/ugolki-dekorativnye-praktik/ugolok-dekorativnyy-praktik-arktika/?oid=1548"],
+ ["Terrapol","уголок","Классик 40×40×4","—","4",209,"209–230 ₽/м","«только декор»","https://terrapol.ru/product/Soputstvuyushie-tovari/komplektuyushchie-dlya-terrasnoy-doski/ugolki-dekorativnye-klassik/ugolok-dekorativnyy-klassik-dub-sevilya/?oid=1483"],
+ ["Terrapol","столб","100×100×3050 (Практик)","—","6",1299,"1 299 ₽/м","","https://terrapol.ru/product/ograzhdeniya%20DPK/Ograzhdeniya-praktik/ograzhdenie-praktik-zhemchug/stolb-ograzhdeniya-praktik-zhemchug/?oid=1225"],
+ ["Terrapol","балясина","52×32×2400","—","6",514,"514 ₽/м","","https://terrapol.ru/product/ograzhdeniya%20DPK/Ograzhdeniya-praktik/ograzhdenie-praktik-zhemchug/stolb-ograzhdeniya-praktik-zhemchug/?oid=1225"],
+ ["Savewood","уголок","40×40×5","—","7",412,"412 ₽/м","","https://www.savewood.ru/product/aksessuary/ugolok-dpk/"],
+ ["Savewood","заглушка","бруса 70×40","—","6",null,"168 ₽/шт","единственная заглушка «под брус» у группы 1","https://www.savewood.ru/product/aksessuary/zaglushka-brusa-lavochnogo-70x40-mm/"],
+ ["Savewood","столб","70×70 / 120×120","—","7",814,"814 / 2 261 ₽/м","","https://www.savewood.ru/product/zabory-i-ograzhdeniya/stolb-promezhutochnyj-dpk/"],
+ ["Варяжский композит","уголок","70×35×3000","0,73","6",292,"от 292 ₽/м","","https://varyag-composit.ru/catalog/terrasnaya-doska-i-komplektuyushchie/krepezh-dlya-terrasnoy-doski/ugol-tortsevoy-70x35-mm/"],
+ ["Варяжский композит","балясина","50×50×3000","1,42","6",534,"от 534 ₽/м","пустотелая","https://varyag-composit.ru/catalog/ograzhdeniya-terrasy/balyasina-50x50-mm/"],
+ ["Варяжский композит","столб","120×120×3000","5,54","6",1562,"от 1 562 ₽/м","пустотелый","https://varyag-composit.ru/catalog/ograzhdeniya-terrasy/stolb-zabornyy-120x120-mm/"],
+ ["Ecodecking","уголок","Практик 50×50","1,0","н/д",297,"297 ₽/м","гарантия 3 года","https://eco-decking.ru/katalog/komplektuyushchie/ugol_tortsevoy_ecodecking_praktik_50kh50/"],
+ ["Ecodecking","уголок","Некст 70×35 / Титан 60×40 / Базик 45×45","0,68 / 1,1 / —","до 6",372,"372 / 407 / 358 ₽/м","","https://eco-decking.ru/katalog/komplektuyushchie/ugol_tortsevoy_ekodeking_nekst_70kh35/"],
+ ["Ecodecking","заглушка","лавочного бруса 40×90","—","н/д",null,"120 ₽/шт","","https://eco-decking.ru/katalog/lavochnyy-brus-iz-dpk/zaglushka_dlya_lavochnogo_brusa_ecodecking_komfort_40kh90/"],
+ ["Grand Line","уголок","50×50 (3 и 4 м)","—","9",279,"837 ₽ за 3 м","есть чертёж","https://www.grandline.ru/ugolok-dpk-grand-line-vnesnij-50h50mm-venge-3m-397721.html"],
+ ["Grand Line","уголок","70×35 «Рельеф» / 56×56 «Винтаж»","—","3 / 4",253,"253 / 268 ₽/м","","https://www.grandline.ru/ugolok-vnesnij-dpk-grand-line-70h35mm-relef-venge-3m-813087.html"],
+ ["Grand Line","балясина","50×30 (3/4 м)","—","4",489,"1 467 ₽ за 3 м","","https://www.grandline.ru/katalog/blagoustroystvo/drevesno-polimernyj-kompozit/terrasnaa-doska-grand-line/stolby-i-elementy-ograzdenia/"],
+ ["MasterDeck","уголок","53×53×2000","—","3",395,"790 ₽ за 2 м","","https://masterdeck.ru/krepezhnye-elementy/ugolok-dpk-53h53-mm-cvet-antracit/"],
+ ["MasterDeck","столб","100×100 (Woodvex, Корея)","4,3","2",1287,"3 860 ₽ за 3 м","не российский","https://masterdeck.ru/ograzhdenie-iz-dpk/stolb-iz-dpk-woodvex-select-venge/"],
+ ["Terradeck","уголок","45×45×3000","—","5",295,"295 ₽/м","","https://terradeck.ru/terradeck-45"],
+ ["ITP (Ай-Техпласт)","уголок","50×50 / 65×35","0,8 (дилер)","12",222,"222 / 199 ₽/м","","https://i-techplast.ru/product/tproduct/322172865-629170096581-ugolok-dekorativnii-5050mm"],
+ ["ITP (Ай-Техпласт)","заглушка","для угла 45×45 (ДПК)","—","н/д",null,"38 ₽/шт","","https://i-techplast.ru/product/tproduct/322172865-929807430042-zaglushka-dpk-dlya-ekstruzionnogo-ugla-4"],
+ ["ITP (Ай-Техпласт)","столб","100×100 (гладкий / NEW / с пазами)","—","12",1224,"1 224–1 385 ₽/м","","https://i-techplast.ru/product/tproduct/322172865-507552356721-stolb-gladkii-100100mm"],
+ ["ITP (Ай-Техпласт)","балясина","50×30 полнотелая / 50×50","—","12",348,"348 / 421 ₽/м","","https://i-techplast.ru/product/tproduct/322172865-960487000361-balyasina-5030mm"],
+ ["ITP (Ай-Техпласт)","перила","84×45","—","12",545,"545 ₽/м","","https://i-techplast.ru/product/tproduct/322172865-243714115501-perila-8445mm"],
+ ["Роскомпозит","уголок","МПК 40×60","—","10",315,"315 ₽/м","","https://cenypopolam.ru/public/product/ugolok-dekorativnyy-40h60-mm"],
+ ["Невский композит","уголок","70×20×3000 (ПВХ)","0,55","2",140,"420 ₽ за 3 м","","https://ncdpk.ru/catalog/decking/ugol.html"],
+ ["ТехноПарк ДПК","уголок","53×53×3000","0,45","7",266,"799 ₽ за 3 м (sale 250 ₽/м)","","https://tpdpk.ru/catalog/komplektuyushie/ugolok-torcevoy-53x53/"],
+ ["Алтай Декинг","уголок","70×35 (3 и 4 м)","—","н/д",280,"840 ₽ за 3 м","у дилера","https://parket-m.ru/terrasnaya-doska/altay-decking/komplektuyushchie/"],
+ ["Волга-Декинг","столб","120×120×3000","5,6","7",2120,"2 120 ₽/м (опт 1 730)","","http://volga-decking.ru/wp-content/uploads/2026/08/roznica-price-№2-2026г-сентябрь.pdf"],
+ ["Волга-Декинг","балясина","50×50×3000","1,1","7",430,"430 ₽/м (опт 350)","","http://volga-decking.ru/wp-content/uploads/2026/08/roznica-price-№2-2026г-сентябрь.pdf"],
+ ["Волга-Декинг","уголок","30×30×2000","0,24","н/д",270,"270 ₽/м","материал н/д","http://volga-decking.ru/wp-content/uploads/2026/08/roznica-price-№1-2026г-сентябрь-.pdf"],
+ ["WPC-ТеХно","столб","120×120 (~9 камер)","—","6",1860,"1 860–2 300 ₽/м","","https://dpk-t.ru/store/sistemy-ograzhdeniy/stolb-opornyy-120h120/"],
+ ["ТехноДек","уголок","Г-профиль 35×70","≈0,75 (ArtDeco)","н/д",277,"277 ₽/м","","https://techno-deck.ru/shop/komplektuyuschie/g-profil-ugolok-iz-dpk.html"],
+ ["ТехноДек","столб","100×100×3000","—","4",1686,"1 686 ₽/м","","https://techno-deck.ru/shop/ograzhdenija-iz-dpk/stolb-iz-dpk-cvet-shokolad.html"],
+ ["ТехноДек","балясина","50×50×3000","≈1,39 (ArtDeco)","4",450,"450 ₽/м","","https://techno-deck.ru/shop/ograzhdenija-iz-dpk/baljasina-iz-dpk-cvet-shokolad.html"],
+ ["ТехноДПК (Атерно)","уголок","70×35","0,7","6",310,"930 ₽ за 3 м","","https://tehnodpk.ru/catalog/komplektuyushchie/ugol-torcevoj"],
+ ["ТехноДПК (Атерно)","столб","100×100×3000","4,0","6",1349,"4 046 ₽/шт","","https://tehnodpk.ru/catalog/ograzhdeniya/stolb-dpk-vud"],
+ ["Polywood","уголок","45×45 полнотелый","0,6","3+",320,"320 (COLOR 350) ₽/м","","https://www.polywood.ru/catalog/ugolok-dpk-45x45-polywood/"],
+ ["Polywood","столб","100×100×2000","4,8","венге",1092,"≈2 184 ₽ за 2 м","","https://www.polywood.ru/catalog/polywood-stolb-100x100/"],
+ ["Polywood","балясина","55×40×4000","1,3","венге",315,"315 ₽/м","","https://www.polywood.ru/catalog/polywood-balyasina-55x40/"],
+ ["DPK-Profile","уголок","55×35×3000","—","4",220,"660 ₽ за 3 м","","https://tk-stroyresurs.ru/catalog/terrasnaya_doska/dpk_profile/ugolok_venge_55kh35kh3000/"],
+ ["Greenwerk","уголок","н/д","—","6",348,"348 ₽/м","","https://green-werk.ru/product/ugolok-iz-dpk.html?oid=1342"],
+ ["Greenwerk","столб","100×100","3,91","5",null,"цена «за кв.м» — ошибка карточки","","https://green-werk.ru/product/stolb-tsvet-orekh.html?oid=1668"],
+ ["Greenwerk","балясина","50×50","1,19","5",400,"400 ₽/м","","https://green-werk.ru/product/balyasina-tsvet-venge.html?oid=1596"],
+ ["Lecole","уголок","L 60×40 (ПВХ)","0,7","15",380,"380–400 ₽/м","","https://lecole.su/catalog/ugolok/ygolok_lecole_standart/"],
+ ["Мербау","уголок","55×35 полнотелый, 5 мм","—","5",335,"1 006 ₽ за 3 м","","https://dpk-merbau.ru/catalog/komplektuyuschie/ugol-dpk-venge-55-35/"],
+ ["Мербау","балясина","51×51","—","5",467,"467 ₽/м","","https://dpk-merbau.ru/catalog/ograzhdeniya/"],
+ ["Harvex","уголок","35×70×3000","1,0","6",150,"450 ₽ за 3 м","","https://harvex-deck.com/catalog"],
+ ["DeckLine","столб","100×100 / 125×125","3,67 / —","н/д",1092,"1 092 / 2 184 ₽/м","","https://deck-line.msk.ru/ograda/stolb-opornyj-deckline-3d-iz-dpk-100h100h3000mm/"],
+ ["DeckLine","балясина","50×50×3000","1,47","н/д",472,"1 417 ₽ за 3 м","пустотелая","https://deck-line.msk.ru/ograda/baljasina-deckline-iz-dpk/"],
+ ["T-Decks","балясина","55×55×3000, стенка 6 мм","1,464","5",528,"528 ₽/м","полая, под вставку трубы 40×40","https://t-decks.ru/catalog/ograzhdeniya_iz_dpk/balyasina_bolshaya_kvadratnaya_t_decks_premium_3d_venge/"],
+ ["T-Decks","балясина","53×27, стенка 5–6 мм","0,92","5",null,"по запросу","под трубу 15×15","https://t-decks.ru/catalog/ograzhdeniya_iz_dpk/balyasina_malaya_pryamougolnaya_t_decks_premium_3d_venge/"],
+ ["Sequoia","столб","120×120×3000","—","4",1838,"5 514 ₽/шт","60/35/5, есть антипирены","https://sequoiadv.ru/product/stolb-sequoia-evolution-3d-wood-nature/"],
+ ["Goodeck","столб","120×120 или 100×100","—","2",1230,"3 690 ₽/шт","размеры на странице расходятся","https://goodeck.ru/products/ogragdeniya-gryadki/ograzhdeniya-dpk/stolb-120x120x2500/"],
+ ["Polydeck (Орёл)","уголок","35×70 / доборный 90×90","—","н/д",280,"280 / 450 ₽/м","","https://poly-deck.ru/"],
+ ["Polydeck (Орёл)","столб","100×100 «сплошной»","—","н/д",1250,"1 250 ₽/м","«сплошной» — уточнить","https://poly-deck.ru/"],
+ ["GrandDPK / NanoWood","уголок","50×50 / 60×60","—","2",260,"260 / 280 ₽/м","","https://ug.granddpk.ru/"],
+ ["WoodDecker","столб","120×120","—","н/д",1100,"3 300 ₽/шт","","https://wooddecker.ru/cat_katalog/ograzhdenie-dpk/"],
+ ["Deckron (Гардек)","уголок","35×70×4000 / 56×56","0,65 / 0,9","н/д",null,"н/д","есть армирующий профиль 15×15, стенка 1,5 мм","https://gardeck.ru/f/decron_sales_web.pdf"]
+];
+
+const SHEETS = [
+ ["Полигаль Восток","Колибри","монолитный ПК","1,5–15 мм","прозрачный, белый, бронза, графит, янтарь, синий, серебро, зелёный + 4; светорассеивающие","коэкструзия, 2 стороны","Г3 (FR — Г1)","14 лет, срок 20",2353,"2 353 прозр.; янтарь 2 469; графит 2 588","https://polygalvostok.ru/upload/iblock/c67/cu6tu0wegwdu9ax6c28ps5qwnjkjcdag.pdf"],
+ ["Полигаль Восток","Моногаль","монолитный ПК","1,5–15 мм","как у Колибри","коэкструзия, 2 стороны","Г3 (FR — Г1)","15 лет, срок 20+",2601,"2 601 (бронза 40 %); 3 мм 1 950","https://polygalvostok.ru/upload/iblock/982/de9c1v5wcx7hfqkx7gyflf2ywvmeoufe.pdf"],
+ ["Полигаль Восток","Киви","монолитный ПК","1,5–15 мм","как у Колибри","коэкструзия, 2 стороны","Г3","10 лет, срок 15+",2228,"2 228; 3 мм 1 671","https://polygalvostok.ru/products/monolitnyj-polikarbonat/kivi-monolitnyj/"],
+ ["КИН","Woggel","монолитный ПК","2–12 мм","прозрачный, дымчатый графит, бронза, тёмная бронза, коричневый, зелёный, синий","40–60 мкм, стороны н/д","н/д","20 лет",2189,"2 189; бронза 2 298; тёмн. бронза 2 407; 3 мм 1 570","https://kinplast.ru/wp-content/uploads/2018/07/MPK-Woggel.pdf"],
+ ["КИН","Kinplast / KIN PREMIUM","монолитный ПК","2–12 мм","прозрачный, дымчатый графит, бронза","40–60 мкм, стороны н/д","н/д","25 лет",2497,"KIN PREMIUM 2 497; бронза 2 622","https://kinplast.ru/wp-content/uploads/2018/07/MPK-Kinplast.pdf"],
+ ["СафПласт","Novattro","монолитный ПК","1–12 мм","прозрачный, бронза S/T, молочный, белый, опал, Призма","40–60 мкм, 2 стороны","Г4 (по имени файла); FR — Г1","15 лет (магазин — 14), срок 20+",null,"3 мм от 1 655; СПб 1 840; 4 мм и опал — по запросу","https://safplast.ru/upload/iblock/6d3/bee9t69rcfp32ng14duyw8hz19ag7udg/Tekhnicheskoe-rukovodstvo-po-monolitnomu-polikarbonatu.pdf"],
+ ["СафПласт","Rational «Казанский»","монолитный ПК","3,8–15 мм","н/д","н/д","н/д","н/д",2052,"от 2 052","https://moscow.safplast.ru/catalog/monolitnyy_polikarbonat/"],
+ ["Юг-Ойл-Пласт","BORREX","монолитный ПК","2–12 мм","прозрачный, белый, синий, зелёный, бирюза, бронза, красный, опал; Шагрень, Призма","слой есть, 2 стороны не подтверждено","«самозатухает», группа н/д","15 лет (через розницу)",2400,"2 400 прозр.; цветной 2 520; 3 мм 1 800","https://www.borrex.ru/polikarbonat/monolitnyy/"],
+ ["Пластилюкс-групп","Sunnex (также Royalplast, Polynex, Ultramarin)","монолитный ПК","2–15 мм","13 цветов, в т. ч. бронза-серая, белый-матовый","30–50 мкм по бренду","Г2 (сертификат)","15–30 лет по бренду",2580,"2 580; бронза-серая 2 709","https://polikarbonates.com/monolithic-polycarbonate-sheets/"],
+ ["Полидин","Primavera / Pronto / Platino","монолитный ПК","0,8–12 мм","бронза, прозрачный, молочный, графит","2 стороны","Г1 (заявлено — проверить сертификат)","15 / 20 / 25 лет",null,"по запросу","https://polidin.ru/monolit/"],
+ ["Баллер","монолит 3 мм","монолитный ПК","3 мм","прозрачный, бронза, цветные, молочный","н/д","н/д","15–20 лет",null,"3 мм 1 296–1 521","https://www.baller.ru/polikarbonat/monolitnyy/3-mm/"],
+ ["Юг-Ойл-Пласт","BORREX сотовый","сотовый ПК","4–32 мм","прозрачный, цветной","защитный слой","н/д","15 лет",400,"400 (4 мм); 650 (6 мм)","https://ug-plast.ru/products/sotovyj-polikarbonat/borrex/"],
+ ["Политек Про","Sellex","сотовый ПК","3,7–16 мм","12 цветов, в т. ч. молочный","1 сторона (по выдаче)","Г1 (по выдаче)","7–20 лет",444,"≈444 (Premium 4 мм)","https://politek.pro/products/spk/"],
+ ["Полигаль Восток","Колибри акрил","прочее","1–15 мм","прозрачный, белый, чёрный","атмосферостойкий","н/д","10 лет",2309,"белый 35 % 4 мм 2 309","https://polygalvostok.ru/upload/iblock/d59/foidnten9vs636nj8n7ndkqw14vb9fpa.pdf"],
+ ["Дзержинское оргстекло","ACRYMA 72 (акрил)","прочее","2–10 мм","прозрачный, опал, матовый, дымчатый, цветные","«устойчив к жёсткому УФ»","н/д","н/д",6746,"6 746 (СПб)","https://megatakt.com/extruded-glass-acryma/"],
+ ["Юнайтед Экстружн","UNEXT вспененный ПВХ","прочее","1–10 мм","белый; КОЛОР — 6 цветов","нет (плёнка не от УФ)","н/д","н/д",752,"≈752 (3 мм белый)","https://unitedextrusion.ru/manual/harakteristiki/"],
+ ["ЛАДА-ЛИСТ","АБС/АСА","прочее","1–10 мм","тиснение «кожа», «песок»","АСА-слой, «более 5 лет»","горит","н/д",null,"под заказ","https://www.zuroplast.ru/products/abs-asa"],
+ ["ЛАДА-ЛИСТ","ПЭТ-Г","прочее","0,75–5 мм","прозрачный","нет","самозатухает","н/д",null,"под заказ","https://www.zuroplast.ru/products/pet-g"],
+ ["Слопласт / Slotex","HPL Compact","прочее","4–25 мм","десятки декоров","без УФ / 2 года / Evonik 10 лет","КМ1, КМ4","по исполнению",null,"12 мм 12 800–20 700; 4–6 мм по запросу","https://kitchen.slotex.com/productions/kompakt-laminat/"]
+];
+
+const RODS = [
+ ["УралАрмоПром","АСП-12 «Стандарт»","ребристая","12","«по ребру» (по массе), число не указано","≥1 200 (заявл.), модуль ≥65 ГПа","0,150","хлысты 1 / 1,2 / 1,5 / 2 / 3 / 6 м",30,"30 (опт 29; «Эко» 28)","должна (проверить образец)","https://ufa.uralarmaprom.ru/stekloplastikovaya-kompozitnaya-armatura-12mm"],
+ ["МЗПКК","АКСп-12 ТУ","ребристая","12 по ребру","12 по ребру","н/д","0,15","бухты 50–100 м",39,"39 (31,2 от 10 000 м)","да","https://mzpkk.ru/produkciya/aksp-12mm/"],
+ ["МЗПКК","АКСп-12 ГОСТ","ребристая","12 по стержню","≈13–14 по виткам (оц.)","н/д","0,232","хлысты 6 м",61,"61 (48,8 от 10 000 м)","вряд ли","https://mzpkk.ru/produkciya/aksp-12mm/"],
+ ["Армпласт","АСК-12 ТУ / ГОСТ","ребристая","12","н/д","≥1 200 (заявл.)","0,19–0,22","любая длина; бухты 50 м",33.35,"ТУ 33,35 / ГОСТ 47,50","ТУ — вероятно; ГОСТ — вряд ли","https://arm-plast.ru/czenyi/kompozitnaya-stekloplastikovaya-armatura-kypit/akp-12.html"],
+ ["Ивановские композиты","арматура 12 ТУ / ГОСТ","ребристая","12","н/д","н/д","н/д","хлысты любой длины; бухты",35,"ТУ от 35 / ГОСТ от 67,38","ТУ — вероятно","https://spb.iv-armatura.ru/katalog/stekloplastikovaya-armatura-12-mm"],
+ ["СтеклоПласт (Волжский)","АКС-12 ТУ / ГОСТ","ребристая","12","н/д","н/д","н/д","бухты",31,"ТУ 31 / ГОСТ 51","ТУ — вероятно","https://stekloplast34.ru/kupit-stekloplastikovuyu-armaturu"],
+ ["Композит 21","АКС-12","ребристая","12","н/д (масса 0,232 или 0,200)","1 107; модуль 54,3 ГПа","0,232 / 0,200","хлысты 3 и 6 м",null,"по запросу","проверить","https://21kompozit.ru/stekloplastikovaya-armatura/12-mm/"],
+ ["Alien Technologies","АСП Ø12","ребристая","12","н/д (0,17 кг/м — «по ребру»)","н/д","≈0,17","прутки 6 и 12 м; бухты",27.11,"27,11 (НДС 18 % — устарело)","вероятно","https://www.alientechnologies.ru/shop/asp12_bight/"],
+ ["Арматурыч (СПб)","ГОСТ 31938-2012 Ø12","ребристая","12","н/д","н/д","н/д","резка «любая длина», от 1 м",36,"36","проверить","https://xn--80aa9apclh7a9a.xn--p1ai/kompozitnaya-armatura/"],
+ ["Ярком","АСК-12","ребристая","12","н/д","н/д","0,20","бухта 100 м",45,"45","проверить","https://yarcompozit.ru/product/stekloplastikovaya-armatura-ask-12/"],
+ ["Армада (продавец)","АСК Ø12 ТУ «Лайт ST»","ребристая","12","11,0 ± 0,1 по рёбрам; ствол 9,0","н/д","0,135","бухта 50 м, от 1 000 м",null,"н/д","да","https://armadag.ru/catalog/stroi_material/stekloplastikovaya-kompozitnaya-armatura/ack-12/ty-st"],
+ ["Гален (ROCKBAR)","АКБ-12, базальт, песчаное покрытие","ребристая","12","н/д (≈12,5 оц.)","1 300 (заявл.); модуль 55 ГПа","0,232","хлысты до 14 м; резка у дилеров",76.8,"76,80","проверить образец","https://galencomposite.ru/produkciya/armatura-rockbar/bazaltaplastikovaia-armatura-rockbar/"],
+ ["БЗС (Бийск)","арматура периодического профиля","ребристая","12","допуск +0,3/−0,5","≥890; модуль ≥50 ГПа","н/д","хлысты до 12 м",null,"по запросу","вероятно","https://bzs.ru/catalog/armatura-kompozitnaya/"],
+ ["Мир сетки (продавец)","АСК-12, прут 1,5 м","ребристая","12","н/д","н/д","н/д","прут 1,5 м",40,"38,8–43,1","проверить","https://mirsetki.ru/catalog/armatura_stekloplastikovaya/9740/"],
+ ["Рускомпозит / Стеклонит","«Пулгласс» ССО-12","гладкий","12","12 ± 0,4","≥500 (справочно)","н/д","резка 200–3 000 ± 5 мм",null,"по запросу (аналоги 160–535)","да, свободно","https://www.ruscompozit.com/catalog/sterzhni-i-profili/profili-i-sterzhni-stekloplastikovye-odnonapravlennye-pulglass/"],
+ ["БЗС (Бийск)","стержень для изоляторов","гладкий","от 12","допуск н/д","≥1 100; модуль 45–51 ГПа","н/д","любая длина",null,"по запросу","вероятно (запросить допуск)","https://bzs.ru/catalog/sterzhni-dlya-polimernykh-izolyatorov/"],
+ ["PULTRA","стержень D8 / D16 (D12 по запросу)","гладкий","8 / 16","н/д","н/д","0,10 / 0,39","6 м, резка",null,"по запросу","Ø12 нет в наличии","https://pultra.ru/produkciya/kompozitnyj-profil/sterzhen/"],
+ ["Армпласт","«гладкий стержень 12» (стеклотекстолит)","гладкий","12","н/д","н/д (ошибка единиц)","0,230","н/д",215,"от 215","н/д (другой материал)","https://arm-plast.ru/czenyi/stekloplastikovyie-sterzhni/ceny/gladkij-stekloplastikovyij-sterzhen-12-mm.html"],
+ ["Атимаркет (продавец)","сплошной круглый 12×1000","гладкий","12","н/д","н/д","н/д","1 000 мм",535,"535 (опт 482–508)","вероятно","https://atimarket.ru/catalog/ogneupornye_materialy/14540/"],
+ ["Крепком (продавец)","пруток 10×2000","гладкий","10","10","н/д","н/д","1 и 2 м",160,"160","да (Ø10)","https://krepcom.ru/catalog/konstruktsionnye_materialy/prutok-stekloplastik-10-x-2000mm-belyy.htm"],
+ ["R-G-Composites (продавец)","пултрузионный пруток Ø12×2 м","гладкий","12","н/д","485","0,24","2 м",425,"850 ₽ за 2 м (нет в наличии)","вероятно","https://www.r-g-composites.ru/glass-fibre-rod-RG6100122/"]
+];
+
+// Карточки заводов
+const MAKERS = [
+ {n:"ДекМастер",site:"https://dpk-decking.ru/",city:"Москва (склад); завод не найден",st:"дилер",has5030:true,flags:[["b-bad","цена за метр, не за хлыст"],["b-warn","завод не найден"],["b-warn","юрлицо 2023 при «8 лет на рынке»"],["b-warn","вес «1 кг» — шаблон"]],what:"Лага 50×30×4000 (269–363 ₽/м), уголок 35×70 (219 ₽/м), балясина 50×50, перила, столб; доска MADERIS (бывш. ELIT).",diff:"Самый «голый» по документам: 70 % муки без защитного слоя, вес и размеры не указаны, документы на dekmaster.ru ведут в 404 и названы CM Decking. Сертификат соответствия добровольный по своим ТУ (в нём «Лага 50*35» и «Брус 50*30»), пожарный Г4/В3/Д3/Т3 — на доски. Отзывов на лагу нет.",draw:[],photo:[["лага","https://dekmaster.ru/wp-content/uploads/2024/07/laga-montaj.jpg"],["лага (карточка)","https://dpk-decking.ru/image/cache/catalog/dpk/laga-1200x800.webp"]]},
+ {n:"Holzhof",site:"https://holzhof.ru/",city:"Ульяновск (ОЭЗ «Портовая»)",st:"завод",has5030:false,flags:[["b-good","контрактное производство под ваш бренд"],["b-warn","гарантия 2 года"]],what:"Лаги 50×40 (310 ₽/м, 2 доп. ребра, канавки) и 40×35 (210), уголок 57×57 (7 цветов), столб 99×99, грядки 150–450 мм с углами и шарнирами.",diff:"Самая продуманная подсистема и грядки; ПЭ, лёгкий (плотность 1,1). Готов делать профиль по заказу — главный кандидат на свой профиль с пазом. WoodDecker, похоже, продаёт их товар под своей маркой. Вес лаги 1,4 кг/м на сайте и 1,2 у дилера.",draw:[["размеры грядки Eco","https://holzhof.ru/wp-content/themes/holzhof/dist/img/catalog/planters/eco-150/size.png"]],photo:[["лага 50×40","https://holzhof.ru/wp-content/themes/holzhof/dist/img/catalog/subsystem/joist-large/holzhof-joist-large.png"],["открытие завода 2023","https://holzhof.ru/home/news/holzhof-openning/"]]},
+ {n:"Woodgrand",site:"https://woodgrand.ru/",city:"Ульяновск (ИП Садеев Р. И.)",st:"завод",has5030:false,flags:[["b-good","мебельный ассортимент"],["b-warn","жалобы на сервис и допуски (2ГИС)"]],what:"Лага 40×25 полнотелая (169 ₽/м), усиленная 40×55 со стенкой 6 мм (299), брус лавочный 40×30 полнотелый 1,63 кг/м (449, 5 цветов), уголки и столбы МПК, грядочная доска со стенкой 4,5 мм, готовые скамьи и столы.",diff:"Две линии — ДПК (56 % сибирской муки + первичный ПНД СИБУР) и МПК (минерал, гарантия 5 лет). Есть доска с коэкструзией 150×22 (слой 1 мм). Декларация Г4/В3/Д3/Т4/РП4, хотя в статьях сайта пишут «Г2» — верить документу.",draw:[],photo:[["брус 40×30","https://woodgrand.ru/upload/iblock/c57/rtnbrt9rv0wse5muzqgxuwengpeoi2h7.webp"],["лага 40×55","https://woodgrand.ru/upload/iblock/9bc/uaf15o3no7a8c5eejr1to4numi38h8iu.jpg"]]},
+ {n:"Варяжский композит",site:"https://varyag-composit.ru/catalog/",city:"Ульяновск (ООО «Мир ДПК»)",st:"завод",has5030:false,flags:[["b-warn","сертификатов на сайте нет"],["b-bad","убыток 43 млн ₽ за 2025 (карта поставщиков)"]],what:"Лага 50×40 1,36 кг/м (374 ₽/м), угол 70×35 (292, 6 цветов), балясина 50×50, столб 120×120, грядочная доска 150×30 и 225×30.",diff:"Вес метра на каждой карточке, состав 60/30/10, гранулирование. Цены линейки Optima до рубля совпадают с Ecodecking — вероятно, один завод. Срок службы на сайте то «25+», то «от 15».",draw:[],photo:[["лага 50×40","https://varyag-composit.ru/upload/iblock/e46/site_TAA_7072_v01.jpg"]]},
+ {n:"Terrapol",site:"https://terrapol.ru/",city:"Москва / Владимир (ООО «Вествуд-полимер»)",st:"завод",has5030:false,flags:[["b-info","полипропилен"],["b-good","гарантия 10 лет"],["b-warn","у лаги нет веса и цвета"]],what:"Лага 50×35 (447 ₽/м на сайте, 240–267 у дилеров), уголки Практик 60×40 (10 цветов), Классик 40×40×4 «только декор», ограждения Практик.",diff:"Самый «премиальный», 50+ цветов, протокол ИХФ РАН 2012 по старению и морозу. Основа ПП — легче, но хуже на морозе. У дилеров гарантия 1–2 года.",draw:[],photo:[["лага 50×35","https://terrapol.ru/upload/iblock/67c/jhttwo3brn8h8e5jygwc94qtl81nxzb2.jpg"]]},
+ {n:"Savewood",site:"https://www.savewood.ru/",city:"Тульская обл. / Москва (ООО «ДПК-ПЛАСТ»)",st:"завод",has5030:true,flags:[["b-info","ПВХ"],["b-good","гарантия 15 лет"],["b-good","есть заглушка бруса"],["b-warn","вес и камеры не указаны"]],what:"Лага 48×33 (261 ₽/м), усиленная 50×40 (420), брус 50×31 полнотелый (700) и пустотелый (370), брус 70×40 (522) с заглушкой 168 ₽.",diff:"Единственный в группе 1 на ПВХ (60 % муки / 40 % ПВХ): жёстче и меньше расширяется, «самозатухает», но мягчеет в жару. Набор протоколов ИНЭОС РАН. Г1 — только вариант с минералом под заказ. В отзывах — разнотон досок.",draw:[],photo:[["лага 48×33","https://www.savewood.ru/wp-content/uploads/2016/07/sw-laga-48x33.jpg"],["заглушка 70×40","https://www.savewood.ru/wp-content/uploads/2022/08/sw-zagl-7040-b.jpg"]]},
+ {n:"Ecodecking",site:"https://eco-decking.ru/",city:"Москва, склад Подольск",st:"смешанный",has5030:true,flags:[["b-warn","часть линеек — Китай"],["b-warn","гарантия 2 года (баннер «25 лет»)"],["b-warn","место завода не найдено"]],what:"Лага «Экстра» 50×30 1,5 кг/м (253 ₽/м), «Титан» 60×35 (393), брус «Некст» 70×35 полнотелый 3,5 кг/м (689–776), 40×90 пустотелый (657) с заглушкой 120 ₽, уголки 50×50, 70×35, 60×40, 45×45.",diff:"Самая дешёвая лага ровно 50×30 с указанным весом. Вес 1,5 кг/м при таком сечении — профиль почти сплошной (≈87 % от сплошного, оценка): стенки толстые, это хорошо для сверления.",draw:[],photo:[["лага 50×30","https://eco-decking.ru/upload/iblock/d38/twzn9y054tl77cuyipefwubutk29vy5g.jpg"]]},
+ {n:"Grand Line",site:"https://www.grandline.ru/",city:"Москва (бренд-магазин)",st:"дилер",has5030:true,flags:[["b-good","публичные чертежи"],["b-warn","изготовитель не назван"]],what:"Лаги 35×40 (275 ₽/м) и 35×50 (295), грядочная 30×50 1,5 м (под заказ), брус лавочный 80×22 массив (705, 8 цветов), брус массив 50×30 — только чертёж, уголки 50×50 (9 цветов).",diff:"Лучший источник чертежей для 3D-модели. Показывает остатки на складе. Гарантия 5 лет «на технические характеристики» («50 лет» в шапке — про металл).",draw:[["лага 35×50","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/laga-gl-35-50.jpg"],["брус 50×30","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/brus-gl-massiv-50-30-chertezh.jpg"],["угол 50×50","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/ugol-gl-50-50.jpg"],["брус 80×22","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/brus-lavochnyi-gl-80-22-chertezh.jpg"]],photo:[["лага 35×40","https://www.grandline.ru/image/data/pg_files/pi/94/laga-montazhnaya-reyka-dpk-grand-line-35kh40mm-venge-4m-797394.jpg"]]},
+ {n:"MasterDeck",site:"https://masterdeck.ru/",city:"Москва, д. Милюково; с 2012",st:"завод",has5030:false,flags:[["b-warn","пожарного сертификата нет"],["b-warn","состав на сайте противоречив"],["b-info","ограждения Woodvex — Корея"]],what:"Лага 40×30 (195 ₽/м, одна камера, цвет тик), уголок ДПК 53×53, алюминиевые лаги; ограждения Woodvex — чужие.",diff:"Крупный завод с протоколами НИЦ 2012–2013, гарантия 10 лет (без изменения цвета). Честный FAQ: «горит, но плохо». Отзыв 2021: «многие доски повело».",draw:[],photo:[["лага, торец","https://masterdeck.ru/files/gallery/245/big/laga-1001590664_1593094685.jpg"]]},
+ {n:"Terradeck",site:"https://terradeck.ru/",city:"Москва; заводы Клин и Н. Новгород",st:"смешанный",has5030:true,flags:[["b-bad","«лагу не использовать как несущую»"],["b-warn","торгует чужими брендами"],["b-warn","жалоба: плесень через год"]],what:"Лаги 40×30 (195 ₽/м) и 60×40 (295), лавочный брус 50×30 (695, 6 цветов) и 100×35 (930), уголок 45×45 (295).",diff:"Сертификат ГОСТ Р 59555 до 2029, пожарный В2/Д3/Т2/РП2/КМ3 (Г не читается). Технических цифр на карточках почти нет. Жалобы на разнотон («три изделия делают разные производители»).",draw:[],photo:[["брус 50×30","https://terradeck.ru/sites/default/files/2026-02/brus-karamel_0.jpg"],["лага 40×30","https://terradeck.ru/sites/default/files/2026-05/laga_dpk_40x30.jpg"]]},
+ {n:"ITP (Ай-Техпласт)",site:"https://i-techplast.ru/",city:"Подольск (Климовск); с 2015",st:"завод",has5030:true,flags:[["b-good","брус с отверстием"],["b-good","12 цветов"],["b-warn","техданных на сайте нет"]],what:"Лага 50×35 1,2 кг/м (267 ₽/м), брус массив 50×30 (562), 60×28 и 60×28 с отверстием (567 / 474), МПК-двойники, столбы 100×100, балясины 50×30 полнотелые, уголки 50×50.",diff:"Самый полный набор брусьев до 6 м и самая широкая палитра. Декларация Г4/В3/Д3/Т4/РП4 до 2028 (Т4 — самый ядовитый дым). Sunwoods («Солнечный лес») — по тому же адресу.",draw:[],photo:[["лага 50×35","https://static.tildacdn.com/stor3439-6635-4134-a536-333730303432/49593f7d8da1c0df1f05bc0c606a7a30.jpg"],["брус с отверстием","https://static.tildacdn.com/stor3030-6430-4933-a632-376435636138/ebae14f50e00a9aaa672b73bb595619a.jpg"]]},
+ {n:"MultiDeck",site:"https://multideck.ru/",city:"Татарстан, Зеленодольский р-н; с 2008",st:"завод",has5030:false,flags:[["b-warn","отзыв 2020: мелование на юге"],["b-good","честная таблица выцветания"]],what:"Лага-подкладочный профиль 60×40, 1,2 кг/м (400 ₽/м); ограждения NauticPrime по запросу.",diff:"Итальянские линии, 70 % муки, гарантия доски 15 лет, лаги 5 (у Леруа 15). Сам публикует, что доска выцветает до 4 тонов.",draw:[],photo:[["страница лаги","https://multideck.ru/images/2/1190/wide/img-4.jpg"]]},
+ {n:"Волга-Декинг",site:"https://volga-decking.ru/",city:"Марий Эл, Волжск; с 2010",st:"завод",has5030:false,flags:[["b-good","вес всех изделий в прайсе"],["b-good","понятный опт"]],what:"Опорная лага 60×50 2,0 кг/м (500 ₽/м, опт 420), столб 120×120 5,6 кг/м, перила 90×45, балясина 50×50, универсальная полнотелая доска 141×23 для мебели.",diff:"Публикует стенки досок (5 и 6 мм) и вес. Ограждение честно названо декоративным. Лага крупнее и дороже нужной.",draw:[],photo:[["прайс №2 с фото","http://volga-decking.ru/wp-content/uploads/2026/08/roznica-price-№2-2026г-сентябрь.png"]]},
+ {n:"Роскомпозит / Decktor",site:"https://roskompozit.ru/",city:"Переславль-Залесский (офис Сочи)",st:"завод",has5030:true,flags:[["b-info","МПК — без дерева"],["b-warn","гарантия 5 или 10 лет"],["b-warn","Г2 на сайте, Г3 в сертификате"]],what:"Лаги МПК 30×50 1,5 кг/м (297 ₽/м) и 35×60 (318), брус МПК 30×50 полнотелый (716–720), 40×90 пустотелый и полнотелый.",diff:"Камень (70 %) + ПНД: плотный, почти не пьёт воду, цвет не выгорает, но тяжелее и греется. Делает свой цвет от 100 м². Техкарточки лаги нет.",draw:[],photo:[["лага МПК 30×50","https://img1.creatium.ru/disk2/3b/25/1a/efd3f2f72b749ccb967fb267c7302b5d22/laga_mpk_30h50.png"],["цех","https://img1.creatium.ru/9b/83/d9/19a6d225533378dedba8953627bfe2e6b6/main_factory.jpg"]]},
+ {n:"Невский композит",site:"https://ncdpk.ru/",city:"Ленобласть, п. Новый Свет",st:"завод",has5030:false,flags:[["b-info","ПВХ"],["b-warn","сертификат ПНД истёк 10.04.2026"]],what:"Лага 55×30 1,5 кг/м на ПВХ (≈303 ₽/м), угол 70×20, штакетник.",diff:"Честно печатает состав (40/50/10) и ТУ с допусками (ширина ±1, высота ±0,5 мм). Г2 — только на сайте.",draw:[],photo:[["лага","https://ncdpk.ru/images/catalog/decking/laga-montazhnaia.jpg"]]},
+ {n:"ТехноПарк ДПК",site:"https://tpdpk.ru/",city:"СПб / Приозерский р-н",st:"риск",has5030:false,flags:[["b-good","есть чертёж лаги"],["b-bad","ликвидация склада до 15.10.2026"],["b-warn","3–4 сотрудника, перепродаёт чужое"]],what:"Лага двухкамерная 50×40 1,4 кг/м (250 ₽/м), Classic 60×40 (чертёж: 2 камеры 20×30, стенка 5 мм), Strong 60×80 4 камеры, уголок 53×53.",diff:"Единственный публичный чертёж лаги с камерами. Но одна и та же лага — то 50×40, то 60×40; в продаже Woodvex и «Верста».",draw:[["лага 60×40","https://sale.tpdpk.ru/img/26039684.jpg"]],photo:[["лага","https://sale.tpdpk.ru/img/26039685.jpg"]]},
+ {n:"Алтай Декинг",site:"https://altaydecking.ru/",city:"Заринск, Алтайский край",st:"завод",has5030:false,flags:[["b-warn","лага только у дилеров"],["b-warn","далеко"]],what:"Лага 50×35 1,2 кг/м (≈200 ₽/м у дилеров), уголки 50×50 и 70×35.",diff:"Маленький сибирский завод, на сайте только доска.",draw:[],photo:[]},
+ {n:"WPC-ТеХно",site:"https://dpk-t.ru/",city:"Свердловская обл. (ПСК «ТехноКрат»)",st:"завод",has5030:false,flags:[["b-warn","нет техданных"],["b-warn","на комплектующие гарантии нет"],["b-bad","отзыв 2025: «рассыпалась»"]],what:"Лага 40×30 (150 ₽/м, 2 камеры), столб 120×120 (~9 камер), перила 100×60, балясина 100×35.",diff:"Самая дешёвая лага, но сечение меньше нужного и 3 м.",draw:[],photo:[["сечение лаги","https://dpk-t.ru/uploadedFiles/eshopimages/big/laga-osn.jpg"],["столб","https://dpk-t.ru/uploadedFiles/eshopimages/big/stolb-120-1-osn.jpg"]]},
+ {n:"Жешартский ЛПК (Poly-Deck)",site:"https://upgweb.ru/products/",city:"Коми, Жешарт",st:"риск",has5030:false,flags:[["b-bad","банкротство (наблюдение с 03.2026)"],["b-warn","лаг нет"]],what:"Только доска 150×24, 190×24, 150×21.",diff:"Не поставщик для нас. Не путать с Polydeck (Орёл).",draw:[],photo:[]},
+ {n:"ТехноДек",site:"https://techno-deck.ru/",city:"Люберцы; завод Волжский (ArtDeco)",st:"смешанный",has5030:false,flags:[["b-warn","сертификаты на ArtDeco"],["b-warn","жалоба на предоплату"]],what:"Лага 35×45 (220 ₽/м, 1 камера + 2 ребра), Г-профиль 35×70 (277), брус лавочный 57×32 (486), столб 100×100, перила 90×45, балясина 50×50.",diff:"Дёшево и единая палитра 4–5 цветов, но почти без цифр.",draw:[],photo:[["лага, сечение","https://techno-deck.ru/33-small_dpk/laga-montazhnaja-iz-dpk.jpg"]]},
+ {n:"ТехноДПК (Атерно)",site:"https://tehnodpk.ru/",city:"Нижний Новгород",st:"дилер",has5030:true,flags:[["b-warn","по ЕГРЮЛ — оптовая торговля"],["b-warn","«завод с 2012», регистрация 2019"]],what:"Лага 30×50 (431 ₽/м), угол 70×35, столб/перила/балясина «Вуд» с весами.",diff:"Дорогая лага; продаёт Woodvex «и других производителей».",draw:[],photo:[]},
+ {n:"Polywood",site:"https://www.polywood.ru/",city:"Москва (ООО «ПоливудТорг»); с 2007",st:"завод",has5030:true,flags:[["b-good","пожарная Г2/В2/Д2/Т2"],["b-good","ТУ 2025 и альбом решений"],["b-warn","ТУ допускает вторичный пластик"],["b-warn","допуски ±2 мм"]],what:"Профиль ДПК 50×30 опорный 1,27 кг/м (380 ₽/м, одна камера), лавочный брус 50×30 полнотелый 2,1 кг/м (800), брус 100×35, столб 100×100 4,8 кг/м, балясина 55×40, уголки.",diff:"Лучшие документы на рынке. «Гарантия» — это срок хранения 2 года; эксплуатация «до 10 лет». Карточки и ТУ расходятся по температуре (−50…+90 и −40…+70).",draw:[["альбом ТР 12167 (PDF)","https://www.polywood.ru/upload/iblock/f60/0mxa6vjh72x0549n1i9opm2znpm860t4/ATR_Polywood.pdf"]],photo:[["профиль 50×30","https://www.polywood.ru/upload/iblock/1a6/uhaax2lqzk7ffyglby1g3xb8159tdezd/polywood_profil_dpk_30kh40.png"]]},
+ {n:"DPK-Profile",site:"http://www.dpk-profile.ru/",city:"Курск (ООО «Смартком»)",st:"риск",has5030:false,flags:[["b-warn","сайт заброшен"],["b-warn","нет документов"]],what:"Лага 40×30 (≈212 ₽/м, 4 ребра), Lite 52×52, уголок 55×35 (220).",diff:"Дёшево, но проверить нечем — только образец и штангенциркуль.",draw:[],photo:[["лага","http://www.dpk-profile.ru/inc/upload/product/td/laga_xl.jpg"]]},
+ {n:"ДПК-НСК",site:"https://dpk-nsk.ru/",city:"Новосибирск (ООО «Сибснабрем»)",st:"дилер",has5030:true,flags:[["b-warn","дилер многих брендов"],["b-warn","страницы противоречат себе"]],what:"Лаги 30×50…60×50 (330–510 ₽/м), МПК 50×30 (460), лавочный брус WoodDeck.",diff:"Широкий выбор, но размеры, страна и гарантия на страницах расходятся. Пишет, что новый профиль заказать «практически невозможно» (фильера ~10 000 $).",draw:[],photo:[]},
+ {n:"Polydeck (Орёл)",site:"https://poly-deck.ru/",city:"Орёл, Кромское ш.; с 2008",st:"завод",has5030:true,flags:[["b-good","лага 50×30 и брус 30×50"],["b-warn","техданных нет"],["b-warn","опт от 250 000 ₽"]],what:"Лага 50×30 (280 ₽/м, 3/4/6 м), брус лавочный 30×50 полнотелый (450), столб 100×100, уголок 35×70, садовая мебель и грядки.",diff:"Единственный региональный завод, у которого есть и лага ровно 50×30, и полнотелый брус, и готовая мебель. Сайт с ошибкой сертификата.",draw:[],photo:[]},
+ {n:"Greenwerk",site:"https://green-werk.ru/",city:"Нижний Ломов (завод «Власть труда»)",st:"завод",has5030:true,flags:[["b-good","юрлицо-производитель, лаборатория"],["b-good","гарантия 3 года"],["b-warn","отзывы Петрович: «брак»"]],what:"Лага 30×50 (300 ₽/м, 2 квадратные камеры), столб 100×100 3,91 кг/м, перила 90×45, балясина 50×50 1,19 кг/м, уголок.",diff:"Крупный фанерный холдинг, своя мука, протоколы НИЦ (водопоглощение 0,79 %). Сертификат Г4.",draw:[],photo:[["лага, 2 камеры","https://green-werk.ru/upload/dev2fun.imagecompress/webp/iblock/27f/plxcskyyzomifz3oi68xyeq9dir496wk/IMG_0095.webp"]]},
+ {n:"Lecole",site:"https://lecole.su/",city:"Краснодар (на базе завода ПВХ «МастерПласт»)",st:"завод",has5030:false,flags:[["b-info","ПВХ + коэкструзия у досок"],["b-warn","лага только 6 м"]],what:"Лага 60×40×6000 1,5 кг/м (550 ₽/м), уголок L 60×40 (380–400), 15–27 цветов.",diff:"Единственный ПВХ-ДПК с защитным слоем. Может делать нестандарт.",draw:[],photo:[["профиль","https://lecole.su/cat_pics/productpic_10_63c8f5b405ed9.jpg"]]},
+ {n:"Мербау",site:"https://dpk-merbau.ru/",city:"Новосибирск",st:"завод",has5030:false,flags:[["b-warn","нет веса и состава"]],what:"Лаги 50×25 (182 ₽/м) и 50×40 (270), угол 55×35 полнотелый 5 мм, балясина 51×51.",diff:"Дешёвые лаги близких сечений; может делать по запросу.",draw:[],photo:[]},
+ {n:"Goodeck",site:"https://goodeck.ru/",city:"Волоколамск; с 2017",st:"смешанный",has5030:true,flags:[["b-warn","размеры в карточках расходятся"]],what:"Лага 50×30×4000 (230 ₽/м), столбы, балясины, перила.",diff:"Дешёвая лага ровно 50×30, но без цифр; торгует и Twinson/Megawood.",draw:[],photo:[]},
+ {n:"Harvex",site:"https://harvex-deck.com/",city:"Москва (завод не назван)",st:"смешанный",has5030:false,flags:[["b-warn","адрес завода не указан"]],what:"Лага 30×40 1,5 кг/м (175–210 ₽/м), уголок 35×70.",diff:"Единственная лага с составом на сайте: 65 % муки, 30 % ПНД, 3 % УФ-добавок.",draw:[],photo:[["лага","https://static.tildacdn.com/tild3662-6538-4961-b838-326265633335/laga111-500x500_1.png"]]},
+ {n:"DeckLine",site:"https://deck-line.msk.ru/",city:"Иркутская обл. / Москва (ИП)",st:"смешанный",has5030:false,flags:[["b-good","вес каждой позиции"],["b-bad","отзыв 2025: шелушение через 3 года"]],what:"Лага 30×40 1,1 кг/м (165 ₽/м), столбы 100×100 и 125×125, балясина 50×50 1,47 кг/м, лавочный брус 60×30 и 80×20.",diff:"По весам можно прикинуть заполнение сечения; цех не подтверждён документами.",draw:[],photo:[]},
+ {n:"T-Decks",site:"https://t-decks.ru/",city:"Оренбург; 11 линий",st:"завод",has5030:false,flags:[["b-good","стенка 6 мм указана"],["b-info","идея трубы внутри ДПК"]],what:"Балясины 55×55 (стенка 6 мм, под трубу 40×40) и 53×27 (под трубу 15×15); лаг нет.",diff:"Прямо предлагает вставлять металл внутрь ДПК — та же идея, что стержни в P-02. Делает контрактное производство.",draw:[["схема балясины","https://t-decks.ru/upload/iblock/e8c/Balyasina-27kh51.png"]],photo:[]},
+ {n:"Sequoia",site:"https://sequoiadv.ru/",city:"Хабаровск",st:"смешанный",has5030:false,flags:[["b-warn","часть номенклатуры — Китай"]],what:"Столб 120×120 (1 838 ₽/м, с антипиренами), перила 90×45; лаг нет.",diff:"Далеко и дорого.",draw:[],photo:[]},
+ {n:"GrandDPK / NanoWood",site:"https://granddpk.ru/",city:"склады Москва, Казань, Краснодар",st:"дилер",has5030:true,flags:[["b-warn","производитель непроверяем"]],what:"Лаги 40×30 ECO (257 ₽/м), 50×30 (255), 48×35 (279), уголки 50×50 и 60×60.",diff:"Только как ценовой ориентир.",draw:[],photo:[]},
+ {n:"Hideck",site:"https://hideck.ru/",city:"Пермь",st:"завод",has5030:false,flags:[["b-good","«любое сечение под заказ»"]],what:"ДПК от 550 ₽/м, МПК от 575; раздел «лага, брус, углы» без цифр.",diff:"Кандидат на заказ своего профиля с пазом: +7 952 322-71-19.",draw:[],photo:[]},
+ {n:"WoodDecker",site:"https://wooddecker.ru/",city:"Москва / Щёлково (не подтверждено)",st:"дилер",has5030:true,flags:[["b-warn","вероятно, белая этикетка Holzhof"]],what:"Лаги 30×50 (262 ₽/м) и 40×60 (250), обе «1,3 кг/м».",diff:"Карточки противоречивы (и ПВХ, и ПНД).",draw:[],photo:[]},
+ {n:"Latitudo / EasyDecking",site:"https://latitudo.ru/",city:"Москва",st:"дилер",has5030:false,flags:[["b-warn","импорт Bruggan/Legro, цены в евро"],["b-warn","ООО с 04.2026"]],what:"Лага 35×45 (245 ₽/м), усиленная 53×43, столбы и перила EasyDecking.",diff:"Ориентир по сечениям, не производитель.",draw:[],photo:[]},
+ {n:"DeckRa",site:"https://deckra.ru/",city:"Тольятти",st:"завод",has5030:false,flags:[["b-bad","не ДПК — вспененный полистирол"]],what:"Лавочный брус 40×40, 60×30, 70×35, 90×35 и др., лёгкий, не впитывает воду.",diff:"Хрупкий и мягчеет от +50 °C — для солнца сомнительно.",draw:[],photo:[]}
+];
+
+const PROPS = [
+ ["Плотность","≥ 1 000 кг/м³","1 202–1 405 кг/м³","н/д; лаги на рынке 1,1–1,5 кг/м","тяжелее воды, тонет"],
+ ["Прочность на изгиб","≥ 30 МПа","27–75, обычно 41–45 МПа","н/д (у доски ДекМастер ≥30)","ломается как хорошее дерево поперёк волокон"],
+ ["Модуль упругости (жёсткость)","не нормируется","2,1–5,5 ГПа","≈3 ГПа (оценка)","в 2–5 раз мягче сосны, в 70 раз мягче стали"],
+ ["Прочность на растяжение","≥ 12 МПа","14,4–33,9 МПа","н/д","—"],
+ ["Водопоглощение за 24 ч","≤ 2,0 %","0,34–1,61 %","н/д","пьёт мало"],
+ ["Водопоглощение, кипячение 2 ч","≤ 5,0 %","1,22–3,17 %","≤5 % (ТУ доски)","жёсткая проверка — можно повторить дома"],
+ ["Набухание за 24 ч","≤ 1,0 %","0,01–0,52 %","н/д","размер почти не меняется"],
+ ["Твёрдость (вдавливание шарика)","≥ 80 Н/мм²","91–161","≥80 (ТУ доски)","—"],
+ ["Ударная вязкость","≥ 4,0 кДж/м²","4,1–7","н/д","хрупковат, особенно на морозе"],
+ ["Держит шуруп","≥ 130 Н/мм","до 277","≥110 (ниже ГОСТ)","держит, но у ДекМастера норма ниже"],
+ ["Разрушающая нагрузка доски на опорах 40 см","≥ 2 000 Н","1 563–6 203 Н","лага не испытывалась","разброс между заводами в 4 раза"],
+ ["Выцветание за 24 ч лампы","не хуже Ц2","Ц1","защитного слоя нет","короткий тест, не «5 лет на солнце»"],
+ ["Старение (20 циклов), потеря прочности","≤ 20 %","4,98 % (лучший протокол)","н/д","≤20 % = всего «не меньше 2 лет»"],
+ ["Расширение от тепла","—","30–70 ·10⁻⁶ на °C","7–17 мм на 4 м при 60 °C","стыки и отверстия с запасом"],
+ ["Рабочая температура","—","от −40…+50 до −60…+90 °C (заявления)","−40…+70 °C (доска ДекМастер)","цифры у всех разные — «из головы»"],
+ ["Горючесть","справочно Г2–Г4","чаще Г4/В3/Д3/Т3–Т4","Г4/В3/Д3/Т3 (на доски)","сильно горит, много дыма"],
+ ["Масса метра","−5…+10 % от заявленной","—","«1 кг» в карточке — взвесить","вес обязан быть в документах"]
+];
+
+const ALT = [
+ ["ДПК-лага 50×30 (ДекМастер)","269–363","1,0–1,5","2–5,5","≈12 мм (7–17)","Г4","ползёт, хрупковат на морозе, 70 % муки на виду, гарантия 1 год"],
+ ["Сосна антисептированная 50×50","40–96","≈2","7–12","≈1,2 мм вдоль","Г3–Г4","усыхает на 4–7 %, гниёт в земле, нужна пропитка"],
+ ["Лиственница 50×50","75–132","≈2","10–12","≈1,2 мм","Г3–Г4","сереет, трескается, нужно масло"],
+ ["Термососна 40×40","164–490","≈0,7–0,8","8–10","≈1,2 мм","Г3–Г4","хрупкая, дорогая, для земли не рекомендуют"],
+ ["Алюминиевая лага","453–1 130","0,5–1","70","≈5,5 мм","НГ","дорогая, острые срезы, холодная"],
+ ["Стальная труба 40×20×2","130–160","1,7","210","≈2,9 мм","НГ","ржавеет на срезах, красить"],
+ ["«Пластиковый» брус ПНД 50×50","365–570","2,25","≈1","до 36 мм","горит","сильно провисает, опоры каждые 40 см"],
+ ["МПК-лага 30×50 (камень + ПНД)","267–460","1,5","н/д","н/д","Г3","тяжелее, греется; нет дерева — не гниёт"]
+];
+
+const DRAWINGS = [
+ ["drawing_gl_laga_35x50.jpg","Grand Line: лага ДПК 35×50","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/laga-gl-35-50.jpg","Grand Line, grandline.ru/dokumenty/chertezhi; права не оговорены — только для сравнения. 1607×731 px."],
+ ["drawing_gl_brus_50x30.jpg","Grand Line: брус массив 50×30 (полнотелый)","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/brus-gl-massiv-50-30-chertezh.jpg","Grand Line; в каталоге товара нет, только чертёж. 961×709 px."],
+ ["drawing_gl_ugol_50x50.jpg","Grand Line: угол ДПК 50×50","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/ugol-gl-50-50.jpg","Grand Line; подходит закрывать торцы и углы. 1239×1053 px."],
+ ["drawing_gl_lavochnyi_80x22.jpg","Grand Line: брус лавочный 80×22 массив","https://www.grandline.ru/uploads/files/chertezhi_vse/dpk/brus-lavochnyi-gl-80-22-chertezh.jpg","Grand Line; 8 цветов, 705 ₽/м. 1279×618 px."],
+ ["drawing_tpdpk_laga_60x40.jpg","ТехноПарк ДПК: лага Classic 60×40 — 2 камеры 20×30, стенка 5 мм","https://sale.tpdpk.ru/img/26039684.jpg","ТехноПарк ДПК (sale.tpdpk.ru); единственный найденный чертёж лаги с камерами и стенкой. 463×382 px."]
+];
+
+const SOURCES = [
+ ["ГОСТ Р 59555-2021 (текст, Гарант)","https://base.garant.ru/401601956/"],
+ ["Протоколы НИЦ «ДПК», «Власть труда» 2023","https://grand-terrasa.pro/wp-content/uploads/2026/03/zakljuchenija-kompleksnye-ispytanija.pdf"],
+ ["Заключение НИЦ по ускоренному старению (срок службы)","https://grand-terrasa.pro/wp-content/uploads/2026/03/zakljuchenie-na-uskorennoe-starenie.pdf"],
+ ["ДекМастер: карточка лаги (dpk-decking.ru)","https://dpk-decking.ru/komplektuyushchie-dlya-terrasnoj-doski-dpk/laga_montagnaya_dpk"],
+ ["ДекМастер у дилера: 363 ₽ за 1 м.п.","https://torgsp.ru/dm/"],
+ ["ДекМастер: каталог (от 269 ₽)","https://dekmaster.ru/laga-montazhnaya-iz-dpk-50304000/"],
+ ["ДекМастер: пожарный сертификат (PDF)","https://dpk-decking.ru/index.php?route=extension/module/uni_download/download&pid=142&did=6"],
+ ["Расширение ДПК на ПЭ (Materials, MDPI 2019)","https://www.mdpi.com/1996-1944/12/6/881"],
+ ["Ползучесть ДПК при 50 °C (Case Studies in Construction Materials 2018)","https://www.sciencedirect.com/science/article/pii/S2214509518303280"],
+ ["Ползучесть ДПК (USDA FPL, 2015)","https://www.fpl.fs.usda.gov/documnts/pdf2015/fpl_2015_hamel001.pdf"],
+ ["Усиление ДПК стеклопластиком (Polymers, MDPI 2022)","https://www.mdpi.com/2073-4360/14/22/4789"],
+ ["ДПК против пластикового бруса (Polymers, MDPI 2020)","https://www.mdpi.com/2073-4360/12/2/262"],
+ ["Выцветание 10–30 % (дилер, 2024)","https://www.terrasov.com/news/vygoraet-li-dpk"],
+ ["Отзыв: мелование MultiPlast (Отзовик, 2020)","https://otzovik.com/review_9349247.html"],
+ ["Сырьё: мука М-180 (Лестех)","https://alestech.ru/bulletin/article/287"],
+ ["Производство ПНД в РФ 2025 (Alto Group)","https://alto-group.ru/new/20502-proizvodstvo-polijetilena-nizkogo-davlenija-v-rossii-2025-rost-na-167.html"],
+ ["Технология производства (MasterDeck)","https://dmitrov.masterdeck.ru/poleznaya-informaciya/proizvodstvo-izdelij-iz-drevesno-polimernogo-kompozita/"],
+ ["Декларация ITP Г4/В3/Д3/Т4","https://xn--b1aaibo6aawehcb.xn--p1acf/declarations/ru-d-ru-ra01-v-02484-25"],
+ ["Пожарный сертификат Polywood Г2","https://www.polywood.ru/upload/iblock/0f3/lhn0gesdqj2hibpcz3r0gzdvy5vxamvd/Pozharnyy_sertifikat.pdf"],
+ ["ТУ Polywood 2025","https://www.polywood.ru/upload/iblock/fba/twu1enkhiyv7pvmu0oe77edte206xedn/09.07TU-22.23.19_002_52775710-_2025-IZDELIYA-PROFILNYE-KOMPOZITNYE.pdf"],
+ ["Terradeck: «лагу не использовать как несущую»","https://terradeck.ru/terrasnaya-doska-iz-DPK/terradeck-massive-pro-venge"],
+ ["Инструкция Технодек (шаг опор ≤300 мм)","https://techno-deck.ru/upload/media/content/instrukcija_po_montazhu_dpk_tehnodek_1.pdf"],
+ ["Чертежи Grand Line","https://www.grandline.ru/dokumenty/chertezhi/"],
+ ["Чертёж лаги ТехноПарк ДПК","https://sale.tpdpk.ru/img/26039684.jpg"],
+ ["Жешартский ЛПК: наблюдение (Интерфакс)","https://www.interfax-russia.ru/northwest/news/sud-vvel-nablyudenie-v-otnoshenii-zheshartskogo-lpk"],
+ ["Поликарбонат Novattro: техническое руководство","https://safplast.ru/upload/iblock/6d3/bee9t69rcfp32ng14duyw8hz19ag7udg/Tekhnicheskoe-rukovodstvo-po-monolitnomu-polikarbonatu.pdf"],
+ ["Полигаль Восток: гарантия и УФ с двух сторон","https://polygalvostok.ru/informacija/garantija-informacija/"],
+ ["Полигаль: цены СПб","https://spb.polygalvostok.ru/catalog/polikarbonat/monolitnyj/"],
+ ["КИН Woggel: цены","https://msk.kinplast.ru/product-category/monolitnyj-polikarbonat/"],
+ ["Горючесть поликарбоната Г1/Г3","https://polyglass.ru/stati/goryuchest-polikarbonata-g1-ili-g3/"],
+ ["ГОСТ 31938-2022 (копия текста)","https://kompozit54.ru/blog/gost-319382022/"],
+ ["Номинальный диаметр арматуры (Alien)","https://www.alientechnologies.ru/faq/rebar_diameter/"],
+ ["МЗПКК: ГОСТ «по стержню» и ТУ «по ребру»","https://mzpkk.ru/produkciya/aksp-12mm/"],
+ ["Армада: Ø12 ТУ — 11,0 мм по рёбрам","https://armadag.ru/catalog/stroi_material/stekloplastikovaya-kompozitnaya-armatura/ack-12/ty-st"],
+ ["УралАрмоПром АСП-12","https://ufa.uralarmaprom.ru/stekloplastikovaya-kompozitnaya-armatura-12mm"],
+ ["Пулгласс ССО-12 (Рускомпозит)","https://www.ruscompozit.com/catalog/sterzhni-i-profili/profili-i-sterzhni-stekloplastikovye-odnonapravlennye-pulglass/"],
+ ["Хранение стеклопластика — от солнца","https://armoplast.ru/2019/10/23/transportirovka-i-hranenie-stekloplastikovoj-armatury/"],
+ ["Викисклад: категория Wood plastic composite","https://commons.wikimedia.org/wiki/Category:Wood_plastic_composite"]
+];
+
+/* ============ ВСПОМОГАТЕЛЬНОЕ ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = (n,d=0) => n==null||isNaN(n) ? "—" : n.toLocaleString("ru-RU",{maximumFractionDigits:d,minimumFractionDigits:0});
+const link = (u,t="открыть") => u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>` : "—";
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+LAGS.forEach(r=>{
+  r.big = Math.max(r.w,r.h); r.small = Math.min(r.w,r.h);
+  r.sz = r.big*1000 + r.small;
+  r.psn = (r.p!=null && r.Ls) ? Math.round(r.p*r.Ls) : null;
+  r.is5030 = (r.big===50 && (r.small===30||r.small===31));
+});
+
+function sortable(table, state, render){
+  table.querySelectorAll("th.sortable").forEach(th=>{
+    th.addEventListener("click",()=>{
+      const k = th.dataset.k;
+      if(state.k===k) state.dir = -state.dir; else {state.k=k; state.dir=1;}
+      table.querySelectorAll("th.sortable").forEach(x=>x.classList.remove("asc","desc"));
+      th.classList.add(state.dir>0?"asc":"desc");
+      render();
+    });
+  });
+}
+function cmp(a,b,dir){
+  const na = a==null||a===""||(typeof a==="number"&&isNaN(a)), nb = b==null||b===""||(typeof b==="number"&&isNaN(b));
+  if(na&&nb) return 0; if(na) return 1; if(nb) return -1;
+  if(typeof a==="number"&&typeof b==="number") return (a-b)*dir;
+  return String(a).localeCompare(String(b),"ru")*dir;
+}
+
+/* ============ ТАБЛИЦА ЛАГ ============ */
+const lagState = {k:"p",dir:1};
+function renderLags(){
+  const q = $("#fl-q").value.trim().toLowerCase();
+  const size = $("#fl-size").value, hol = $("#fl-hol").value, base = $("#fl-base").value, kind = $("#fl-kind").value;
+  let rows = LAGS.filter(r=>{
+    if(size==="near" && !(Math.abs(r.big-50)<=10 && Math.abs(r.small-30)<=5)) return false;
+    if(size==="exact" && !r.is5030) return false;
+    if(hol!=="all" && r.t!==hol) return false;
+    if(base!=="all" && r.b!==base) return false;
+    if(kind!=="all" && r.k!==kind) return false;
+    if(q){ const hay=(r.m+" "+r.a+" "+r.w+"×"+r.h+" "+r.h+"×"+r.w+" "+(r.n||"")+" "+r.b).toLowerCase(); if(!hay.includes(q)) return false; }
+    return true;
+  });
+  const key = lagState.k==="ps" ? "psn" : lagState.k;
+  rows.sort((a,b)=>cmp(a[key],b[key],lagState.dir));
+  $("#t-lag tbody").innerHTML = rows.map(r=>{
+    const stick = r.ps || (r.psn!=null ? fmt(r.psn)+" ₽ за "+fmt(r.Ls,1)+" м" : (r.pt&&/за \d/.test(r.pt)? "см. цену" : "—"));
+    const price = r.p!=null ? `<b>${fmt(r.p,1)}</b>` : "—";
+    const title = r.n ? ` title="${esc(r.n)}"` : "";
+    return `<tr class="${r.is5030?"hl":""}"${title}>
+      <td class="nowrap"><b>${esc(r.m)}</b></td>
+      <td>${esc(r.a)}${r.n?`<br><span class="muted small">${esc(r.n)}</span>`:""}</td>
+      <td class="num">${r.w}×${r.h}</td>
+      <td>${esc(r.L)}</td>
+      <td>${esc(r.t)}</td>
+      <td>${esc(r.ch)}</td>
+      <td>${esc(r.wl)}</td>
+      <td class="num">${r.kgt?esc(r.kgt):(r.kg!=null?fmt(r.kg,2):"н/д")}</td>
+      <td>${esc(r.b)}</td>
+      <td>${esc(r.cx)}</td>
+      <td>${esc(r.col)}</td>
+      <td>${esc(r.f)}</td>
+      <td>${esc(r.g)}</td>
+      <td class="num">${price}${r.pt?`<br><span class="muted small" style="white-space:normal">${esc(r.pt)}</span>`:""}</td>
+      <td class="num">${esc(stick)}</td>
+      <td class="nowrap">${esc(r.d)}</td>
+      <td>${link(r.u)}</td></tr>`;
+  }).join("") || `<tr><td colspan="17" class="muted">Ничего не нашлось — ослабьте фильтры.</td></tr>`;
+  const priced = rows.filter(r=>r.p!=null).map(r=>r.p);
+  const mn = priced.length?Math.min(...priced):null, mx = priced.length?Math.max(...priced):null;
+  $("#fl-count").textContent = `Показано ${rows.length} из ${LAGS.length}` + (priced.length?` · цена от ${fmt(mn)} до ${fmt(mx)} ₽/м`:"");
+}
+["#fl-q","#fl-size","#fl-hol","#fl-base","#fl-kind"].forEach(s=>$(s).addEventListener("input",renderLags));
+sortable($("#t-lag"),lagState,renderLags);
+
+/* ============ ТАБЛИЦА АКСЕССУАРОВ ============ */
+const accState = {k:"m",dir:1};
+function renderAcc(){
+  const q = $("#fa-q").value.trim().toLowerCase(), ty = $("#fa-type").value;
+  let rows = ACC.map(a=>({m:a[0],ty:a[1],sz:a[2],kg:a[3],col:a[4],p:a[5],pt:a[6],n:a[7],u:a[8]})).filter(r=>{
+    if(ty!=="all" && r.ty!==ty) return false;
+    if(q && !(r.m+" "+r.sz+" "+r.n+" "+r.ty).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  rows.sort((a,b)=>cmp(a[accState.k],b[accState.k],accState.dir));
+  $("#t-acc tbody").innerHTML = rows.map(r=>`<tr><td class="nowrap"><b>${esc(r.m)}</b></td><td>${esc(r.ty)}</td><td>${esc(r.sz)}</td><td>${esc(r.kg)}</td><td>${esc(r.col)}</td><td class="num">${r.p!=null?fmt(r.p):"—"}</td><td>${esc(r.pt)}</td><td>${esc(r.n)}</td><td>${link(r.u)}</td></tr>`).join("") || `<tr><td colspan="9" class="muted">Ничего не нашлось.</td></tr>`;
+  $("#fa-count").textContent = `Показано ${rows.length} из ${ACC.length}`;
+}
+["#fa-q","#fa-type"].forEach(s=>$(s).addEventListener("input",renderAcc));
+sortable($("#t-acc"),accState,renderAcc);
+
+/* ============ КАРТОЧКИ ЗАВОДОВ ============ */
+function renderMakers(){
+  const v = $("#fm-type").value;
+  const list = MAKERS.filter(m=>{
+    if(v==="завод") return m.st==="завод";
+    if(v==="5030") return m.has5030;
+    if(v==="risk") return m.flags.some(f=>f[0]==="b-bad") || m.st==="риск";
+    return true;
+  });
+  const stBadge = {"завод":["b-good","завод"],"дилер":["b-warn","продавец / дилер"],"смешанный":["b-info","завод + перепродажа"],"риск":["b-bad","риск"]};
+  $("#makers").innerHTML = list.map(m=>{
+    const sb = stBadge[m.st]||["",m.st];
+    const draws = m.draw.length ? `<div class="links"><b>Чертежи:</b> ${m.draw.map(d=>link(d[1],d[0])).join(", ")}</div>` : `<div class="links muted">Чертежей нет.</div>`;
+    const photos = m.photo.length ? `<div class="links"><b>Фото (ссылки, права у завода):</b> ${m.photo.map(d=>link(d[1],d[0])).join(", ")}</div>` : "";
+    return `<details class="card maker"><summary><h3>${esc(m.n)}</h3>
+      <div class="meta">${esc(m.city)} · ${link(m.site,"сайт")}</div>
+      <div><span class="badge ${sb[0]}">${esc(sb[1])}</span>${m.has5030?'<span class="badge b-info">есть 50×30</span>':""}${m.flags.map(f=>`<span class="badge ${f[0]}">${esc(f[1])}</span>`).join("")}</div></summary>
+      <p class="small" style="margin-top:8px"><b>Что есть:</b> ${esc(m.what)}</p>
+      <p class="small"><b>Чем отличается:</b> ${esc(m.diff)}</p>
+      ${draws}${photos}</details>`;
+  }).join("");
+}
+$("#fm-type").addEventListener("input",renderMakers);
+$("#fm-open").addEventListener("click",e=>{
+  const all = [...document.querySelectorAll("#makers details")];
+  const open = !all.every(d=>d.open);
+  all.forEach(d=>d.open=open);
+  e.target.textContent = open ? "Свернуть все" : "Раскрыть все";
+});
+
+/* ============ ЛИСТЫ ============ */
+const sheetState = {k:"p",dir:1};
+function renderSheets(){
+  const ty = $("#fs-type").value;
+  let rows = SHEETS.map(s=>({m:s[0],a:s[1],t:s[2],th:s[3],col:s[4],uv:s[5],f:s[6],g:s[7],p:s[8],pt:s[9],u:s[10]})).filter(r=>ty==="all"||r.t===ty);
+  rows.sort((a,b)=>cmp(a[sheetState.k],b[sheetState.k],sheetState.dir));
+  $("#t-sheet tbody").innerHTML = rows.map(r=>`<tr class="${/Woggel|Колибри$/.test(r.a)&&r.t==="монолитный ПК"?"hl":""}"><td class="nowrap"><b>${esc(r.m)}</b></td><td>${esc(r.a)}</td><td>${esc(r.t)}</td><td>${esc(r.th)}</td><td>${esc(r.col)}</td><td>${esc(r.uv)}</td><td>${esc(r.f)}</td><td>${esc(r.g)}</td><td class="num">${r.p!=null?"<b>"+fmt(r.p)+"</b>":"—"}<br><span class="muted small" style="white-space:normal">${esc(r.pt)}</span></td><td>${link(r.u)}</td></tr>`).join("");
+  $("#fs-count").textContent = `Показано ${rows.length} из ${SHEETS.length} · цены на 29.09.2026, розница`;
+}
+$("#fs-type").addEventListener("input",renderSheets);
+sortable($("#t-sheet"),sheetState,renderSheets);
+
+/* ============ СТЕРЖНИ ============ */
+const rodState = {k:"p",dir:1};
+function renderRods(){
+  const ty = $("#fr-type").value;
+  let rows = RODS.map(s=>({m:s[0],a:s[1],t:s[2],dn:s[3],da:s[4],st:s[5],kg:s[6],len:s[7],p:s[8],pt:s[9],fit:s[10],u:s[11]})).filter(r=>ty==="all"||r.t===ty);
+  rows.sort((a,b)=>cmp(a[rodState.k],b[rodState.k],rodState.dir));
+  const fitBadge = f => /^да/.test(f)?`<span class="badge b-good">${esc(f)}</span>`:/вряд|нет в/.test(f)?`<span class="badge b-bad">${esc(f)}</span>`:`<span class="badge b-warn">${esc(f)}</span>`;
+  $("#t-rod tbody").innerHTML = rows.map(r=>`<tr class="${/АСП-12 «Стандарт»|ССО-12/.test(r.a)?"hl":""}"><td class="nowrap"><b>${esc(r.m)}</b></td><td>${esc(r.a)}</td><td>${esc(r.t)}</td><td>${esc(r.dn)}</td><td>${esc(r.da)}</td><td>${esc(r.st)}</td><td class="num">${esc(r.kg)}</td><td>${esc(r.len)}</td><td class="num">${r.p!=null?"<b>"+fmt(r.p,2)+"</b>":"—"}<br><span class="muted small" style="white-space:normal">${esc(r.pt)}</span></td><td>${fitBadge(r.fit)}</td><td>${link(r.u)}</td></tr>`).join("");
+  $("#fr-count").textContent = `Показано ${rows.length} из ${RODS.length} · цены на 29.09.2026`;
+}
+$("#fr-type").addEventListener("input",renderRods);
+sortable($("#t-rod"),rodState,renderRods);
+
+/* ============ ПРОСТЫЕ ТАБЛИЦЫ ============ */
+$("#t-props tbody").innerHTML = PROPS.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="muted">${esc(r[4])}</td></tr>`).join("");
+$("#t-alt tbody").innerHTML = ALT.map((r,i)=>`<tr class="${i===0?"hl":""}"><td><b>${esc(r[0])}</b></td><td class="num">${esc(r[1])}</td><td class="num">${esc(r[2])}</td><td class="num">${esc(r[3])}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td><td class="muted">${esc(r[6])}</td></tr>`).join("");
+
+/* ============ ЧЕРТЕЖИ ============ */
+$("#drawings").innerHTML = DRAWINGS.map(d=>`<figure class="fig">
+  <img src="img/${d[0]}" alt="${esc(d[1])}" loading="lazy" onerror="this.closest('figure').classList.add('noimg')">
+  <div class="fallback"><b>${esc(d[1])}</b><br>Картинка ещё не добавлена (<code>img/${d[0]}</code>). Откройте чертёж по ссылке ниже.</div>
+  <figcaption><b>${esc(d[1])}.</b> Источник: ${link(d[2],"оригинал чертежа")}. ${esc(d[3])}</figcaption></figure>`).join("");
+
+/* ============ ИСТОЧНИКИ ============ */
+$("#sources").innerHTML = SOURCES.map(s=>`<li>${link(s[1],s[0])}</li>`).join("");
+
+/* ============ СХЕМА ПРОИЗВОДСТВА (SVG) ============ */
+const STEPS = [
+ ["Мука","опилки и щепа → мука ~0,07 мм"],
+ ["Сушка","до 0,5–4 % влаги, иначе пузыри"],
+ ["Смешивание","мука + пластик + добавки, ~100 кг"],
+ ["Гранулы","смесь → гранулы, ровнее качество"],
+ ["Экструдер","шнеки плавят при 160–180 °C"],
+ ["Фильера","форма: стенки, рёбра, камеры"],
+ ["Охлаждение","калибратор и водяная ванна"],
+ ["Брашировка","щётки, тиснение «под дерево»"],
+ ["Резка","хлысты 3, 4, 6 м"]
+];
+function buildFlow(){
+  const box = $("#flow"); const W = box.clientWidth || 800;
+  const cols = W < 560 ? 1 : (W < 900 ? 3 : 3);
+  const bw = cols===1 ? 320 : 290, bh = 74, gx = cols===1?0:46, gy = cols===1?30:40;
+  const rows = Math.ceil(STEPS.length/cols);
+  const vw = cols*bw + (cols-1)*gx + 20, vh = rows*bh + (rows-1)*gy + 20;
+  let s = `<svg viewBox="0 0 ${vw} ${vh}" role="img" aria-label="Схема производства ДПК из девяти шагов">`;
+  const pos = [];
+  STEPS.forEach((st,i)=>{
+    const r = Math.floor(i/cols); let c = i%cols; if(r%2===1) c = cols-1-c;
+    const x = 10 + c*(bw+gx), y = 10 + r*(bh+gy); pos.push([x,y]);
+  });
+  // стрелки
+  for(let i=0;i<STEPS.length-1;i++){
+    const [x1,y1]=pos[i], [x2,y2]=pos[i+1];
+    let d, hx, hy, ang;
+    if(y1===y2){ const dir = x2>x1?1:-1; const sx = dir>0? x1+bw : x1, ex = dir>0? x2 : x2+bw; const yy=y1+bh/2;
+      d=`M${sx+3},${yy} L${ex-dir*9},${yy}`; hx=ex-dir*2; hy=yy; ang = dir>0?0:180; }
+    else { const xx = x1+bw/2; d=`M${xx},${y1+bh+3} L${xx},${y2-9}`; hx=xx; hy=y2-2; ang=90; }
+    s += `<path class="flow-arrow" d="${d}"/><path class="flow-head" transform="translate(${hx},${hy}) rotate(${ang})" d="M0,0 L-9,-5 L-9,5 Z"/>`;
+  }
+  STEPS.forEach((st,i)=>{
+    const [x,y]=pos[i];
+    s += `<g><rect class="flow-box" x="${x}" y="${y}" width="${bw}" height="${bh}" rx="10"/>
+      <circle class="flow-num" cx="${x+24}" cy="${y+bh/2}" r="14"/><text class="flow-numtxt" x="${x+24}" y="${y+bh/2+5}" text-anchor="middle" font-size="14">${i+1}</text>
+      <text class="flow-title" x="${x+48}" y="${y+30}" font-size="16">${esc(st[0])}</text>
+      <text class="flow-note" x="${x+48}" y="${y+52}" font-size="12.5">${esc(st[1])}</text></g>`;
+  });
+  s += `</svg>`;
+  box.innerHTML = s;
+}
+
+/* ============ КАЛЬКУЛЯТОРЫ ============ */
+function calcExp(){
+  const L = +$("#ce-len").value||0, dt = +$("#ce-dt").value||0;
+  const f = a => (L*a*1e-6*dt);
+  const items = [["ДПК (обычно)",f(50),`от ${fmt(f(30),1)} до ${fmt(f(70),1)} мм`],["Поликарбонат",f(65),""],["Алюминий",f(23),""],["Сталь",f(12),""],["Стеклопластик",f(9),""],["Дерево вдоль",f(4.5),""]];
+  $("#ce-out").innerHTML = items.map(i=>`<div>${i[0]}<b>${fmt(i[1],1)} мм</b>${i[2]?`<span class="muted small">${i[2]}</span>`:""}</div>`).join("");
+}
+["#ce-len","#ce-dt"].forEach(s=>$(s).addEventListener("input",calcExp));
+function calcSheet(){
+  const L = +$("#cs-len").value||0, dt = +$("#cs-dt").value||0, th = +$("#cs-th").value||0;
+  const g = 0.065*(L/1000)*dt;
+  const rec = Math.max(g*1.3, g+0.5);
+  $("#cs-out").innerHTML = `<div>Лист удлинится на<b>${fmt(g,1)} мм</b></div><div>Зазор в пазу (с запасом, суммарно)<b>${fmt(rec,1)} мм</b><span class="muted small">по ${fmt(rec/2,1)} мм с каждого края</span></div><div>Ширина паза<b>${fmt(th+0.5,1)}–${fmt(th+1,1)} мм</b><span class="muted small">замер листа + 0,5…1 мм</span></div>`;
+}
+["#cs-len","#cs-dt","#cs-th"].forEach(s=>$(s).addEventListener("input",calcSheet));
+
+/* ============ ГРАФИКИ ============ */
+let charts = [];
+function buildCharts(){
+  if(typeof Chart==="undefined"){ document.querySelectorAll(".chart-box").forEach(b=>b.innerHTML='<p class="muted small">Графики не загрузились (нет интернета) — те же цифры в таблице ниже.</p>'); return; }
+  charts.forEach(c=>c.destroy()); charts=[];
+  const ink = cssVar("--ink-2"), grid = cssVar("--grid"), s1 = cssVar("--series-1"), s2 = cssVar("--series-2"), surf = cssVar("--surface");
+  Chart.defaults.font.family = '"Golos Text", system-ui, sans-serif';
+  Chart.defaults.color = ink;
+  const price = [
+    ["Сосна 50×50",40,96,0],["Сталь 40×20×2",130,160,0],["Лиственница 50×50",75,132,0],["Термососна 40×40",164,490,0],
+    ["ДПК-лага ~50×30",150,447,1],["МПК-лага 30×50",267,460,1],["ДПК брус 50×30",450,800,1],["Пласт. брус 50×50",365,570,0],["Алюминиевая лага",453,1130,0]
+  ];
+  const ctx1 = $("#ch-price");
+  charts.push(new Chart(ctx1,{type:"bar",data:{labels:price.map(p=>p[0]),datasets:[{data:price.map(p=>[p[1],p[2]]),backgroundColor:price.map(p=>p[3]?s2:s1),borderRadius:4,borderSkipped:false,borderColor:surf,borderWidth:1,barPercentage:.7}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw[0])}–${fmt(c.raw[1])} ₽/м`}}},
+      scales:{x:{beginAtZero:true,grid:{color:grid},ticks:{callback:v=>fmt(v)},title:{display:true,text:"₽ за погонный метр"}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:11}}}}}}));
+  const stiff = [["ДПК-лага 50×30",1,1],["ДПК брус 50×30",1.2,1],["Пласт. брус 50×50",1.8,0],["Термососна 40×40",6.6,0],["Сталь 40×20×2",10,0],["Алюминий 40×40×2",18,0],["Сосна 50×50",18,0],["Лиственница 50×50",20,0]];
+  charts.push(new Chart($("#ch-stiff"),{type:"bar",data:{labels:stiff.map(s=>s[0]),datasets:[{data:stiff.map(s=>s[1]),backgroundColor:stiff.map(s=>s[2]?s2:s1),borderRadius:4,borderColor:surf,borderWidth:1,barPercentage:.7}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`в ${fmt(c.raw,1)} раза жёстче лаги ДПК`}}},
+      scales:{x:{beginAtZero:true,grid:{color:grid},title:{display:true,text:"во сколько раз жёстче лаги ДПК 50×30"}},y:{grid:{display:false},ticks:{autoSkip:false,font:{size:11}}}}}}));
+}
+
+/* ============ СТАРТ ============ */
+renderLags(); renderAcc(); renderMakers(); renderSheets(); renderRods();
+calcExp(); calcSheet(); buildFlow(); buildCharts();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{buildCharts();});
+let rt; window.addEventListener("resize",()=>{clearTimeout(rt); rt=setTimeout(buildFlow,150);});
+const mq = window.matchMedia("(prefers-color-scheme: dark)");
+if(mq.addEventListener) mq.addEventListener("change",buildCharts);
+</script>
+</body>
+</html>
