@@ -436,10 +436,20 @@ fitEuro();
 ['pointerdown', 'wheel', 'touchstart'].forEach(ev => document.getElementById('map').addEventListener(ev, () => { autoView = false; }, { passive: true }));
 window.addEventListener('load', () => { if (autoView) fitEuro(); });
 if (window.ResizeObserver) new ResizeObserver(() => { map.invalidateSize(); if (autoView) fitEuro(); }).observe(document.getElementById('map'));
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 18, subdomains: 'abc',
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">участники OpenStreetMap</a>'
+/* подложка: Esri (работает без ключа и с диска, и с сайта); при сбое — запасная OSM */
+const OSM_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">участники OpenStreetMap</a>';
+const darkBase = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme !== 'light';
+const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
+let baseLayer = L.tileLayer(ESRI + (darkBase ? 'Canvas/World_Dark_Gray_Base' : 'World_Street_Map') + '/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: darkBase ? 16 : 18, attribution: 'Карта &copy; <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a>, HERE, Garmin, ' + OSM_ATTR
 }).addTo(map);
+if (darkBase) L.tileLayer(ESRI + 'Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
+let tileErr = 0;
+baseLayer.on('tileerror', () => {
+  if (++tileErr !== 6) return;
+  map.removeLayer(baseLayer);
+  baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, subdomains: 'abc', attribution: OSM_ATTR }).addTo(map);
+});
 map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 map.createPane('demandPane').style.zIndex = 350;
 map.createPane('linkPane').style.zIndex = 380;
