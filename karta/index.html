@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Карта поставщиков ДПК</title>
+<meta name="description" content="Поставщики лаги ДПК, листов и стержней для P-02, спрос по регионам и расчёт места сборки.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#f6f5f2; --surface:#fcfcfb; --surface-2:#f0efec; --line:#e2e0da; --line-2:#cfccc4;
+  --ink:#141412; --ink-2:#52514e; --ink-3:#7a7873;
+  --accent:#2a78d6; --accent-ink:#ffffff; --accent-soft:#e3eefb;
+  --dpk:#2a78d6; --sheet:#eb6834; --rod:#1baf7a;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --demand:#4a3aa7; --hub:#3b3a37; --win:#008300; --win-soft:#e2f2e2;
+  --warn:#9a5b00; --warn-soft:#fff3dc;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#302f2c; --line-2:#44433f;
+    --ink:#f4f3ef; --ink-2:#c3c2b7; --ink-3:#8f8d86;
+    --accent:#3987e5; --accent-ink:#ffffff; --accent-soft:#1d2b3d;
+    --dpk:#3987e5; --sheet:#d95926; --rod:#199e70;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+    --demand:#9085e9; --hub:#d8d6cf; --win:#3fae3f; --win-soft:#1c2e1c;
+    --warn:#f0b457; --warn-soft:#33291a;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#302f2c; --line-2:#44433f;
+  --ink:#f4f3ef; --ink-2:#c3c2b7; --ink-3:#8f8d86;
+  --accent:#3987e5; --accent-ink:#ffffff; --accent-soft:#1d2b3d;
+  --dpk:#3987e5; --sheet:#d95926; --rod:#199e70;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --demand:#9085e9; --hub:#d8d6cf; --win:#3fae3f; --win-soft:#1c2e1c;
+  --warn:#f0b457; --warn-soft:#33291a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:100%;overflow-x:hidden}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.2;margin:0}
+.wrap{max-width:1600px;margin:0 auto;padding:0 16px}
+header.top{padding:14px 0 10px;border-bottom:1px solid var(--line);background:var(--surface)}
+header.top h1{font-size:22px;font-weight:700;letter-spacing:-.01em}
+header.top p{margin:6px 0 0;color:var(--ink-2);font-size:14.5px;max-width:1100px}
+header.top b{color:var(--ink)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 480px;gap:16px;padding:16px 0}
+.mapcol{position:sticky;top:12px;align-self:start;display:flex;flex-direction:column;gap:8px;min-width:0}
+#map{height:calc(100vh - 150px);min-height:460px;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);background:var(--surface-2)}
+.layers{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:13px}
+.layers label{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;cursor:pointer;user-select:none;color:var(--ink)}
+.layers input{margin:0;accent-color:var(--accent)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:50%;flex:none}
+.sw.sq{border-radius:2px;width:10px;height:10px}
+.sw.ring{background:transparent!important;border:2px dashed var(--ink-3)}
+.maphint{font-size:12.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.maphint .k{display:inline-flex;align-items:center;gap:5px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-width:0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:10px 10px 0}
+.tabs button{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);padding:6px 11px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.tabpane{padding:12px 14px 16px;display:none}
+.tabpane.on{display:block}
+.tabpane h2{font-size:17px;margin:6px 0 8px}
+.tabpane h3{font-size:14.5px;margin:16px 0 6px;display:flex;align-items:center;gap:8px}
+.muted{color:var(--ink-3)}
+.small{font-size:12.5px}
+.note{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:13.5px;color:var(--ink-2);margin:8px 0}
+.note.warn{background:var(--warn-soft);color:var(--ink)}
+.note b{color:var(--ink)}
+.tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -2px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:6px 5px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--ink-2);font-size:12px;white-space:nowrap;position:relative}
+th.sort{cursor:pointer}
+th.sort:hover{color:var(--ink)}
+th .arr{font-size:10px;margin-left:2px;color:var(--ink-3)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr.click{cursor:pointer}
+tbody tr.click:hover{background:var(--surface-2)}
+tbody tr.sel{background:var(--accent-soft)}
+tr.winrow td{font-weight:600}
+#tbl-cand{font-size:12px}
+#tbl-cand th,#tbl-cand td{padding:5px 3px}
+.nm{font-weight:600;color:var(--ink)}
+.sub{display:block;font-size:11.5px;color:var(--ink-3);font-weight:400}
+.star{color:#c98500}
+.tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);white-space:nowrap}
+.tag.no{border-style:dashed}
+.tag.ok{background:var(--win-soft);color:var(--ink);border-color:transparent}
+.sc{display:inline-block;min-width:22px;text-align:center;border-radius:6px;padding:1px 4px;font-variant-numeric:tabular-nums}
+.sc5{background:var(--win-soft)} .sc1,.sc2{background:var(--warn-soft)}
+.filter{display:flex;align-items:center;gap:8px;font-size:13.5px;margin:4px 0 6px;cursor:pointer}
+.filter input{accent-color:var(--accent)}
+/* calculator */
+.calc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0 12px;background:var(--surface)}
+.calc h3{margin-top:2px}
+.ctl{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;margin:8px 0}
+.ctl label{font-size:13px;color:var(--ink-2)}
+.ctl output{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.ctl input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--accent);margin:2px 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chips button{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);padding:4px 10px;border-radius:999px;cursor:pointer}
+.chips button.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:6px 0;color:var(--ink-2);cursor:pointer}
+.chk input{margin-top:3px;accent-color:var(--accent)}
+.leader{background:var(--win-soft);border-radius:10px;padding:10px 12px;font-size:14px;margin:6px 0}
+.leader b{font-size:15px}
+.btn{font:inherit;font-size:12.5px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);padding:4px 10px;border-radius:8px;cursor:pointer}
+/* chart */
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--ink-2);margin:4px 0 6px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+#chart{width:100%;position:relative}
+#chart svg{display:block;width:100%;height:auto;overflow:visible}
+#chart text{font:12px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;fill:var(--ink-2)}
+#chart text.tot{fill:var(--ink);font-weight:600}
+#chart .rowhit{fill:transparent;cursor:pointer}
+#chart .rowhit:hover{fill:var(--surface-2)}
+#tip{position:fixed;z-index:2000;pointer-events:none;background:var(--ink);color:var(--surface);font-size:12.5px;padding:7px 9px;border-radius:8px;max-width:260px;display:none;box-shadow:var(--shadow);line-height:1.4}
+ol.calls{padding-left:18px;margin:6px 0}
+ol.calls li{margin:0 0 10px}
+ol.calls li b{color:var(--ink)}
+ul.plain{padding-left:18px;margin:6px 0}
+ul.plain li{margin:0 0 6px;font-size:13.5px;color:var(--ink-2)}
+.scen{margin:0;padding:0;list-style:none}
+.scen li{padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+.scen li b{color:var(--ink)}
+footer{padding:14px 0 28px;color:var(--ink-3);font-size:12.5px;border-top:1px solid var(--line);margin-top:4px}
+/* leaflet */
+.leaflet-container{font:inherit;background:var(--surface-2)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.leaflet-popup-content{margin:12px 14px;font-size:13px;line-height:1.4;width:270px}
+.leaflet-container a.leaflet-popup-close-button{color:var(--ink-3)}
+.leaflet-tooltip{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:var(--shadow)}
+.leaflet-bar a{background:var(--surface);color:var(--ink);border-bottom-color:var(--line)}
+.leaflet-control-attribution{background:rgba(255,255,255,.8)!important}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.95) contrast(.88) saturate(.7)}
+  :root:not([data-theme="light"]) .leaflet-control-attribution{background:rgba(26,26,25,.85)!important;color:var(--ink-2)}
+}
+:root[data-theme="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.95) contrast(.88) saturate(.7)}
+.pp h4{margin:0 0 2px;font-size:14.5px}
+.pp .where{color:var(--ink-3);font-size:12px;margin-bottom:6px}
+.pp .tags{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 8px}
+.pp .bars{display:grid;grid-template-columns:86px 1fr 26px;gap:3px 8px;align-items:center;margin:6px 0 8px;font-size:12px;color:var(--ink-2)}
+.pp .bar{display:flex;gap:2px}
+.pp .bar i{flex:1;height:8px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line)}
+.pp .bar i.f{background:var(--c,var(--accent));border-color:transparent}
+.pp .bars .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+.pp .row{margin:3px 0}
+.pp .row span{color:var(--ink-3)}
+.pp .coord{font-size:11.5px;color:var(--warn);margin-top:6px}
+.pp table{font-size:12px}
+.pp td,.pp th{padding:3px 4px}
+.cand{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--surface);font-weight:700;font-size:12.5px;border:2px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.cand.win{width:36px;height:36px;font-size:15px;background:var(--win);color:#fff;box-shadow:0 0 0 4px rgba(0,131,0,.25),0 1px 6px rgba(0,0,0,.4)}
+.cand.top{background:var(--accent);color:#fff}
+.cand.sel{outline:3px solid var(--sheet);outline-offset:1px}
+.hubi{width:11px;height:11px;background:var(--hub);border:2px solid var(--surface);border-radius:2px;box-shadow:0 0 0 1px var(--hub)}
+@media (max-width: 1100px){
+  .layout{grid-template-columns:minmax(0,1fr) 400px}
+}
+@media (max-width: 860px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:12px}
+  .mapcol{position:static}
+  #map{height:62vh;min-height:340px}
+  .layers{font-size:12px;gap:5px 6px}
+  .layers label{padding:3px 8px 3px 6px}
+  header.top h1{font-size:20px}
+  .leaflet-popup-content{width:240px!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Карта поставщиков ДПК</h1>
+    <p>Итог: сборку P-02 выгоднее ставить <b>во Владимире или Калуге</b> — около 12,8 млн ₽ в год на 1 000 комплектов; Подмосковье дороже на 4,4 млн ₽. Место решают аренда и зарплата, а не близость сырья.</p>
+  </div>
+</header>
+
+<main class="wrap layout">
+  <section class="mapcol" aria-label="Карта">
+    <div class="layers" id="layers">
+      <label><input type="checkbox" data-layer="dpk" checked><span class="sw" style="background:var(--dpk)"></span>ДПК лага</label>
+      <label><input type="checkbox" data-layer="sheet" checked><span class="sw" style="background:var(--sheet)"></span>Листы для вставок</label>
+      <label><input type="checkbox" data-layer="rod" checked><span class="sw" style="background:var(--rod)"></span>Стержни</label>
+      <label><input type="checkbox" data-layer="demand" checked><span class="sw" style="background:var(--demand);opacity:.55"></span>Спрос по регионам</label>
+      <label><input type="checkbox" data-layer="hubs" checked><span class="sw sq" style="background:var(--hub)"></span>Склады маркетплейсов</label>
+      <label><input type="checkbox" data-layer="cand" checked><span class="sw" style="background:var(--win)"></span>Места для сборки</label>
+    </div>
+    <div id="map" role="region" aria-label="Карта России с поставщиками"></div>
+    <div class="maphint">
+      <span class="k"><span class="sw" style="background:var(--ink-2)"></span>залитый кружок — завод подтверждён</span>
+      <span class="k"><span class="sw ring"></span>пустой пунктир — завод не подтверждён</span>
+      <span class="k">цифры — место в расчёте, зелёная — лучшее</span>
+      <button class="btn" id="viewBtn" type="button">Показать всю Россию</button>
+    </div>
+  </section>
+
+  <section class="panel" aria-label="Таблицы и расчёт">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="t-sup" aria-selected="true">Рейтинг поставщиков</button>
+      <button role="tab" data-tab="t-site" aria-selected="false">Где ставить сборку</button>
+      <button role="tab" data-tab="t-dem" aria-selected="false">Спрос</button>
+      <button role="tab" data-tab="t-call" aria-selected="false">Кому звонить</button>
+      <button role="tab" data-tab="t-src" aria-selected="false">Допущения и источники</button>
+    </div>
+
+    <!-- ПОСТАВЩИКИ -->
+    <div class="tabpane on" id="t-sup" role="tabpanel">
+      <h2>Рейтинг поставщиков</h2>
+      <p class="small muted" style="margin:0 0 6px">Оценки от 1 до 5 (5 — лучше): цена, качество, ассортимент (есть ли нужная деталь и берутся ли делать под заказ). Нет опубликованной цены — ставится 3. Итог — среднее трёх. <span class="star">★</span> — звонить в первую очередь. Нажмите на строку — карта покажет завод. Заголовок столбца — сортировка.</p>
+      <label class="filter"><input type="checkbox" id="onlyConfirmed"> только подтверждённые заводы (и на карте тоже)</label>
+      <h3><span class="sw" style="background:var(--dpk)"></span>ДПК лага <span class="muted small" id="cnt-dpk"></span></h3>
+      <div class="tblwrap"><table id="tbl-dpk"></table></div>
+      <h3><span class="sw" style="background:var(--sheet)"></span>Листы для вставок <span class="muted small" id="cnt-sheet"></span></h3>
+      <div class="tblwrap"><table id="tbl-sheet"></table></div>
+      <h3><span class="sw" style="background:var(--rod)"></span>Стержни Ø12 <span class="muted small" id="cnt-rod"></span></h3>
+      <div class="tblwrap"><table id="tbl-rod"></table></div>
+      <div class="note"><b>Важно про лагу.</b> Сами заводы не считают лагу ДПК несущей деталью. Раз P-02 держится на лаге, прочность надо проверять своими испытаниями и просить у завода протоколы. Форма («фильера») под профиль с пазом стоит, по словам одного завода, около 10 тыс. $ и делается месяцами — точную цену дадут только звонки.</div>
+    </div>
+
+    <!-- ПЛОЩАДКИ -->
+    <div class="tabpane" id="t-site" role="tabpanel">
+      <h2>Где ставить сборку</h2>
+      <div class="note"><b>Совет из отчёта:</b> Владимир — основной вариант, Калуга — равноценная замена. Владимир первый при 2 000 и 5 000 комплектов и при лаге от Holzhof; в самом городе стоит Terrapol с готовой лагой 50×35. Калуга выигрывает, если зарплата во Владимире окажется выше оценки. Тула третья (Savewood в 22 км). Подмосковье имеет смысл только при помещении дешевле ~330 ₽/м² в месяц.</div>
+
+      <div class="calc" id="calc">
+        <h3>Свой расчёт</h3>
+        <p class="small muted" style="margin:0">Двигайте ползунки — суммы, места в рейтинге и цифры на карте пересчитаются сразу. Формулы те же, что в расчёте отчёта.</p>
+        <div class="chips" id="volChips">
+          <button type="button" data-v="1000" class="on">1 000 комплектов</button>
+          <button type="button" data-v="2000">2 000</button>
+          <button type="button" data-v="5000">5 000</button>
+          <button type="button" id="resetBtn">Как в отчёте</button>
+        </div>
+        <div class="ctl"><label for="kits">Комплектов в год</label><output id="kitsO"></output><input type="range" id="kits" min="200" max="6000" step="100" value="1000"></div>
+        <div class="ctl"><label for="rentM">Аренда, % от цифр отчёта</label><output id="rentMO"></output><input type="range" id="rentM" min="40" max="200" step="5" value="100"></div>
+        <div class="ctl"><label for="salM">Зарплата, % от цифр отчёта</label><output id="salMO"></output><input type="range" id="salM" min="60" max="160" step="5" value="100"></div>
+        <div class="ctl"><label for="truck">Фура с лагой, ₽ за км</label><output id="truckO"></output><input type="range" id="truck" min="40" max="150" step="5" value="75"></div>
+        <div class="ctl"><label for="box">Сборный груз: постоянная часть цены коробки</label><output id="boxO"></output><input type="range" id="box" min="50" max="170" step="5" value="100"></div>
+        <label class="chk"><input type="checkbox" id="holz"> Лага только от Holzhof (если паз сделает только он)</label>
+        <label class="chk"><input type="checkbox" id="flat"> Спрос ровнее по стране (доля региона пропорциональна баллу)</label>
+        <div class="leader" id="leader"></div>
+      </div>
+
+      <h3>Годовые затраты по местам, млн ₽</h3>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>подвоз сырья</span>
+        <span><i style="background:var(--s2)"></i>доставка покупателям</span>
+        <span><i style="background:var(--s3)"></i>аренда</span>
+        <span><i style="background:var(--s4)"></i>зарплата</span>
+      </div>
+      <div id="chart"></div>
+      <p class="small muted" style="margin:4px 0 8px">Нажмите на полосу или строку — карта покажет место и линиями откуда везти сырьё.</p>
+      <div class="tblwrap"><table id="tbl-cand"></table></div>
+      <p class="small muted">* — аренда или зарплата оценены, в заметках такой цифры нет. Суммы без цены самого сырья: она одинакова для любого места.</p>
+
+      <h3>Проверка: меняется ли лидер</h3>
+      <ul class="scen" id="scenList"></ul>
+      <h3>Две площадки</h3>
+      <ul class="plain" id="twoList"></ul>
+      <div class="note"><b>Почему место почти не влияет на доставку.</b> У сборного груза большая постоянная часть — около 5 900 ₽ за коробку — и лишь около 1 ₽ за километр. А подвоз всего сырья стоит 0,15–0,8 млн ₽ в год. Для сравнения: разница в цене лаги всего 60 ₽/м даёт около 5 млн ₽ в год. Поэтому деньги на сырье экономятся выбором завода и оптовой цены, а не местом.</div>
+      <div class="note warn"><b>Что расчёт не учёл:</b> льготы (займы ФРП, индустриальные парки), отопление, электричество, погрузчик, зимний склад готовых изделий, отгрузки целой фурой на склады маркетплейсов (коробки 80–200 кг маркетплейсы считают крупногабаритом).</div>
+    </div>
+
+    <!-- СПРОС -->
+    <div class="tabpane" id="t-dem" role="tabpanel">
+      <h2>Спрос по регионам</h2>
+      <p class="small muted" style="margin:0 0 8px">Балл 1–10 из прошлого исследования (доход и частное строительство). Доля — какую часть коробок расчёт отправляет в регион. Кружки на карте: чем больше и темнее, тем больше спрос. Нажмите на строку — карта покажет регион.</p>
+      <div class="tblwrap"><table id="tbl-dem"></table></div>
+      <p class="small muted">Учтены 27 регионов, остальные в расчёт не вошли. Координаты — центры городов.</p>
+    </div>
+
+    <!-- ЗВОНКИ -->
+    <div class="tabpane" id="t-call" role="tabpanel">
+      <h2>Что проверить звонками</h2>
+      <div class="note warn"><b>Сначала — лага с пазом.</b> Сколько стоит форма, какая минимальная партия и выдержит ли лага нагрузку. Эти три цифры сильнее всего меняют себестоимость и сроки. Звонить в Holzhof, Terrapol и Ай-Техпласт и заказать образцы. Помещение выбирать потом, по реальным предложениям во Владимире и Калуге.</div>
+      <ol class="calls" id="callList"></ol>
+      <div class="note"><b>Вес лаги — проверить до всех цен.</b> У Terrapol 50×35 заявлено 1,24 кг/м, у Ecodecking 50×30 — 1,5 кг/м; значит, 0,25 кг/м в карточке вряд ли верно. Надёжнее всего взвесить свой хлыст.</div>
+    </div>
+
+    <!-- ДОПУЩЕНИЯ -->
+    <div class="tabpane" id="t-src" role="tabpanel">
+      <h2>Допущения и источники</h2>
+      <h3>Как считалось</h3>
+      <ul class="plain" id="assumpList"></ul>
+      <h3>Что добавляет «Свой расчёт»</h3>
+      <ul class="plain">
+        <li>Ползунок «Аренда» и «Зарплата» умножает цифры каждого места из отчёта на один и тот же процент.</li>
+        <li>Ползунок «Фура» меняет ставку только для лаги (листы — 45 ₽/км, стержни — 30 ₽/км, как в отчёте).</li>
+        <li>Ползунок «Сборный груз» меняет постоянную часть цены коробки (в отчёте ≈5 900 ₽ за 1,5 м³); цена за километр и 1 000 ₽ до двери не меняются.</li>
+        <li>Площадь и число сборщиков растут с объёмом: 300 м² + 0,2 м² на комплект, один сборщик на 250 комплектов (не меньше двух).</li>
+      </ul>
+      <h3>Для сравнения — цена самой лаги</h3>
+      <p class="small" id="infoLine" style="color:var(--ink-2)"></p>
+      <h3>Источники</h3>
+      <ul class="plain" id="srcList"></ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">29.09.2026 · цифры — оценки по открытым источникам, проверять звонками. Координаты — примерные, по центрам городов. Карта © участники OpenStreetMap.</div>
+</footer>
+<div id="tip" role="tooltip"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script id="data">
+const DATA = {"generated":"2026-09-29","suppliers":[{"name":"Holzhof (Хольцхоф Рус)","group":"dpk","city":"ОЭЗ «Портовая», Чердаклинский р-н","region":"Ульяновская обл.","lat":54.4,"lon":48.8,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":4,"assortment_score":5,"price_text":"лага 50×40 — 310 ₽/м (сайт); 40×35 — 230 ₽/м (дилер)","products":"доска, фасад, заборы, лага 50×40 с рёбрами и канавками","url":"https://holzhof.ru/","note":"Контрактное производство под брендом заказчика; уже делает лагу с канавками — главный кандидат на профиль с пазом.","contact_first":true,"total_score":4},{"name":"Ай-Техпласт","group":"dpk","city":"Подольск (Климовск)","region":"Московская обл.","lat":55.36,"lon":37.54,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":5,"assortment_score":5,"price_text":"цена лаги не опубликована","products":"ДПК и МПК: доска, ступени, столбы, профили; 60+ фильер; литьё","url":"https://alestech.ru/factory/1657-aj-tehplast","note":"Первыми в РФ по ГОСТ Р 59555-2021, прибыльная, 60+ формующих головок; готовность к новой фильере не заявлена.","contact_first":true,"total_score":4.3},{"name":"Savewood (Сейввуд)","group":"dpk","city":"п. Первомайский (у Щёкино)","region":"Тульская обл.","lat":54.03,"lon":37.6,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":5,"assortment_score":5,"price_text":"цена лаги не опубликована","products":"доска (4 колл.), фасад, забор, ступени, универсальные профили; ПВХ","url":"https://www.savewood.ru/opt/","note":"3-е место по мощности (7,5 тыс. т), гарантия 15 лет; оптовикам — кастомизация и окраска RAL.","contact_first":true,"total_score":4.3},{"name":"Terrapol (Вествуд-полимер)","group":"dpk","city":"Владимир","region":"Владимирская обл.","lat":56.13,"lon":40.41,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":4,"quality_score":4,"assortment_score":4,"price_text":"лага 50×35 — 240–267 ₽/м у дилеров (447 у Латитудо)","products":"доска (5 колл.), ограждения, забор; ПП; лага 50×35×4000","url":"https://terrapol.ru/","note":"Единственный с готовой лагой ровно 50×35 (1,24 кг/м); длины 1,5–6 м и цвета под заказ.","contact_first":true,"total_score":4},{"name":"Woodgrand","group":"dpk","city":"Ульяновск","region":"Ульяновская обл.","lat":54.31,"lon":48.39,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":4,"quality_score":4,"assortment_score":4,"price_text":"лага 40×25 — 169 ₽/м; усиленная 40×55 — 299 ₽/м","products":"доска ДПК/МПК, ступени, грядки, забор, фасад, лаги","url":"https://woodgrand.ru/katalog/lagi-iz-dpk/","note":"5,4 тыс. т/год, ГОСТ Р 59555-2021; режут в любую длину, новое сечение не заявлено.","contact_first":false,"total_score":4},{"name":"MultiDeck (МультиПласт)","group":"dpk","city":"пос. Новониколаевский (Зеленодольск)","region":"Татарстан","lat":55.85,"lon":48.52,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":2,"quality_score":4,"assortment_score":3,"price_text":"лага 40×60 — от 400 ₽/м","products":"доска, фасад, лага 40×60×3000; ПЭ","url":"https://kazan.multideck.ru/","note":"С 2008 г., европейское оборудование; лага дорогая, гарантия на неё 5 лет.","contact_first":false,"total_score":3},{"name":"MasterDeck (Мастер Дэк)","group":"dpk","city":"д. Милюково (Новая Москва)","region":"Москва","lat":55.5,"lon":37.1,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":4,"assortment_score":3,"price_text":"цена лаги не опубликована","products":"доска Light/Classic/Massive, фасад, лага 30×40","url":"https://masterdeck.ru/","note":"Гарантия 10 лет, своя лаборатория, поставки в DIY-сети.","contact_first":false,"total_score":3.3},{"name":"Роскомпозит / Дектор (DECKTOR)","group":"dpk","city":"Переславль-Залесский","region":"Ярославская обл.","lat":56.74,"lon":38.85,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":4,"price_text":"цена лаги не опубликована","products":"ДПК и МПК: доска, фасад, забор, ограждения, брус","url":"https://roskompozit.ru/factory","note":"Делает по размерам, цвету и фактуре от 20 м2; выручка небольшая (123 млн ₽).","contact_first":false,"total_score":3.3},{"name":"Волга-Декинг (ProDecking)","group":"dpk","city":"Волжск (с. Мамасево)","region":"Марий Эл","lat":55.87,"lon":48.36,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":2,"quality_score":3,"assortment_score":3,"price_text":"лага 50×60 — 400–500 ₽/м (прайс 01.2026)","products":"доска, лага 50×60 длиной 2–6 м, уголки","url":"https://volga-decking.ru/prices","note":"Понятные оптовые пороги (от 50 и 100 тыс. ₽), но лага крупнее и дороже нужной.","contact_first":false,"total_score":2.7},{"name":"Варяжский композит (Мир ДПК)","group":"dpk","city":"Ульяновск","region":"Ульяновская обл.","lat":54.31,"lon":48.39,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":2,"assortment_score":3,"price_text":"цена лаги не опубликована","products":"доска, ограждения, сайдинг; гранула с ПЭТ","url":"https://alestech.ru/factory/1468-varazskij-kompozit","note":"Убыток 43 млн ₽ за 2025 г. при выручке 134 млн — риск устойчивости; лага не найдена.","contact_first":false,"total_score":2.7},{"name":"Невский композит","group":"dpk","city":"п. Новый Свет (Гатчина)","region":"Ленинградская обл.","lat":59.57,"lon":30.13,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цена лаги не опубликована","products":"доска, сайдинг, штакетник, лаги","url":"https://ncdpk.ru/about-us.html","note":"Ближайший к СПб; лага есть, размеры не получены.","contact_first":false,"total_score":3},{"name":"Технопарк ДПК","group":"dpk","city":"пос. Синево","region":"Ленинградская обл.","lat":59.85,"lon":31.1,"coords_note":"очень грубо","confirmed":true,"suitable":true,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цена лаги не опубликована","products":"доска, забор, фасад, лага, ступени","url":"https://texnodpk.ru/","note":"С 2019 г.; склады в Ленобласти и Краснодаре.","contact_first":false,"total_score":3},{"name":"WPC-ТеХно","group":"dpk","city":"п. Бобровский (Сысерть)","region":"Свердловская обл.","lat":56.7,"lon":60.8,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":5,"quality_score":2,"assortment_score":2,"price_text":"лага 40×30 — 150 ₽/м","products":"доска 140×25, лага 40×30×3000; ПНД","url":"https://dpk-t.ru/","note":"Самая дешёвая лага, но сечение меньше нужного; единственный завод на Урале.","contact_first":false,"total_score":3},{"name":"Terradeck","group":"dpk","city":"Клин (+ Нижний Новгород)","region":"Московская обл.","lat":56.33,"lon":36.73,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":2,"price_text":"лаги ДПК не найдены (только алюминиевые 583–631 ₽/м)","products":"доска «Массив», ступени, фасады, ограждения","url":"https://www.terradeck.ru/proizvodstvo","note":"Лагу ДПК не выпускает; есть жалобы на коробление тонкой доски.","contact_first":false,"total_score":2.7},{"name":"Алтай Декинг","group":"dpk","city":"Заринск","region":"Алтайский край","lat":53.71,"lon":84.93,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":1,"price_text":"цены нет","products":"доска 150×24, 140×20; забор","url":"https://alestech.ru/factory/1676-altaj-deking","note":"Лаги в ассортименте нет; далеко.","contact_first":false,"total_score":2.3},{"name":"Жешартский ЛПК (Poly-Deck)","group":"dpk","city":"Жешарт","region":"Коми","lat":61.8,"lon":50.8,"coords_note":"грубо","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":1,"price_text":"цены нет","products":"полнотелая доска","url":"https://alestech.ru/factory/58-zheshartskiy-lpk","note":"Лаги нет; далеко.","contact_first":false,"total_score":2.3},{"name":"Полимерные Композиции (ПВХ по чертежу, не ДПК)","group":"dpk","city":"с. Суромна (Суздальский р-н)","region":"Владимирская обл.","lat":56.45,"lon":40.45,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":4,"price_text":"оснастка 1–3 мес, партия от 10 000 м","products":"ПВХ-профиль по чертежу, 15 линий","url":"http://polimerkompozit.ru/profil_pod_kluch","note":"Запасной вариант профиля с пазом из ПВХ; известна минимальная партия 10 000 м.","contact_first":false,"total_score":3.3},{"name":"ELMAT GROUP (ПВХ/ПЭ по чертежу, не ДПК)","group":"dpk","city":"Калуга","region":"Калужская обл.","lat":54.51,"lon":36.26,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":4,"price_text":"цена и партия по запросу","products":"контрактная экструзия ПВХ/ПЭ/ПК, ширина до 200 мм","url":"https://elmat-zavod.ru/services/ekstruziya/","note":"Запасной вариант профиля с пазом; 12 линий.","contact_first":false,"total_score":3.3},{"name":"Ecodecking","group":"dpk","city":"Тверь (офис)","region":"Тверская обл.","lat":56.86,"lon":35.9,"coords_note":"офис, не завод","confirmed":false,"suitable":false,"price_score":4,"quality_score":2,"assortment_score":3,"price_text":"лага 50×30 — 253 ₽/м","products":"доска, забор, фасад, лага 50×30","url":"https://zavod-dpk.ru/","note":"Место завода не найдено; гарантия до 2 лет.","contact_first":false,"total_score":3},{"name":"ДекМастер","group":"dpk","city":"Москва (склад)","region":"Москва","lat":55.62,"lon":37.68,"coords_note":"склад/офис, не завод","confirmed":false,"suitable":false,"price_score":4,"quality_score":2,"assortment_score":3,"price_text":"лага 50×30 — 230 или 363 ₽/м (противоречие)","products":"доска, фасад, забор, лага 50×30","url":"https://dekmaster.ru/","note":"Место завода не найдено; гарантия на лагу 1 год.","contact_first":false,"total_score":3},{"name":"ТехноДек","group":"dpk","city":"Люберцы (склад)","region":"Московская обл.","lat":55.68,"lon":37.89,"coords_note":"склад/офис, не завод","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цены нет","products":"ДПК/МПК, мебель","url":"https://techno-deck.ru/","note":"Завод «в Московской области» без адреса.","contact_first":false,"total_score":3},{"name":"ТехноДПК","group":"dpk","city":"Нижний Новгород (заявлено)","region":"Нижегородская обл.","lat":56.33,"lon":44,"coords_note":"заявлено, не проверено","confirmed":false,"suitable":false,"price_score":3,"quality_score":2,"assortment_score":3,"price_text":"цены нет","products":"доска, забор, фасад","url":"https://tehnodpk.ru/about","note":"Завод заявлен только на своём сайте.","contact_first":false,"total_score":2.7},{"name":"ДПК-НСК","group":"dpk","city":"Новосибирск (офис)","region":"Новосибирская обл.","lat":55.03,"lon":82.92,"coords_note":"офис, не завод","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":2,"price_text":"цены нет","products":"доска, ступени, сайдинг","url":"https://dpk-nsk.ru/","note":"Сам пишет, что новый профиль заказать «практически невозможно» (фильера ~10 тыс. $).","contact_first":false,"total_score":2.7},{"name":"Grand Line (бренд)","group":"dpk","city":"—","region":"—","lat":null,"lon":null,"coords_note":"место не установлено","confirmed":false,"suitable":false,"price_score":4,"quality_score":3,"assortment_score":3,"price_text":"лага 35×50 — 225–265 ₽/м","products":"лага 35×50","url":"https://www.grandline.ru/","note":"Изготовитель не назван.","contact_first":false,"total_score":3.3},{"name":"Polywood","group":"dpk","city":"—","region":"—","lat":null,"lon":null,"coords_note":"место не установлено","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цены нет","products":"доска, сайдинг","url":"https://polywood.ru/","note":"Место производства не найдено.","contact_first":false,"total_score":3},{"name":"CM Decking","group":"dpk","city":"склады Москва, СПб, Воронеж, Белгород","region":"—","lat":null,"lon":null,"coords_note":"место не установлено","confirmed":false,"suitable":false,"price_score":2,"quality_score":4,"assortment_score":3,"price_text":"лага 40×25 — 326–367 ₽/м","products":"доска, фасад, лага","url":"https://cm-deckings.ru/","note":"Шведский бренд; завода в РФ не найдено.","contact_first":false,"total_score":3},{"name":"Полигаль Восток (Monogal)","group":"sheet","city":"Куровское","region":"Московская обл.","lat":55.58,"lon":38.92,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":5,"assortment_score":5,"price_text":"монолит 4 мм ≈2350 ₽/м2 (розница СПб); цена завода по запросу","products":"монолит ПК 1,5–20 мм, 12+ цветов и опал; акрил; резка на 16 складах","url":"https://polygalvostok.ru/monolitnyj-polikarbonat/monogal/","note":"Самый осторожный в гарантиях, УФ-слой с двух сторон, склады с резкой в 16 городах.","contact_first":true,"total_score":4.3},{"name":"Юг-Ойл-Пласт / BORREX","group":"sheet","city":"Черкесск / Усть-Джегута","region":"Карачаево-Черкесия","lat":44.22,"lon":42.06,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":5,"quality_score":4,"assortment_score":4,"price_text":"прайс завода: прозр. 2 мм 696, 3 мм 1044, 4 мм 1392 ₽/м2; опал у дилера 4 мм ≈2184","products":"монолит 2–12 мм, сотовый 4–32 мм; нестандартные размеры","url":"https://ug-plast.ru/price/","note":"Самый дешёвый открытый заводской прайс, режет нестандартные размеры; цветов меньше.","contact_first":true,"total_score":4.3},{"name":"Пластилюкс-групп (Sunnex, Royalplast, Polynex)","group":"sheet","city":"пгт Северный","region":"Белгородская обл.","lat":50.63,"lon":36.59,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":4,"assortment_score":5,"price_text":"Sunnex прозр. 3 мм ≈1750 ₽/м2 (розница)","products":"монолит 2–15 мм, 13+ цветов, «белый-матовый»; нестандарт до 13 м","url":"https://polikarbonates.com/monolithic-polycarbonate-sheets/","note":"Четыре линейки с гарантией 15–30 лет; приграничный регион — риск поставок.","contact_first":false,"total_score":4},{"name":"СафПласт (Novattro)","group":"sheet","city":"Казань (Высокогорский р-н)","region":"Татарстан","lat":55.83,"lon":49.26,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":4,"quality_score":4,"assortment_score":4,"price_text":"сотовый 4 мм ≈330 ₽/м2; монолит — уточнять","products":"сотовый и монолит ПК, ПЭТ-листы; опал и «слоновая кость»","url":"https://safplast.ru/","note":"Крупнейший (18 млн м2/год); единственный, у кого заявлена «слоновая кость».","contact_first":false,"total_score":4},{"name":"Полидин","group":"sheet","city":"ст. Новотитаровская","region":"Краснодарский край","lat":45.24,"lon":38.98,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цены нет","products":"сотовый и монолит ПК","url":"https://2gis.ru/krasnodar/firm/70000001018575628","note":"Завод 6,5 тыс. т/год с 2015 г.; удобен для площадки на юге.","contact_first":false,"total_score":3},{"name":"Политек Про / Sellex","group":"sheet","city":"Клин","region":"Московская обл.","lat":56.33,"lon":36.73,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"цены нет","products":"в основном сотовый ПК","url":"https://www.sellex.ru/","note":"Связь со СафПласт неясна; опал-монолит не подтверждён.","contact_first":false,"total_score":3},{"name":"UNEXT (Юнайтед Экстружн) — вспененный ПВХ","group":"sheet","city":"Ясногорск","region":"Тульская обл.","lat":54.48,"lon":37.69,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":4,"quality_score":2,"assortment_score":4,"price_text":"817–16 921 ₽/лист по толщинам (1–10 мм)","products":"вспененный ПВХ 1–30 мм, белый + 6 цветов, резка","url":"https://unitedextrusion.ru/proizvodstvo/","note":"Дешевле ПК, но стойкость цвета на солнце не подтверждена — для закрытых мест.","contact_first":false,"total_score":3.3},{"name":"Дзержинское оргстекло (акрил)","group":"sheet","city":"Дзержинск","region":"Нижегородская обл.","lat":56.24,"lon":43.46,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":3,"price_text":"молочный 3 мм ≈2230 ₽/м2 (розница)","products":"акрил экструзия и литьё","url":"https://epolymer.ru/supplier/dzerzhinskoe-orgsteklo","note":"Блестит лучше ПК, но хрупче при ударе.","contact_first":false,"total_score":3},{"name":"ЛАДА-ЛИСТ (PETG)","group":"sheet","city":"Тольятти","region":"Самарская обл.","lat":53.51,"lon":49.42,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":3,"quality_score":2,"assortment_score":2,"price_text":"цены не публикуются","products":"PETG 0,75–5 мм, только под заказ","url":"https://www.zuroplast.ru/products/pet-g","note":"Защита от солнца не заявлена.","contact_first":false,"total_score":2.3},{"name":"Слопласт / Slotex (HPL)","group":"sheet","city":"Санкт-Петербург / дер. Проба","region":"Ленинградская обл.","lat":59.9,"lon":30.3,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":2,"quality_score":5,"assortment_score":3,"price_text":"цены нет","products":"HPL 0,6–25 мм, уличный класс","url":"https://www.sloplast.ru/","note":"Очень стойкий, но дороже и толще — в паз ДПК не встанет без подбора.","contact_first":false,"total_score":3.3},{"name":"КИН / Kinplast","group":"sheet","city":"Кимры (по вторичным источникам)","region":"Тверская обл.","lat":56.87,"lon":37.35,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":4,"quality_score":3,"assortment_score":3,"price_text":"сотовый 4 мм у дилеров ≈155–340 ₽/м2","products":"сотовый ПК, монолит","url":"https://kinplast.ru/","note":"Адрес завода не подтверждён.","contact_first":false,"total_score":3.3},{"name":"Карбогласс","group":"sheet","city":"Голицыно","region":"Московская обл.","lat":55.61,"lon":36.99,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":2,"price_text":"цены нет","products":"сотовый ПК","url":"https://teplicino.ru/katalog/polikarbonat/obzor-ryinka-polikarbonata-rf-2026/","note":"По обзору прекратил продажи в 2024 г.","contact_first":false,"total_score":2.7},{"name":"МЗПКК (Московский завод полимерно-композитных конструкций)","group":"rod","city":"Балашиха (Купавна)","region":"Московская обл.","lat":55.8,"lon":37.94,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":4,"quality_score":4,"assortment_score":4,"price_text":"Ø12: 61 ₽/м (ГОСТ), 39 ₽/м (ТУ)","products":"арматура АКСп Ø12, прутки 6 м, резка на заводе","url":"https://mzpkk.ru/produkciya/aksp-12mm/","note":"Прямые прутки 6 м и резка по заказу; ГОСТ 31938-2022.","contact_first":true,"total_score":4},{"name":"Армпласт","group":"rod","city":"Нижний Новгород","region":"Нижегородская обл.","lat":56.33,"lon":44,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":4,"assortment_score":4,"price_text":"арматура АКП-12 «от 19» ₽/м (сомнительно); гладкий стержень Ø12 от 215 ₽/м","products":"арматура стекло- и базальтопластиковая, гладкий стержень Ø12, резка","url":"https://arm-plast.ru/","note":"Крупнейший (7 линий); единственный с гладким стержнем Ø12 у завода (фенольный, не пултрузия).","contact_first":true,"total_score":3.7},{"name":"Ивановские композиты","group":"rod","city":"Иваново","region":"Ивановская обл.","lat":57,"lon":40.97,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":4,"quality_score":3,"assortment_score":4,"price_text":"Ø12: 35–42 ₽/м","products":"арматура Ø4–32 мм, отдельные прутки, бухты","url":"https://spb.iv-armatura.ru/katalog/stekloplastikovaya-armatura-12-mm","note":"Продаёт отдельные прутки; ГОСТ 31938-2012.","contact_first":false,"total_score":3.7},{"name":"УралАрмоПром","group":"rod","city":"Екатеринбург","region":"Свердловская обл.","lat":56.84,"lon":60.61,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":5,"quality_score":3,"assortment_score":3,"price_text":"Ø12: 30 ₽/м (до 10 000 м)","products":"арматура Ø12, прутки 6 м","url":"https://aspkompozit.ru/kompozitnaya-armatura-12-mm","note":"Самая низкая цена; стандарт на странице не указан.","contact_first":false,"total_score":3.7},{"name":"Бийский завод стеклопластиков","group":"rod","city":"Бийск","region":"Алтайский край","lat":52.54,"lon":85.21,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":true,"price_score":3,"quality_score":4,"assortment_score":4,"price_text":"цена Ø12 не найдена","products":"арматура Ø4–40 мм до 12 м, изоляторы, штанги","url":"https://bzs.ru/","note":"С 1991 г., ISO 9001; очень далеко от рынка.","contact_first":false,"total_score":3.7},{"name":"СтеклоПласт (Волжский)","group":"rod","city":"Волжский","region":"Волгоградская обл.","lat":48.79,"lon":44.78,"coords_note":"центр города/посёлка, приблизительно","confirmed":true,"suitable":false,"price_score":5,"quality_score":3,"assortment_score":1,"price_text":"гладкие Ø4–6 мм: 11–19 ₽/шт; Ø12 нет","products":"гладкие стержни Ø4–6 мм","url":"https://stekloplast34.ru/gladkie-stekloplastikovye-sterzhni","note":"Ø12 не выпускает.","contact_first":false,"total_score":3},{"name":"PULTRA","group":"rod","city":"Санкт-Петербург","region":"Санкт-Петербург","lat":59.93,"lon":30.34,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":2,"quality_score":5,"assortment_score":3,"price_text":"по запросу","products":"пултрузионные стержни 8 и 16 мм, 6 м, резка","url":"https://pultra.ru/produkciya/kompozitnyj-profil/sterzhen/","note":"Гладкий пултрузионный — лучшая геометрия, но Ø12 не подтверждён.","contact_first":false,"total_score":3.3},{"name":"Alien Technologies","group":"rod","city":"Санкт-Петербург","region":"Санкт-Петербург","lat":59.93,"lon":30.34,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":4,"price_text":"за пруток/бухту, за метр не указано","products":"арматура Ø12 в бухтах и прутках 6/12 м","url":"https://www.alientechnologies.ru/shop/asp12_bight/","note":"Своё ли производство — неясно.","contact_first":false,"total_score":3.3},{"name":"R-G-Composites (продавец)","group":"rod","city":"Москва","region":"Москва","lat":55.76,"lon":37.62,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":1,"quality_score":5,"assortment_score":2,"price_text":"Ø12×2 м пултрузия — 850 ₽/шт (≈425 ₽/м)","products":"пултрузионный пруток винилэфир","url":"https://www.r-g-composites.ru/glass-fibre-rod-RG6100122/","note":"Страна изготовления не указана; нет в наличии.","contact_first":false,"total_score":2.7},{"name":"Стройсталь (продавец)","group":"rod","city":"Москва","region":"Москва","lat":55.76,"lon":37.62,"coords_note":"центр города/посёлка, приблизительно","confirmed":false,"suitable":false,"price_score":3,"quality_score":3,"assortment_score":4,"price_text":"цена на странице сомнительна","products":"арматура Ø12, гладкий вариант, резка 0,1–11,9 м","url":"https://www.stroymetall.ru/catalog/armatura/12mm/stecloplastikovaya/","note":"Пилит в размер; данные страницы противоречивы.","contact_first":false,"total_score":3.3},{"name":"СТЕКЛОНиТ (Пулгласс)","group":"rod","city":"—","region":"—","lat":null,"lon":null,"coords_note":"место не установлено","confirmed":false,"suitable":false,"price_score":3,"quality_score":4,"assortment_score":2,"price_text":"по запросу","products":"пултрузионный цилиндрический профиль ПСПЦ","url":"https://steklonit.com/ru/otrasli/dlya-stroitelstva/stekloplastikovie-stergni-pulglass/","note":"Диаметры и место не подтверждены.","contact_first":false,"total_score":3}],"demand":[{"region":"Московская обл.","city":"Красногорск","lat":55.83,"lon":37.33,"score":10,"income":91490,"izhs":7950,"hubs":"WB Коледино, Электросталь (КГТ), Подольск, Домодедово; Ozon Хоругвино","share":0.2262,"coords_note":"административный центр, приблизительно"},{"region":"Москва","city":"Москва","lat":55.75,"lon":37.62,"score":6.5,"income":167033,"izhs":650,"hubs":"те же хабы МО","share":0.0845,"coords_note":"административный центр, приблизительно"},{"region":"Краснодарский край","city":"Краснодар","lat":45.04,"lon":38.98,"score":7.1,"income":77306,"izhs":3800,"hubs":"WB Краснодар; Ozon Адыгейск","share":0.1039,"coords_note":"административный центр, приблизительно"},{"region":"Татарстан","city":"Казань","lat":55.79,"lon":49.12,"score":5.4,"income":74506,"izhs":2350,"hubs":"WB Казань/Зеленодольск; Ozon 3 РФЦ","share":0.0541,"coords_note":"административный центр, приблизительно"},{"region":"Ленинградская обл.","city":"Всеволожск","lat":60.02,"lon":30.65,"score":5.2,"income":65525,"izhs":2700,"hubs":"WB Новосаратовка, Уткина Заводь, Шушары; Ozon Шушары","share":0.0493,"coords_note":"административный центр, приблизительно"},{"region":"Санкт-Петербург","city":"Санкт-Петербург","lat":59.94,"lon":30.31,"score":5.3,"income":104432,"izhs":null,"hubs":"те же","share":0.0516,"coords_note":"административный центр, приблизительно"},{"region":"Ростовская обл.","city":"Ростов-на-Дону","lat":47.24,"lon":39.71,"score":4.9,"income":64411,"izhs":1820,"hubs":"Ozon РФЦ Ростовская обл.","share":0.0425,"coords_note":"административный центр, приблизительно"},{"region":"Башкортостан","city":"Уфа","lat":54.74,"lon":55.97,"score":4.7,"income":53985,"izhs":2335,"hubs":"хабы в Уфе","share":0.0382,"coords_note":"административный центр, приблизительно"},{"region":"Свердловская обл.","city":"Екатеринбург","lat":56.84,"lon":60.6,"score":4.5,"income":74969,"izhs":1620,"hubs":"WB Кольцово; Ozon РФЦ","share":0.0342,"coords_note":"административный центр, приблизительно"},{"region":"Нижегородская обл.","city":"Нижний Новгород","lat":56.33,"lon":44,"score":4.2,"income":72046,"izhs":1260,"hubs":"Ozon ФЦ 2025","share":0.0286,"coords_note":"административный центр, приблизительно"},{"region":"Самарская обл.","city":"Самара","lat":53.2,"lon":50.16,"score":4,"income":59253,"izhs":1343,"hubs":"комбинированные хабы","share":0.0251,"coords_note":"административный центр, приблизительно"},{"region":"Дагестан","city":"Махачкала","lat":42.98,"lon":47.5,"score":4,"income":52032,"izhs":2350,"hubs":"Ozon ФЦ 2025","share":0.0251,"coords_note":"административный центр, приблизительно"},{"region":"Воронежская обл.","city":"Воронеж","lat":51.66,"lon":39.2,"score":3.8,"income":62726,"izhs":1160,"hubs":"—","share":0.0219,"coords_note":"административный центр, приблизительно"},{"region":"Пермский край","city":"Пермь","lat":58.01,"lon":56.23,"score":3.7,"income":61406,"izhs":1160,"hubs":"Ozon ЛЦ","share":0.0204,"coords_note":"административный центр, приблизительно"},{"region":"Ставропольский край","city":"Ставрополь","lat":45.04,"lon":41.97,"score":3.6,"income":44048,"izhs":1210,"hubs":"—","share":0.0189,"coords_note":"административный центр, приблизительно"},{"region":"Тюменская обл.","city":"Тюмень","lat":57.15,"lon":65.53,"score":3.6,"income":59648,"izhs":1100,"hubs":"через Екатеринбург","share":0.0189,"coords_note":"административный центр, приблизительно"},{"region":"Челябинская обл.","city":"Челябинск","lat":55.16,"lon":61.4,"score":3.5,"income":55184,"izhs":1160,"hubs":"через Екатеринбург","share":0.0175,"coords_note":"административный центр, приблизительно"},{"region":"Иркутская обл.","city":"Иркутск","lat":52.29,"lon":104.3,"score":3.5,"income":57343,"izhs":1200,"hubs":"—","share":0.0175,"coords_note":"административный центр, приблизительно"},{"region":"Новосибирская обл.","city":"Новосибирск","lat":55.03,"lon":82.92,"score":3.4,"income":68265,"izhs":945,"hubs":"WB Толмачёво; Ozon РФЦ","share":0.0161,"coords_note":"административный центр, приблизительно"},{"region":"Крым","city":"Симферополь","lat":44.95,"lon":34.1,"score":3.3,"income":45439,"izhs":910,"hubs":"—","share":0.0148,"coords_note":"административный центр, приблизительно"},{"region":"Калужская обл.","city":"Калуга","lat":54.51,"lon":36.26,"score":3.2,"income":60298,"izhs":740,"hubs":"рядом хабы МО","share":0.0135,"coords_note":"административный центр, приблизительно"},{"region":"Владимирская обл.","city":"Владимир","lat":56.13,"lon":40.41,"score":3.2,"income":53993,"izhs":820,"hubs":"рядом хабы МО","share":0.0135,"coords_note":"административный центр, приблизительно"},{"region":"Удмуртия","city":"Ижевск","lat":56.85,"lon":53.2,"score":3.2,"income":56743,"izhs":860,"hubs":"—","share":0.0135,"coords_note":"административный центр, приблизительно"},{"region":"Белгородская обл.","city":"Белгород","lat":50.6,"lon":36.59,"score":3.2,"income":65726,"izhs":669,"hubs":"— (приграничные риски)","share":0.0135,"coords_note":"административный центр, приблизительно"},{"region":"Оренбургская обл.","city":"Оренбург","lat":51.77,"lon":55.1,"score":3.2,"income":50544,"izhs":847,"hubs":"—","share":0.0135,"coords_note":"административный центр, приблизительно"},{"region":"Приморский край","city":"Владивосток","lat":43.12,"lon":131.89,"score":3.1,"income":74804,"izhs":645,"hubs":"WB Артём; Ozon Владивосток","share":0.0123,"coords_note":"административный центр, приблизительно"},{"region":"Красноярский край","city":"Красноярск","lat":56.01,"lon":92.85,"score":3,"income":68749,"izhs":662,"hubs":"Ozon ФЦ 2025","share":0.0112,"coords_note":"административный центр, приблизительно"}],"hubs":[{"name":"WB Коледино","city":"Коледино (Подольск)","lat":55.35,"lon":37.53,"note":"главный хаб WB","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Электросталь (КГТ)","city":"Электросталь","lat":55.78,"lon":38.45,"note":"только крупногабарит","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Подольск","city":"Подольск","lat":55.43,"lon":37.54,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Домодедово (Белые Столбы)","city":"Белые Столбы","lat":55.33,"lon":37.85,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"Ozon Хоругвино","city":"Хоругвино (Солнечногорск)","lat":56.1,"lon":37.1,"note":">250 тыс. м2, источник малонадёжный","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Казань (Зеленодольск)","city":"Зеленодольск","lat":55.85,"lon":48.52,"note":"охват без ограничений","coords_note":"центр населённого пункта, приблизительно"},{"name":"Ozon Казань (3 РФЦ, в т.ч. КГТ)","city":"Казань","lat":55.79,"lon":49.12,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB/Ozon СПб (Шушары, Новосаратовка, Уткина Заводь)","city":"Санкт-Петербург","lat":59.82,"lon":30.45,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Краснодар","city":"Краснодар","lat":45.04,"lon":38.98,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"Ozon Адыгейск","city":"Адыгейск","lat":44.88,"lon":39.19,"note":">60 тыс. м2","coords_note":"центр населённого пункта, приблизительно"},{"name":"Ozon Ростовская обл.","city":"Ростов-на-Дону (обл.)","lat":47.24,"lon":39.71,"note":">80 тыс. м2","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Екатеринбург (Кольцово)","city":"Кольцово","lat":56.74,"lon":60.8,"note":"2 FBO","coords_note":"центр населённого пункта, приблизительно"},{"name":"Ozon Нижний Новгород","city":"Нижний Новгород","lat":56.33,"lon":44,"note":"ФЦ 2025","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Новосибирск (Толмачёво)","city":"Толмачёво","lat":55.01,"lon":82.65,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Хабаровск","city":"Хабаровск","lat":48.48,"lon":135.08,"note":"","coords_note":"центр населённого пункта, приблизительно"},{"name":"WB Артём","city":"Артём","lat":43.36,"lon":132.19,"note":"открыт в 2025","coords_note":"центр населённого пункта, приблизительно"}],"candidates":[{"name":"Калуга","lat":54.51,"lon":36.26,"inbound":145583,"outbound":6581649,"rent":1350000,"labor":4680000,"total":12757232,"rank":1,"per_kit":12757,"inbound_detail":{"dpk":{"supplier":"Savewood (Сейввуд)","km":128,"trips":6,"cost":59400},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":259,"trips":4,"cost":46583},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":223,"trips":4,"cost":39600}},"rent_rub_m2_month":225,"rent_src":"05: объявления 200–250","salary_rub_month":75000,"salary_src":"est: данных нет, доход 0,81 от РФ"},{"name":"Владимир","lat":56.13,"lon":40.41,"inbound":138600,"outbound":6636172,"rent":1500000,"labor":4492800,"total":12767572,"rank":2,"per_kit":12768,"inbound_detail":{"dpk":{"supplier":"Terrapol (Вествуд-полимер)","km":0,"trips":6,"cost":59400},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":139,"trips":4,"cost":39600},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":198,"trips":4,"cost":39600}},"rent_rub_m2_month":250,"rent_src":"est: только Муром «от 100» (05)","salary_rub_month":72000,"salary_src":"est: данных нет, доход 0,72 от РФ"},{"name":"Тульская обл. (Тула)","lat":54.19,"lon":37.62,"inbound":138600,"outbound":6667265,"rent":1800000,"labor":4680000,"total":13285865,"rank":3,"per_kit":13286,"inbound_detail":{"dpk":{"supplier":"Savewood (Сейввуд)","km":22,"trips":6,"cost":59400},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":219,"trips":4,"cost":39600},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":225,"trips":4,"cost":39600}},"rent_rub_m2_month":300,"rent_src":"est: данных нет, между Калугой (200–250) и Ростовом (330)","salary_rub_month":75000,"salary_src":"est: данных нет, доход региона 0,81 от РФ"},{"name":"Ярославль","lat":57.63,"lon":39.87,"inbound":188147,"outbound":7151311,"rent":1500000,"labor":4680000,"total":13519458,"rank":4,"per_kit":13519,"inbound_detail":{"dpk":{"supplier":"Terrapol (Вествуд-полимер)","km":212,"trips":6,"cost":95618},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":294,"trips":4,"cost":52929},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":294,"trips":4,"cost":39600}},"rent_rub_m2_month":250,"rent_src":"est: данных нет","salary_rub_month":75000,"salary_src":"est: данных нет"},{"name":"Ульяновск","lat":54.31,"lon":48.39,"inbound":152982,"outbound":7466779,"rent":1500000,"labor":4492800,"total":13612560,"rank":5,"per_kit":13613,"inbound_detail":{"dpk":{"supplier":"Holzhof (Хольцхоф Рус)","km":35,"trips":6,"cost":59400},"sheet":{"supplier":"СафПласт (Novattro)","km":222,"trips":4,"cost":40018},"rod":{"supplier":"Армпласт","km":446,"trips":4,"cost":53564}},"rent_rub_m2_month":250,"rent_src":"est: данных нет","salary_rub_month":72000,"salary_src":"est: данных нет"},{"name":"Нижний Новгород","lat":56.33,"lon":44,"inbound":238593,"outbound":7408948,"rent":1218000,"labor":5304000,"total":14169541,"rank":6,"per_kit":14170,"inbound_detail":{"dpk":{"supplier":"Terrapol (Вествуд-полимер)","km":279,"trips":6,"cost":125426},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":409,"trips":4,"cost":73567},"rod":{"supplier":"Армпласт","km":0,"trips":4,"cost":39600}},"rent_rub_m2_month":203,"rent_src":"05: объявления, в среднем 203 (120–250)","salary_rub_month":85000,"salary_src":"est: «до 120 000» — это максимум; взято среднее по РФ 85 000"},{"name":"Ростов-на-Дону","lat":47.24,"lon":39.71,"inbound":628359,"outbound":7532127,"rent":1980000,"labor":4992000,"total":15132486,"rank":7,"per_kit":15132,"inbound_detail":{"dpk":{"supplier":"Savewood (Сейввуд)","km":962,"trips":6,"cost":432813},"sheet":{"supplier":"Полидин","km":287,"trips":4,"cost":51607},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":1199,"trips":4,"cost":143939}},"rent_rub_m2_month":330,"rent_src":"05: объявление 330 (сводка 280–400)","salary_rub_month":80000,"salary_src":"est: средняя ЗП области 76 146"},{"name":"Краснодар","lat":45.04,"lon":38.98,"inbound":784456,"outbound":7412970,"rent":2100000,"labor":4992000,"total":15289426,"rank":8,"per_kit":15289,"inbound_detail":{"dpk":{"supplier":"Savewood (Сейввуд)","km":1256,"trips":6,"cost":565053},"sheet":{"supplier":"Полидин","km":28,"trips":4,"cost":39600},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":1498,"trips":4,"cost":179803}},"rent_rub_m2_month":350,"rent_src":"est: данных нет","salary_rub_month":80000,"salary_src":"05: сборщик корпусной мебели ≈80 000"},{"name":"Екатеринбург","lat":56.84,"lon":60.6,"inbound":621410,"outbound":7939382,"rent":1380000,"labor":5616000,"total":15556792,"rank":9,"per_kit":15557,"inbound_detail":{"dpk":{"supplier":"MultiDeck (МультиПласт)","km":939,"trips":6,"cost":422711},"sheet":{"supplier":"СафПласт (Novattro)","km":884,"trips":4,"cost":159099},"rod":{"supplier":"УралАрмоПром","km":1,"trips":4,"cost":39600}},"rent_rub_m2_month":230,"rent_src":"05: объявления 200–250 (Екб ≈260)","salary_rub_month":90000,"salary_src":"est: средняя ЗП области 89 286"},{"name":"Санкт-Петербург / Ленобласть","lat":60.02,"lon":30.65,"inbound":311125,"outbound":7435085,"rent":2100000,"labor":6240000,"total":16086210,"rank":10,"per_kit":16086,"inbound_detail":{"dpk":{"supplier":"Невский композит","km":72,"trips":6,"cost":59400},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":868,"trips":4,"cost":156297},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":795,"trips":4,"cost":95428}},"rent_rub_m2_month":350,"rent_src":"05: Ленобласть 306, СПб 290–650","salary_rub_month":100000,"salary_src":"est: данных нет"},{"name":"Казань (Татарстан)","lat":55.79,"lon":49.12,"inbound":147511,"outbound":7353458,"rent":2400000,"labor":6739200,"total":16640169,"rank":11,"per_kit":16640,"inbound_detail":{"dpk":{"supplier":"MultiDeck (МультиПласт)","km":48,"trips":6,"cost":59400},"sheet":{"supplier":"СафПласт (Novattro)","km":12,"trips":4,"cost":39600},"rod":{"supplier":"Армпласт","km":404,"trips":4,"cost":48511}},"rent_rub_m2_month":400,"rent_src":"05: объявления 300–500","salary_rub_month":108000,"salary_src":"05: сборщик Казань ≈108 000"},{"name":"Московская обл. (восток, Ногинск/Электросталь)","lat":55.85,"lon":38.44,"inbound":150308,"outbound":5945812,"rent":5100000,"labor":5928000,"total":17124120,"rank":12,"per_kit":17124,"inbound_detail":{"dpk":{"supplier":"Terrapol (Вествуд-полимер)","km":158,"trips":6,"cost":71108},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":53,"trips":4,"cost":39600},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":40,"trips":4,"cost":39600}},"rent_rub_m2_month":850,"rent_src":"05: склад класса А МО 845–917 ₽/м2/мес; объявление 950","salary_rub_month":95000,"salary_src":"05: сборщик МО 92 730 ₽ (ГородРабот)"},{"name":"Московская обл. (юг, Чехов/Подольск)","lat":55.14,"lon":37.46,"inbound":148812,"outbound":6017042,"rent":5100000,"labor":5928000,"total":17193854,"rank":13,"per_kit":17194,"inbound_detail":{"dpk":{"supplier":"Savewood (Сейввуд)","km":155,"trips":6,"cost":69612},"sheet":{"supplier":"Полигаль Восток (Monogal)","km":131,"trips":4,"cost":39600},"rod":{"supplier":"МЗПКК (Московский завод полимерно-композитных конструкций)","km":99,"trips":4,"cost":39600}},"rent_rub_m2_month":850,"rent_src":"05: склад класса А МО 845–917 ₽/м2/мес","salary_rub_month":95000,"salary_src":"05: сборщик МО 92 730 ₽"}],"scenarios":{"base_1000":[{"name":"Калуга","total":12757232,"rank":1,"inbound":145583,"outbound":6581649,"rent":1350000,"labor":4680000,"per_kit":12757},{"name":"Владимир","total":12767572,"rank":2,"inbound":138600,"outbound":6636172,"rent":1500000,"labor":4492800,"per_kit":12768},{"name":"Тульская обл. (Тула)","total":13285865,"rank":3,"inbound":138600,"outbound":6667265,"rent":1800000,"labor":4680000,"per_kit":13286},{"name":"Ярославль","total":13519458,"rank":4,"inbound":188147,"outbound":7151311,"rent":1500000,"labor":4680000,"per_kit":13519},{"name":"Ульяновск","total":13612560,"rank":5,"inbound":152982,"outbound":7466779,"rent":1500000,"labor":4492800,"per_kit":13613},{"name":"Нижний Новгород","total":14169541,"rank":6,"inbound":238593,"outbound":7408948,"rent":1218000,"labor":5304000,"per_kit":14170},{"name":"Ростов-на-Дону","total":15132486,"rank":7,"inbound":628359,"outbound":7532127,"rent":1980000,"labor":4992000,"per_kit":15132},{"name":"Краснодар","total":15289426,"rank":8,"inbound":784456,"outbound":7412970,"rent":2100000,"labor":4992000,"per_kit":15289},{"name":"Екатеринбург","total":15556792,"rank":9,"inbound":621410,"outbound":7939382,"rent":1380000,"labor":5616000,"per_kit":15557},{"name":"Санкт-Петербург / Ленобласть","total":16086210,"rank":10,"inbound":311125,"outbound":7435085,"rent":2100000,"labor":6240000,"per_kit":16086},{"name":"Казань (Татарстан)","total":16640169,"rank":11,"inbound":147511,"outbound":7353458,"rent":2400000,"labor":6739200,"per_kit":16640},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":17124120,"rank":12,"inbound":150308,"outbound":5945812,"rent":5100000,"labor":5928000,"per_kit":17124},{"name":"Московская обл. (юг, Чехов/Подольск)","total":17193854,"rank":13,"inbound":148812,"outbound":6017042,"rent":5100000,"labor":5928000,"per_kit":17194}],"volume_2000":[{"name":"Владимир","total":24595543,"rank":1,"inbound":237600,"outbound":13272343,"rent":2100000,"labor":8985600,"per_kit":12298},{"name":"Калуга","total":24661373,"rank":2,"inbound":248074,"outbound":13163299,"rent":1890000,"labor":9360000,"per_kit":12331},{"name":"Тульская обл. (Тула)","total":25452131,"rank":3,"inbound":237600,"outbound":13334531,"rent":2520000,"labor":9360000,"per_kit":12726},{"name":"Ярославль","total":26086616,"rank":4,"inbound":323993,"outbound":14302622,"rent":2100000,"labor":9360000,"per_kit":13043},{"name":"Ульяновск","total":26281821,"rank":5,"inbound":262663,"outbound":14933558,"rent":2100000,"labor":8985600,"per_kit":13141},{"name":"Нижний Новгород","total":27540694,"rank":6,"inbound":409599,"outbound":14817896,"rent":1705200,"labor":10608000,"per_kit":13770},{"name":"Ростов-на-Дону","total":28943048,"rank":7,"inbound":1122794,"outbound":15064254,"rent":2772000,"labor":9984000,"per_kit":14472},{"name":"Краснодар","total":29159926,"rank":8,"inbound":1409986,"outbound":14825940,"rent":2940000,"labor":9984000,"per_kit":14580},{"name":"Екатеринбург","total":30125684,"rank":9,"inbound":1082919,"outbound":15878765,"rent":1932000,"labor":11232000,"per_kit":15063},{"name":"Санкт-Петербург / Ленобласть","total":30800514,"rank":10,"inbound":510344,"outbound":14870170,"rent":2940000,"labor":12480000,"per_kit":15400},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":31146689,"rank":11,"inbound":259065,"outbound":11891625,"rent":7140000,"labor":11856000,"per_kit":15573},{"name":"Московская обл. (юг, Чехов/Подольск)","total":31286406,"rank":12,"inbound":256323,"outbound":12034083,"rent":7140000,"labor":11856000,"per_kit":15643},{"name":"Казань (Татарстан)","total":31798510,"rank":13,"inbound":253194,"outbound":14706916,"rent":3360000,"labor":13478400,"per_kit":15899}],"volume_5000":[{"name":"Владимир","total":60138858,"rank":1,"inbound":594000,"outbound":33180858,"rent":3900000,"labor":22464000,"per_kit":12028},{"name":"Калуга","total":60438433,"rank":2,"inbound":620186,"outbound":32908247,"rent":3510000,"labor":23400000,"per_kit":12088},{"name":"Тульская обл. (Тула)","total":62010327,"rank":3,"inbound":594000,"outbound":33336327,"rent":4680000,"labor":23400000,"per_kit":12402},{"name":"Ярославль","total":63869557,"rank":4,"inbound":813001,"outbound":35756556,"rent":3900000,"labor":23400000,"per_kit":12774},{"name":"Ульяновск","total":64352807,"rank":5,"inbound":654912,"outbound":37333894,"rent":3900000,"labor":22464000,"per_kit":12871},{"name":"Нижний Новгород","total":67761038,"rank":6,"inbound":1029499,"outbound":37044739,"rent":3166800,"labor":26520000,"per_kit":13552},{"name":"Ростов-на-Дону","total":70593695,"rank":7,"inbound":2825060,"outbound":37660635,"rent":5148000,"labor":24960000,"per_kit":14119},{"name":"Краснодар","total":71034426,"rank":8,"inbound":3549577,"outbound":37064849,"rent":5460000,"labor":24960000,"per_kit":14207},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":73277699,"rank":9,"inbound":648637,"outbound":29729062,"rent":13260000,"labor":29640000,"per_kit":14656},{"name":"Московская обл. (юг, Чехов/Подольск)","total":73626866,"rank":10,"inbound":641658,"outbound":30085208,"rent":13260000,"labor":29640000,"per_kit":14725},{"name":"Екатеринбург","total":74102485,"rank":11,"inbound":2737572,"outbound":39696912,"rent":3588000,"labor":28080000,"per_kit":14820},{"name":"Санкт-Петербург / Ленобласть","total":75104307,"rank":12,"inbound":1268882,"outbound":37175426,"rent":5460000,"labor":31200000,"per_kit":15021},{"name":"Казань (Татарстан)","total":77335160,"rank":13,"inbound":631871,"outbound":36767289,"rent":6240000,"labor":33696000,"per_kit":15467}],"dpk_only_holzhof_1000":[{"name":"Владимир","total":13025906,"rank":1,"inbound":396935,"outbound":6636172,"rent":1500000,"labor":4492800,"per_kit":13026},{"name":"Калуга","total":13153251,"rank":2,"inbound":541602,"outbound":6581649,"rent":1350000,"labor":4680000,"per_kit":13153},{"name":"Ульяновск","total":13612560,"rank":3,"inbound":152982,"outbound":7466779,"rent":1500000,"labor":4492800,"per_kit":13613},{"name":"Тульская обл. (Тула)","total":13634355,"rank":4,"inbound":487089,"outbound":6667265,"rent":1800000,"labor":4680000,"per_kit":13634},{"name":"Ярославль","total":13795271,"rank":5,"inbound":463960,"outbound":7151311,"rent":1500000,"labor":4680000,"per_kit":13795},{"name":"Нижний Новгород","total":14253056,"rank":6,"inbound":322108,"outbound":7408948,"rent":1218000,"labor":5304000,"per_kit":14253},{"name":"Ростов-на-Дону","total":15272809,"rank":7,"inbound":768682,"outbound":7532127,"rent":1980000,"labor":4992000,"per_kit":15273},{"name":"Краснодар","total":15430340,"rank":8,"inbound":925370,"outbound":7412970,"rent":2100000,"labor":4992000,"per_kit":15430},{"name":"Екатеринбург","total":15577220,"rank":9,"inbound":641837,"outbound":7939382,"rent":1380000,"labor":5616000,"per_kit":15577},{"name":"Казань (Татарстан)","total":16668460,"rank":10,"inbound":175802,"outbound":7353458,"rent":2400000,"labor":6739200,"per_kit":16668},{"name":"Санкт-Петербург / Ленобласть","total":16731662,"rank":11,"inbound":956577,"outbound":7435085,"rent":2100000,"labor":6240000,"per_kit":16732},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":17434064,"rank":12,"inbound":460251,"outbound":5945812,"rent":5100000,"labor":5928000,"per_kit":17434},{"name":"Московская обл. (юг, Чехов/Подольск)","total":17535546,"rank":13,"inbound":490505,"outbound":6017042,"rent":5100000,"labor":5928000,"per_kit":17536}],"dpk_only_holzhof_5000":[{"name":"Владимир","total":61344420,"rank":1,"inbound":1799562,"outbound":33180858,"rent":3900000,"labor":22464000,"per_kit":12269},{"name":"Калуга","total":62286521,"rank":2,"inbound":2468274,"outbound":32908247,"rent":3510000,"labor":23400000,"per_kit":12457},{"name":"Тульская обл. (Тула)","total":63636610,"rank":3,"inbound":2220283,"outbound":33336327,"rent":4680000,"labor":23400000,"per_kit":12727},{"name":"Ульяновск","total":64352807,"rank":4,"inbound":654912,"outbound":37333894,"rent":3900000,"labor":22464000,"per_kit":12871},{"name":"Ярославль","total":65156684,"rank":5,"inbound":2100128,"outbound":35756556,"rent":3900000,"labor":23400000,"per_kit":13031},{"name":"Нижний Новгород","total":68150773,"rank":6,"inbound":1419234,"outbound":37044739,"rent":3166800,"labor":26520000,"per_kit":13630},{"name":"Ростов-на-Дону","total":71248537,"rank":7,"inbound":3479902,"outbound":37660635,"rent":5148000,"labor":24960000,"per_kit":14250},{"name":"Краснодар","total":71692026,"rank":8,"inbound":4207177,"outbound":37064849,"rent":5460000,"labor":24960000,"per_kit":14338},{"name":"Екатеринбург","total":74197812,"rank":9,"inbound":2832899,"outbound":39696912,"rent":3588000,"labor":28080000,"per_kit":14840},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":74724101,"rank":10,"inbound":2095039,"outbound":29729062,"rent":13260000,"labor":29640000,"per_kit":14945},{"name":"Московская обл. (юг, Чехов/Подольск)","total":75221429,"rank":11,"inbound":2236221,"outbound":30085208,"rent":13260000,"labor":29640000,"per_kit":15044},{"name":"Казань (Татарстан)","total":77467187,"rank":12,"inbound":763897,"outbound":36767289,"rent":6240000,"labor":33696000,"per_kit":15493},{"name":"Санкт-Петербург / Ленобласть","total":78116420,"rank":13,"inbound":4280994,"outbound":37175426,"rent":5460000,"labor":31200000,"per_kit":15623}],"demand_flat_1000":[{"name":"Владимир","total":13427692,"rank":1,"inbound":138600,"outbound":7296292,"rent":1500000,"labor":4492800,"per_kit":13428},{"name":"Калуга","total":13577914,"rank":2,"inbound":145583,"outbound":7402331,"rent":1350000,"labor":4680000,"per_kit":13578},{"name":"Ульяновск","total":13786812,"rank":3,"inbound":152982,"outbound":7641031,"rent":1500000,"labor":4492800,"per_kit":13787},{"name":"Тульская обл. (Тула)","total":14037121,"rank":4,"inbound":138600,"outbound":7418521,"rent":1800000,"labor":4680000,"per_kit":14037},{"name":"Ярославль","total":14041121,"rank":5,"inbound":188147,"outbound":7672974,"rent":1500000,"labor":4680000,"per_kit":14041},{"name":"Нижний Новгород","total":14361662,"rank":6,"inbound":238593,"outbound":7601068,"rent":1218000,"labor":5304000,"per_kit":14362},{"name":"Ростов-на-Дону","total":15473934,"rank":7,"inbound":628359,"outbound":7873576,"rent":1980000,"labor":4992000,"per_kit":15474},{"name":"Екатеринбург","total":15476965,"rank":8,"inbound":621410,"outbound":7859555,"rent":1380000,"labor":5616000,"per_kit":15477},{"name":"Краснодар","total":15822649,"rank":9,"inbound":784456,"outbound":7946193,"rent":2100000,"labor":4992000,"per_kit":15823},{"name":"Санкт-Петербург / Ленобласть","total":16519076,"rank":10,"inbound":311125,"outbound":7867951,"rent":2100000,"labor":6240000,"per_kit":16519},{"name":"Казань (Татарстан)","total":16838434,"rank":11,"inbound":147511,"outbound":7551723,"rent":2400000,"labor":6739200,"per_kit":16838},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":18244942,"rank":12,"inbound":150308,"outbound":7066634,"rent":5100000,"labor":5928000,"per_kit":18245},{"name":"Московская обл. (юг, Чехов/Подольск)","total":18291702,"rank":13,"inbound":148812,"outbound":7114890,"rent":5100000,"labor":5928000,"per_kit":18292}],"mo_rent_500_1000":[{"name":"Калуга","total":12757232,"rank":1,"inbound":145583,"outbound":6581649,"rent":1350000,"labor":4680000,"per_kit":12757},{"name":"Владимир","total":12767572,"rank":2,"inbound":138600,"outbound":6636172,"rent":1500000,"labor":4492800,"per_kit":12768},{"name":"Тульская обл. (Тула)","total":13285865,"rank":3,"inbound":138600,"outbound":6667265,"rent":1800000,"labor":4680000,"per_kit":13286},{"name":"Ярославль","total":13519458,"rank":4,"inbound":188147,"outbound":7151311,"rent":1500000,"labor":4680000,"per_kit":13519},{"name":"Ульяновск","total":13612560,"rank":5,"inbound":152982,"outbound":7466779,"rent":1500000,"labor":4492800,"per_kit":13613},{"name":"Нижний Новгород","total":14169541,"rank":6,"inbound":238593,"outbound":7408948,"rent":1218000,"labor":5304000,"per_kit":14170},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":15024120,"rank":7,"inbound":150308,"outbound":5945812,"rent":3000000,"labor":5928000,"per_kit":15024},{"name":"Московская обл. (юг, Чехов/Подольск)","total":15093854,"rank":8,"inbound":148812,"outbound":6017042,"rent":3000000,"labor":5928000,"per_kit":15094},{"name":"Ростов-на-Дону","total":15132486,"rank":9,"inbound":628359,"outbound":7532127,"rent":1980000,"labor":4992000,"per_kit":15132},{"name":"Краснодар","total":15289426,"rank":10,"inbound":784456,"outbound":7412970,"rent":2100000,"labor":4992000,"per_kit":15289},{"name":"Екатеринбург","total":15556792,"rank":11,"inbound":621410,"outbound":7939382,"rent":1380000,"labor":5616000,"per_kit":15557},{"name":"Санкт-Петербург / Ленобласть","total":16086210,"rank":12,"inbound":311125,"outbound":7435085,"rent":2100000,"labor":6240000,"per_kit":16086},{"name":"Казань (Татарстан)","total":16640169,"rank":13,"inbound":147511,"outbound":7353458,"rent":2400000,"labor":6739200,"per_kit":16640}],"equal_salary_1000":[{"name":"Калуга","total":13381232,"rank":1,"inbound":145583,"outbound":6581649,"rent":1350000,"labor":5304000,"per_kit":13381},{"name":"Владимир","total":13578772,"rank":2,"inbound":138600,"outbound":6636172,"rent":1500000,"labor":5304000,"per_kit":13579},{"name":"Тульская обл. (Тула)","total":13909865,"rank":3,"inbound":138600,"outbound":6667265,"rent":1800000,"labor":5304000,"per_kit":13910},{"name":"Ярославль","total":14143458,"rank":4,"inbound":188147,"outbound":7151311,"rent":1500000,"labor":5304000,"per_kit":14143},{"name":"Нижний Новгород","total":14169541,"rank":5,"inbound":238593,"outbound":7408948,"rent":1218000,"labor":5304000,"per_kit":14170},{"name":"Ульяновск","total":14423760,"rank":6,"inbound":152982,"outbound":7466779,"rent":1500000,"labor":5304000,"per_kit":14424},{"name":"Санкт-Петербург / Ленобласть","total":15150210,"rank":7,"inbound":311125,"outbound":7435085,"rent":2100000,"labor":5304000,"per_kit":15150},{"name":"Казань (Татарстан)","total":15204969,"rank":8,"inbound":147511,"outbound":7353458,"rent":2400000,"labor":5304000,"per_kit":15205},{"name":"Екатеринбург","total":15244792,"rank":9,"inbound":621410,"outbound":7939382,"rent":1380000,"labor":5304000,"per_kit":15245},{"name":"Ростов-на-Дону","total":15444486,"rank":10,"inbound":628359,"outbound":7532127,"rent":1980000,"labor":5304000,"per_kit":15444},{"name":"Краснодар","total":15601426,"rank":11,"inbound":784456,"outbound":7412970,"rent":2100000,"labor":5304000,"per_kit":15601},{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":16500120,"rank":12,"inbound":150308,"outbound":5945812,"rent":5100000,"labor":5304000,"per_kit":16500},{"name":"Московская обл. (юг, Чехов/Подольск)","total":16569854,"rank":13,"inbound":148812,"outbound":6017042,"rent":5100000,"labor":5304000,"per_kit":16570}],"logistics_only_1000":[{"name":"Московская обл. (восток, Ногинск/Электросталь)","total":13200120,"rank":1,"inbound":150308,"outbound":5945812,"rent":1800000,"labor":5304000,"per_kit":13200},{"name":"Московская обл. (юг, Чехов/Подольск)","total":13269854,"rank":2,"inbound":148812,"outbound":6017042,"rent":1800000,"labor":5304000,"per_kit":13270},{"name":"Калуга","total":13831232,"rank":3,"inbound":145583,"outbound":6581649,"rent":1800000,"labor":5304000,"per_kit":13831},{"name":"Владимир","total":13878772,"rank":4,"inbound":138600,"outbound":6636172,"rent":1800000,"labor":5304000,"per_kit":13879},{"name":"Тульская обл. (Тула)","total":13909865,"rank":5,"inbound":138600,"outbound":6667265,"rent":1800000,"labor":5304000,"per_kit":13910},{"name":"Ярославль","total":14443458,"rank":6,"inbound":188147,"outbound":7151311,"rent":1800000,"labor":5304000,"per_kit":14443},{"name":"Казань (Татарстан)","total":14604969,"rank":7,"inbound":147511,"outbound":7353458,"rent":1800000,"labor":5304000,"per_kit":14605},{"name":"Ульяновск","total":14723760,"rank":8,"inbound":152982,"outbound":7466779,"rent":1800000,"labor":5304000,"per_kit":14724},{"name":"Нижний Новгород","total":14751541,"rank":9,"inbound":238593,"outbound":7408948,"rent":1800000,"labor":5304000,"per_kit":14752},{"name":"Санкт-Петербург / Ленобласть","total":14850210,"rank":10,"inbound":311125,"outbound":7435085,"rent":1800000,"labor":5304000,"per_kit":14850},{"name":"Ростов-на-Дону","total":15264486,"rank":11,"inbound":628359,"outbound":7532127,"rent":1800000,"labor":5304000,"per_kit":15264},{"name":"Краснодар","total":15301426,"rank":12,"inbound":784456,"outbound":7412970,"rent":1800000,"labor":5304000,"per_kit":15301},{"name":"Екатеринбург","total":15664792,"rank":13,"inbound":621410,"outbound":7939382,"rent":1800000,"labor":5304000,"per_kit":15665}],"two_sites":[{"kits":1000,"sites":["Калуга","Краснодар"],"total":16111074,"single_best":"Калуга","single_best_total":12757232,"delta_vs_single":3353842,"parts":{"Калуга":{"kits":795,"inbound":125783,"outbound":4974701,"rent":1239226,"labor":4680000,"total":11019710,"regions":["Московская обл.","Москва","Татарстан","Ленинградская обл.","Санкт-Петербург","Башкортостан","Свердловская обл.","Нижегородская обл.","Самарская обл.","Воронежская обл.","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Калужская обл.","Владимирская обл.","Удмуртия","Белгородская обл.","Оренбургская обл.","Приморский край","Красноярский край"]},"Краснодар":{"kits":205,"inbound":506204,"outbound":656845,"rent":1432316,"labor":2496000,"total":5091365,"regions":["Краснодарский край","Ростовская обл.","Дагестан","Ставропольский край","Крым"]}}},{"kits":1000,"sites":["Калуга","Екатеринбург"],"total":15051043,"single_best":"Калуга","single_best_total":12757232,"delta_vs_single":2293811,"parts":{"Калуга":{"kits":708,"inbound":115883,"outbound":4030364,"rent":1192139,"labor":3510000,"total":8848385,"regions":["Московская обл.","Москва","Краснодарский край","Ленинградская обл.","Санкт-Петербург","Ростовская обл.","Нижегородская обл.","Дагестан","Воронежская обл.","Ставропольский край","Крым","Калужская обл.","Владимирская обл.","Белгородская обл."]},"Екатеринбург":{"kits":292,"inbound":460706,"outbound":1944583,"rent":989369,"labor":2808000,"total":6202658,"regions":["Татарстан","Башкортостан","Свердловская обл.","Самарская обл.","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Удмуртия","Оренбургская обл.","Приморский край","Красноярский край"]}}},{"kits":1000,"sites":["Калуга","Казань (Татарстан)"],"total":15966195,"single_best":"Калуга","single_best_total":12757232,"delta_vs_single":3208963,"parts":{"Калуга":{"kits":654,"inbound":115883,"outbound":3615541,"rent":1163130,"labor":3510000,"total":8404553,"regions":["Московская обл.","Москва","Краснодарский край","Ленинградская обл.","Санкт-Петербург","Ростовская обл.","Воронежская обл.","Ставропольский край","Крым","Калужская обл.","Владимирская обл.","Белгородская обл."]},"Казань (Татарстан)":{"kits":346,"inbound":103455,"outbound":2316373,"rent":1772214,"labor":3369600,"total":7561642,"regions":["Татарстан","Башкортостан","Свердловская обл.","Нижегородская обл.","Самарская обл.","Дагестан","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Удмуртия","Оренбургская обл.","Приморский край","Красноярский край"]}}},{"kits":1000,"sites":["Калуга","Санкт-Петербург / Ленобласть"],"total":16712989,"single_best":"Калуга","single_best_total":12757232,"delta_vs_single":3955757,"parts":{"Калуга":{"kits":887,"inbound":125783,"outbound":5660208,"rent":1288876,"labor":4680000,"total":11754867,"regions":["Московская обл.","Москва","Краснодарский край","Татарстан","Ростовская обл.","Башкортостан","Свердловская обл.","Нижегородская обл.","Самарская обл.","Дагестан","Воронежская обл.","Пермский край","Ставропольский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Крым","Калужская обл.","Владимирская обл.","Удмуртия","Белгородская обл.","Оренбургская обл.","Красноярский край"]},"Санкт-Петербург / Ленобласть":{"kits":113,"inbound":243611,"outbound":239430,"rent":1355082,"labor":3120000,"total":4958122,"regions":["Ленинградская обл.","Санкт-Петербург","Приморский край"]}}},{"kits":5000,"sites":["Владимир","Краснодар"],"total":59235138,"single_best":"Владимир","single_best_total":60138858,"delta_vs_single":-903720,"parts":{"Владимир":{"kits":3907,"inbound":475200,"outbound":24470294,"rent":3244046,"labor":17971200,"total":46160740,"regions":["Московская обл.","Москва","Татарстан","Ленинградская обл.","Санкт-Петербург","Башкортостан","Свердловская обл.","Нижегородская обл.","Самарская обл.","Воронежская обл.","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Калужская обл.","Владимирская обл.","Удмуртия","Оренбургская обл.","Приморский край","Красноярский край"]},"Краснодар":{"kits":1093,"inbound":878632,"outbound":3777430,"rent":2178336,"labor":6240000,"total":13074397,"regions":["Краснодарский край","Ростовская обл.","Дагестан","Ставропольский край","Крым","Белгородская обл."]}}},{"kits":5000,"sites":["Владимир","Екатеринбург"],"total":61349897,"single_best":"Владимир","single_best_total":60138858,"delta_vs_single":1211039,"parts":{"Владимир":{"kits":3934,"inbound":475200,"outbound":23796700,"rent":3260547,"labor":17971200,"total":45503647,"regions":["Московская обл.","Москва","Краснодарский край","Татарстан","Ленинградская обл.","Санкт-Петербург","Ростовская обл.","Нижегородская обл.","Самарская обл.","Дагестан","Воронежская обл.","Ставропольский край","Крым","Калужская обл.","Владимирская обл.","Белгородская обл."]},"Екатеринбург":{"kits":1066,"inbound":621410,"outbound":6788544,"rent":1416297,"labor":7020000,"total":15846250,"regions":["Башкортостан","Свердловская обл.","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Удмуртия","Оренбургская обл.","Приморский край","Красноярский край"]}}},{"kits":5000,"sites":["Владимир","Казань (Татарстан)"],"total":64532459,"single_best":"Владимир","single_best_total":60138858,"delta_vs_single":4393601,"parts":{"Владимир":{"kits":3413,"inbound":415800,"outbound":19875437,"rent":2947606,"labor":15724800,"total":38963643,"regions":["Московская обл.","Москва","Краснодарский край","Ленинградская обл.","Санкт-Петербург","Ростовская обл.","Нижегородская обл.","Воронежская обл.","Ставропольский край","Крым","Калужская обл.","Владимирская обл.","Белгородская обл."]},"Казань (Татарстан)":{"kits":1587,"inbound":211366,"outbound":10600019,"rent":2963831,"labor":11793600,"total":25568816,"regions":["Татарстан","Башкортостан","Свердловская обл.","Самарская обл.","Дагестан","Пермский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Удмуртия","Оренбургская обл.","Приморский край","Красноярский край"]}}},{"kits":5000,"sites":["Владимир","Санкт-Петербург / Ленобласть"],"total":60716868,"single_best":"Владимир","single_best_total":60138858,"delta_vs_single":578010,"parts":{"Владимир":{"kits":4496,"inbound":534600,"outbound":29450334,"rent":3597361,"labor":20217600,"total":53799895,"regions":["Московская обл.","Москва","Краснодарский край","Татарстан","Ростовская обл.","Башкортостан","Свердловская обл.","Нижегородская обл.","Самарская обл.","Дагестан","Воронежская обл.","Пермский край","Ставропольский край","Тюменская обл.","Челябинская обл.","Иркутская обл.","Новосибирская обл.","Крым","Калужская обл.","Владимирская обл.","Удмуртия","Белгородская обл.","Оренбургская обл.","Приморский край","Красноярский край"]},"Санкт-Петербург / Ленобласть":{"kits":504,"inbound":243611,"outbound":309668,"rent":1683694,"labor":4680000,"total":6916973,"regions":["Ленинградская обл.","Санкт-Петербург"]}}}]},"ltl_model":{"fixed_rub_per_1_5m3":5914,"rub_per_km":1.039,"calibration":[["Москва–Н.Новгород",420,5750],["Москва–СПб",710,7250],["Москва–Казань",810,6750],["Москва–Ростов",1080,7250],["Москва–Краснодар",1347,7750],["Москва–Екатеринбург",1750,7000],["Москва–Новосибирск",3370,9500]]},"info":{"dpk_m_per_kit":81,"dpk_cost_per_kit_rub_at_250":20370,"dpk_cost_per_kit_rub_at_310":25259},"assumptions":["Объём 1000 комплектов в год; коробка в среднем 140 кг и 1.4 м3.","Сырьё на комплект: ДПК 110 кг, лист 15 кг, стержни 5 кг.","Расстояние = прямая × 1.25. Координаты — центры городов, приблизительно.","Сырьё: ДПК фурой 20 т по 75 ₽/км (заметки: 60–90), лист 5-тонником 45 ₽/км (оценка), стержни Газелью 30 ₽/км (оценка); минимум рейсов в год 4/4/2, минимальный заказ машины 9 900 ₽. Берётся ближайший подходящий завод.","Доставка коробки покупателю: сборный груз 5914 ₽ + 1.04 ₽/км за 1,5 м3 (подгонка по 7 направлениям из Москвы), пересчёт на 1.4 м3, плюс 1000 ₽ до двери (оценка); на коротком плече — Газель (оценка), берётся дешевле.","Спрос: 27 регионов из заметок 04; доля региона ~ ((балл−1)/9)^2, то есть обратно к корню в методике баллов (близко к ИЖС × доход). Остальные регионы России не учтены.","Площадь 500 м2 при 1000 комплектов (300 + 0,2 м2 на комплект); сборщиков 1 на 250 комплектов/год, не меньше 2; зарплата × 12 × 1.3 (взносы).","Аренда и зарплата: где в заметках 05 нет цифры, стоит оценка (пометка est в полях rent_src/salary_src).","Цена самого сырья в расчёт места не входит (она одинакова для всех площадок при одном поставщике).","Не учтены: налоговые льготы, отопление и электричество, погрузчик, склад готовой продукции в сезон, отгрузки фурой на склады маркетплейсов."],"sources":[{"title":"Лестех: исследование заводов ДПК 2026 (демо)","url":"https://st.alestech.ru/files/0a9ffa2757d69b26278182d8cdb44c1f.pdf"},{"title":"Holzhof: лага 50×40","url":"https://holzhof.ru/home/catalog-subsystem/joist-large/"},{"title":"Terrapol лага 50×35 (дилер)","url":"https://klinkergof.ru/catalog/terrasnaya_doska/laga_dlya_montazha_terrasnoy_doski_terrapol/"},{"title":"Woodgrand: лаги","url":"https://woodgrand.ru/katalog/lagi-iz-dpk/"},{"title":"Ай-Техпласт (Лестех)","url":"https://alestech.ru/factory/1657-aj-tehplast"},{"title":"Savewood опт","url":"https://www.savewood.ru/opt/"},{"title":"ДПК-НСК: почему нельзя заказать свой профиль","url":"https://dpk-nsk.ru/encziklopediya-dpk/pro-proizvodstvo-dpk/pochemu-nelzya-zakazat-profil-dpk-po-svoemu-razmeru"},{"title":"Полимерные Композиции: профиль под ключ","url":"http://polimerkompozit.ru/profil_pod_kluch"},{"title":"Monogal","url":"https://polygalvostok.ru/monolitnyj-polikarbonat/monogal/"},{"title":"BORREX прайс завода","url":"https://ug-plast.ru/price/"},{"title":"Опал Borrex, розница СПб","url":"https://polikarbonat-online.ru/cvetnoy-polikarbonat/monolitnyj/opal/"},{"title":"Пластилюкс монолит","url":"https://polikarbonates.com/monolithic-polycarbonate-sheets/"},{"title":"СафПласт","url":"https://safplast.ru/"},{"title":"Пластик Система: резка","url":"https://plastic-system.ru/product-category/uslugi-po-rezke-i-pechati/frezernaya-rezka/rezka-monolitnogo-polikarbonata-i-akrila/"},{"title":"МЗПКК АКСп-12","url":"https://mzpkk.ru/produkciya/aksp-12mm/"},{"title":"Армпласт гладкий стержень 12 мм","url":"https://arm-plast.ru/czenyi/stekloplastikovyie-sterzhni/ceny/gladkij-stekloplastikovyij-sterzhen-12-mm.html"},{"title":"УралАрмоПром Ø12","url":"https://aspkompozit.ru/kompozitnaya-armatura-12-mm"},{"title":"Ивановские композиты Ø12","url":"https://spb.iv-armatura.ru/katalog/stekloplastikovaya-armatura-12-mm"},{"title":"Top-RF: ИЖС по регионам 2024 (Росстат)","url":"https://top-rf.ru/places/375-rejting-po-dole-individualnogo-stroitelstva.html"},{"title":"Statbase: доходы по регионам 2025 (Росстат)","url":"https://statbase.ru/datasets/national-statistics-of-russia/labor-income-prices/average-income-per-capita-by-region-national-stat/"},{"title":"Склады маркетплейсов по городам (Logidex)","url":"https://logidex.ru/sklady-mp-po-gorodam.html"},{"title":"Склады WB и зоны охвата","url":"https://fulfilmentmoscow.ru/news/osnovnye-sklady-wildberries-i-ih-zony-pokrytiya"},{"title":"Логистический аудит ТК 2026 (Sostav)","url":"https://www.sostav.ru/blogs/284204/79159"},{"title":"ПЭК против ДЛ 2025 (Main Transport)","url":"https://maintransport.ru/novosti/pek-vs-dl-2025"},{"title":"Ставки фуры 2026 (Rosperevozki)","url":"https://rosperevozki.ru/blog/stoimost-gruzoperevozok-za-1-km-2026/"},{"title":"ATI FTL: ставки 2025–2026 (Logistics.ru)","url":"https://logistics.ru/upravlenie-logistikoy-i-kompaniey-transportirovka/avtoperevozki-v-rossii-pochemu-rynok-ne"},{"title":"Аренда складов Москвы (Ведомости)","url":"https://www.vedomosti.ru/realty/articles/2026/01/29/1172458-tempi-snizheniya-stoimosti-arendi-skladov-dostigli-antirekorda"},{"title":"Производственная аренда по России (Коммерческая.ру)","url":"https://www.kommercheskaya.ru/ru_industry_rent"},{"title":"Зарплата сборщика мебели, МО (ГородРабот)","url":"https://moskovskaya-oblast.gorodrabot.ru/salaries/sborshchik-mebeli"},{"title":"Зарплата сборщика мебели, Казань","url":"https://kazan.gorodrabot.ru/salaries/sborshchik-mebeli"},{"title":"Господдержка Татарстана","url":"https://mert.tatarstan.ru/gosudarstvennaya-podderzhka.htm"},{"title":"ФРП: займы","url":"https://frprf.ru/zaymy/"}]};
+</script>
+<script id="model">
+/* Перенос формул из raschet.py. Константы — из раздела «ИСХОДНЫЕ ДАННЫЕ» скрипта;
+   координаты, аренда, зарплата, спрос и поставщики — из DATA (data.json). */
+const M = {
+  KIT_M3: 1.4,
+  RAW: { dpk: 0.110, sheet: 0.015, rod: 0.005 },
+  TRUCKS: { dpk: { load: 20, rate: 75, min: 4 }, sheet: { load: 5, rate: 45, min: 4 }, rod: { load: 1.5, rate: 30, min: 2 } },
+  TRIP_MIN: 9900, ROAD: 1.25, LTL_REF_M3: 1.5, LAST_MILE: 1000,
+  VAN_FIXED: 2000, VAN_RATE: 40, VAN_BOXES: 5,
+  AREA_FIXED: 300, AREA_PER_KIT: 0.2, KITS_PER_WORKER: 250, MIN_WORKERS: 2, TAX: 1.30
+};
+function fitLtl(cal) {
+  const xs = cal.map(c => c[1]), ys = cal.map(c => c[2]), n = xs.length;
+  const mx = xs.reduce((a, b) => a + b, 0) / n, my = ys.reduce((a, b) => a + b, 0) / n;
+  let num = 0, den = 0;
+  for (let i = 0; i < n; i++) { num += (xs[i] - mx) * (ys[i] - my); den += (xs[i] - mx) ** 2; }
+  const b = num / den; return { a: my - b * mx, b };
+}
+const LTL = fitLtl(DATA.ltl_model.calibration);
+const rad = d => d * Math.PI / 180;
+function gcKm(la1, lo1, la2, lo2) {
+  const p1 = rad(la1), p2 = rad(la2), dp = p2 - p1, dl = rad(lo2 - lo1);
+  const a = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(a));
+}
+const roadKm = (a, b, c, d) => gcKm(a, b, c, d) * M.ROAD;
+function boxCost(km, p) {
+  const ltl = (p.ltlA + LTL.b * km) * (M.KIT_M3 / M.LTL_REF_M3) + M.LAST_MILE;
+  const van = (M.VAN_FIXED + 2 * M.VAN_RATE * km) / M.VAN_BOXES;
+  return Math.min(ltl, van);
+}
+function demandShares(mode) {
+  const w = DATA.demand.map(d => mode === 'raw' ? ((d.score - 1) / 9) ** 2 : d.score);
+  const s = w.reduce((a, b) => a + b, 0); return w.map(x => x / s);
+}
+function sourcesFor(mat, dpkOnly) {
+  if (mat === 'dpk' && dpkOnly) return DATA.suppliers.filter(s => s.name === dpkOnly);
+  return DATA.suppliers.filter(s => s.group === mat && s.suitable && s.lat != null);
+}
+function inbound(site, kits, p) {
+  let total = 0; const detail = {};
+  for (const mat of ['dpk', 'sheet', 'rod']) {
+    const tonnes = M.RAW[mat] * kits, tr = M.TRUCKS[mat];
+    const rate = mat === 'dpk' ? p.truck : tr.rate;
+    const trips = Math.max(Math.ceil(tonnes / tr.load), tr.min);
+    let best = null;
+    for (const s of sourcesFor(mat, p.dpkOnly)) {
+      const km = roadKm(site.lat, site.lon, s.lat, s.lon);
+      const cost = trips * Math.max(M.TRIP_MIN, km * rate);
+      if (best === null || cost < best.cost) best = { supplier: s.name, cost, km };
+    }
+    detail[mat] = { supplier: best.supplier, km: Math.round(best.km), trips, cost: best.cost };
+    total += best.cost;
+  }
+  return { total, detail };
+}
+function outbound(site, kits, shares, p) {
+  let t = 0;
+  DATA.demand.forEach((d, i) => { t += kits * shares[i] * boxCost(roadKm(site.lat, site.lon, d.lat, d.lon), p); });
+  return t;
+}
+const areaFor = k => M.AREA_FIXED + M.AREA_PER_KIT * k;
+const workersFor = k => Math.max(M.MIN_WORKERS, Math.ceil(k / M.KITS_PER_WORKER));
+function evaluate(p) {
+  const shares = demandShares(p.demand);
+  const rows = DATA.candidates.map(c => {
+    const site = { lat: c.lat, lon: c.lon };
+    const inb = inbound(site, p.kits, p);
+    const outb = outbound(site, p.kits, shares, p);
+    const rent = areaFor(p.kits) * c.rent_rub_m2_month * p.rentMul * 12;
+    const labor = workersFor(p.kits) * c.salary_rub_month * p.salMul * 12 * M.TAX;
+    const total = inb.total + outb + rent + labor;
+    return { name: c.name, lat: c.lat, lon: c.lon, inbound: inb.total, outbound: outb, rent, labor, total,
+             per_kit: total / p.kits, inbound_detail: inb.detail, src: c };
+  });
+  rows.sort((a, b) => a.total - b.total);
+  rows.forEach((r, i) => r.rank = i + 1);
+  return rows;
+}
+const DEFAULTS = { kits: 1000, rentMul: 1, salMul: 1, truck: 75, boxPct: 100, ltlA: LTL.a, dpkOnly: null, demand: 'raw' };
+</script>
+<script id="ui">
+(function () {
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const mln = x => (x / 1e6).toFixed(2).replace('.', ',');
+const rub = x => Math.round(x).toLocaleString('ru-RU');
+const num1 = x => String(x).replace('.', ',');
+const GROUP = { dpk: 'ДПК лага', sheet: 'Листы для вставок', rod: 'Стержни' };
+const GVAR = { dpk: '--dpk', sheet: '--sheet', rod: '--rod' };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const SHORT = {
+  'Московская обл. (восток, Ногинск/Электросталь)': 'Подмосковье, восток',
+  'Московская обл. (юг, Чехов/Подольск)': 'Подмосковье, юг',
+  'Тульская обл. (Тула)': 'Тула',
+  'Казань (Татарстан)': 'Казань',
+  'Санкт-Петербург / Ленобласть': 'Петербург',
+  'Нижний Новгород': 'Нижний Новгород',
+  'Ростов-на-Дону': 'Ростов-на-Дону'
+};
+const short = n => SHORT[n] || n;
+const SHORT_M = { 'Московская обл. (восток, Ногинск/Электросталь)': 'Подмоск., восток', 'Московская обл. (юг, Чехов/Подольск)': 'Подмоск., юг', 'Нижний Новгород': 'Н. Новгород', 'Ростов-на-Дону': 'Ростов' };
+const shortSup = n => n.replace(/\s*\(.*\)\s*$/, '');
+const isEst = s => /^est/.test(s || '');
+
+/* ---------- map ---------- */
+const EURO = L.latLngBounds([42.5, 27.5], [62.5, 62]);
+const map = L.map('map', { zoomSnap: 0.25, worldCopyJump: false, preferCanvas: false }).setView([55, 45], 4);
+let autoView = true; /* пока человек сам не двигал карту — подгоняем вид под размер окна */
+function fitEuro() { map.invalidateSize(); const sz = map.getSize(); if (sz.x > 50 && sz.y > 50) map.fitBounds(EURO, { padding: [8, 8], maxZoom: 6 }); }
+fitEuro();
+['pointerdown', 'wheel', 'touchstart'].forEach(ev => document.getElementById('map').addEventListener(ev, () => { autoView = false; }, { passive: true }));
+window.addEventListener('load', () => { if (autoView) fitEuro(); });
+if (window.ResizeObserver) new ResizeObserver(() => { map.invalidateSize(); if (autoView) fitEuro(); }).observe(document.getElementById('map'));
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18, subdomains: 'abc',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">участники OpenStreetMap</a>'
+}).addTo(map);
+map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+map.createPane('demandPane').style.zIndex = 350;
+map.createPane('linkPane').style.zIndex = 380;
+map.createPane('supPane').style.zIndex = 450;
+
+const layers = { dpk: L.layerGroup(), sheet: L.layerGroup(), rod: L.layerGroup(), demand: L.layerGroup(), hubs: L.layerGroup(), cand: L.layerGroup() };
+Object.values(layers).forEach(l => l.addTo(map));
+const linkLayer = L.layerGroup().addTo(map);
+
+/* jitter: points closer than ~0.035° share a bucket; the first stays, others go round it */
+const buckets = [];
+function place(lat, lon) {
+  let b = buckets.find(x => Math.abs(x.lat - lat) < 0.035 && Math.abs(x.lon - lon) < 0.035);
+  if (!b) { b = { lat, lon, n: 0 }; buckets.push(b); }
+  const i = b.n++;
+  if (i === 0) return [lat, lon];
+  const ang = (i - 1) * (Math.PI * 2 / 6) - Math.PI / 2, r = 0.045 * (1 + Math.floor((i - 1) / 6) * 0.8);
+  return [lat + r * Math.sin(ang), lon + r * Math.cos(ang) / Math.cos(rad(lat))];
+}
+/* candidates first so they stay at the true point */
+const candMarkers = {};
+DATA.candidates.forEach(c => { c._pos = place(c.lat, c.lon); });
+DATA.suppliers.forEach(s => { if (s.lat != null) s._pos = place(s.lat, s.lon); });
+DATA.hubs.forEach(h => { h._pos = place(h.lat, h.lon); });
+
+function coordText(note) {
+  if (!note) return '';
+  if (/грубо/.test(note)) return 'координаты очень примерные';
+  if (/офис|склад/.test(note)) return 'на карте офис или склад, не завод; координаты примерные (центр города)';
+  if (/заявлено/.test(note)) return 'завод заявлен, но не проверен; координаты примерные (центр города)';
+  return 'координаты примерные (центр города)';
+}
+function bars(s, color) {
+  const row = (lbl, v, dec) => {
+    let cells = ''; for (let i = 1; i <= 5; i++) cells += `<i class="${i <= Math.round(v) ? 'f' : ''}"></i>`;
+    return `<span>${lbl}</span><span class="bar" style="--c:${color}">${cells}</span><span class="v">${num1(dec ? v.toFixed(1) : v)}</span>`;
+  };
+  return `<div class="bars">${row('Цена', s.price_score)}${row('Качество', s.quality_score)}${row('Ассортимент', s.assortment_score)}${row('<b>Итог</b>', s.total_score, 1)}</div>`;
+}
+function supPopup(s) {
+  const tags = [
+    s.contact_first ? '<span class="tag ok">★ звонить первым</span>' : '',
+    s.confirmed ? '<span class="tag">завод подтверждён</span>' : '<span class="tag no">завод не подтверждён</span>',
+    s.suitable ? '<span class="tag">подходит для P-02 в расчёте</span>' : ''
+  ].join('');
+  return `<div class="pp"><h4>${esc(s.name)}</h4>
+    <div class="where">${esc(GROUP[s.group])} · ${esc(s.city)}${s.region && s.region !== '—' ? ', ' + esc(s.region) : ''}</div>
+    <div class="tags">${tags}</div>
+    ${bars(s, css(GVAR[s.group]))}
+    <div class="row"><span>Цена:</span> ${esc(s.price_text)}</div>
+    <div class="row"><span>Делает:</span> ${esc(s.products)}</div>
+    <div class="row">${esc(s.note)}</div>
+    ${s.url ? `<div class="row"><a href="${esc(s.url)}" target="_blank" rel="noopener">Сайт или источник ↗</a></div>` : ''}
+    ${s.lat != null ? `<div class="coord">${esc(coordText(s.coords_note))}</div>` : ''}</div>`;
+}
+const supMarkers = new Map();
+function buildSuppliers() {
+  DATA.suppliers.forEach(s => {
+    if (s.lat == null) return;
+    const col = css(GVAR[s.group]);
+    const m = L.circleMarker(s._pos, {
+      pane: 'supPane', radius: s.contact_first ? 9 : 7, color: col, weight: s.confirmed ? 2 : 2.5,
+      fillColor: col, fillOpacity: s.confirmed ? 0.9 : 0, dashArray: s.confirmed ? null : '3 3'
+    });
+    m.bindPopup(() => supPopup(s), { maxWidth: 300, autoPanPadding: [20, 20], autoPanPaddingTopLeft: [52, 20] });
+    m.bindTooltip(esc(shortSup(s.name)), { direction: 'top', offset: [0, -6] });
+    m._sup = s;
+    supMarkers.set(s, m);
+  });
+}
+function recolorSuppliers() {
+  supMarkers.forEach((m, s) => { const col = css(GVAR[s.group]); m.setStyle({ color: col, fillColor: col }); });
+}
+function applySupplierFilter() {
+  const only = $('#onlyConfirmed').checked;
+  supMarkers.forEach((m, s) => {
+    const lg = layers[s.group];
+    const show = !only || s.confirmed;
+    if (show && !lg.hasLayer(m)) lg.addLayer(m);
+    if (!show && lg.hasLayer(m)) lg.removeLayer(m);
+  });
+}
+
+/* demand */
+const demMarkers = [];
+function buildDemand(shares) {
+  layers.demand.clearLayers(); demMarkers.length = 0;
+  const col = css('--demand');
+  DATA.demand.forEach((d, i) => {
+    const sh = shares[i];
+    const c = L.circleMarker([d.lat, d.lon], {
+      pane: 'demandPane', radius: 6 + Math.sqrt(sh) * 44, color: col, weight: 1,
+      fillColor: col, fillOpacity: 0.08 + (d.score - 3) / 7 * 0.32, opacity: 0.6
+    });
+    c.bindPopup(`<div class="pp"><h4>${esc(d.region)}</h4><div class="where">Спрос · центр: ${esc(d.city)}</div>
+      <div class="row"><span>Балл спроса:</span> <b>${num1(d.score)}</b> из 10</div>
+      <div class="row"><span>Доля коробок в расчёте:</span> <b>${(sh * 100).toFixed(1).replace('.', ',')}%</b></div>
+      <div class="row"><span>Доход:</span> ${d.income ? rub(d.income) + ' ₽ в месяц' : '—'}</div>
+      <div class="row"><span>Частное строительство 2024:</span> ${d.izhs ? rub(d.izhs) + ' тыс. м²' : 'учтено вместе с областью'}</div>
+      <div class="row"><span>Склады маркетплейсов:</span> ${esc(d.hubs)}</div>
+      <div class="coord">координаты примерные (центр региона)</div></div>`, { maxWidth: 300 });
+    c.bindTooltip(esc(d.region), { direction: 'top', sticky: true });
+    layers.demand.addLayer(c); demMarkers.push(c);
+  });
+}
+
+/* hubs */
+function buildHubs() {
+  DATA.hubs.forEach(h => {
+    const m = L.marker(h._pos, { icon: L.divIcon({ className: '', html: '<div class="hubi"></div>', iconSize: [11, 11], iconAnchor: [6, 6] }), zIndexOffset: -200 });
+    m.bindPopup(`<div class="pp"><h4>${esc(h.name)}</h4><div class="where">Склад маркетплейса · ${esc(h.city)}</div>
+      ${h.note ? `<div class="row">${esc(h.note)}</div>` : ''}<div class="coord">координаты примерные (центр населённого пункта)</div></div>`, { maxWidth: 280 });
+    m.bindTooltip(esc(h.name), { direction: 'top', offset: [0, -4] });
+    layers.hubs.addLayer(m);
+  });
+}
+
+/* ---------- model state ---------- */
+const P = Object.assign({}, DEFAULTS);
+let ROWS = [];
+let selCand = null;
+
+function candIcon(r) {
+  const cls = r.rank === 1 ? 'cand win' : (r.rank <= 3 ? 'cand top' : 'cand');
+  const sz = r.rank === 1 ? 36 : 26;
+  return L.divIcon({ className: '', html: `<div class="${cls}${selCand === r.name ? ' sel' : ''}" title="${esc(r.name)}">${r.rank}</div>`, iconSize: [sz, sz], iconAnchor: [sz / 2, sz / 2], popupAnchor: [0, -sz / 2] });
+}
+function candPopup(r) {
+  const d = r.inbound_detail, c = r.src;
+  const line = (mat, lbl) => `<tr><td><span class="sw" style="background:${css(GVAR[mat])};width:9px;height:9px"></span> ${lbl}</td><td>${esc(shortSup(d[mat].supplier))}</td><td class="num">${rub(d[mat].km)} км</td><td class="num">${rub(d[mat].cost / 1000)} тыс.</td></tr>`;
+  return `<div class="pp"><h4>${r.rank}. ${esc(r.name)}</h4>
+    <div class="where">Место для сборки · ${rub(P.kits)} комплектов в год</div>
+    <div class="row"><span>Итого:</span> <b>${mln(r.total)} млн ₽ в год</b> · ${rub(r.per_kit)} ₽ на комплект</div>
+    <table><tbody>
+      <tr><td>Подвоз сырья</td><td class="num" colspan="3">${mln(r.inbound)} млн</td></tr>
+      <tr><td>Доставка покупателям</td><td class="num" colspan="3">${mln(r.outbound)} млн</td></tr>
+      <tr><td>Аренда ${rub(areaFor(P.kits))} м²</td><td class="num" colspan="3">${mln(r.rent)} млн</td></tr>
+      <tr><td>Зарплата, ${workersFor(P.kits)} чел.</td><td class="num" colspan="3">${mln(r.labor)} млн</td></tr>
+    </tbody></table>
+    <div class="row" style="margin-top:6px"><span>Откуда сырьё (линии на карте):</span></div>
+    <table><tbody>${line('dpk', 'лага')}${line('sheet', 'лист')}${line('rod', 'стержни')}</tbody></table>
+    <div class="row small"><span>Аренда:</span> ${rub(c.rent_rub_m2_month * P.rentMul)} ₽/м² в мес — ${esc(c.rent_src.replace(/^est:?\s*/, 'оценка: ').replace(/^05:\s*/, 'заметки: ').replace(/\(05\)/g, '(заметки)'))}</div>
+    <div class="row small"><span>Зарплата:</span> ${rub(c.salary_rub_month * P.salMul)} ₽ в мес — ${esc(c.salary_src.replace(/^est:?\s*/, 'оценка: ').replace(/^05:\s*/, 'заметки: ').replace(/\(05\)/g, '(заметки)'))}</div>
+    <div class="coord">координаты примерные (центр города)</div></div>`;
+}
+function buildCandidates() {
+  DATA.candidates.forEach(c => {
+    const m = L.marker(c._pos, { icon: L.divIcon({ className: '', html: '' }), zIndexOffset: 500, riseOnHover: true });
+    m.bindPopup(() => candPopup(ROWS.find(r => r.name === c.name)), { maxWidth: 320, autoPanPadding: [20, 20], autoPanPaddingTopLeft: [52, 20] });
+    m.bindTooltip(esc(short(c.name)), { direction: 'right', offset: [14, 0] });
+    m.on('click', () => selectCand(c.name, false));
+    m.on('popupclose', () => { if (selCand === c.name) { /* keep lines visible until another pick */ } });
+    candMarkers[c.name] = m;
+    layers.cand.addLayer(m);
+  });
+}
+function updateCandIcons() {
+  ROWS.forEach(r => {
+    const m = candMarkers[r.name];
+    m.setIcon(candIcon(r));
+    m.setZIndexOffset(r.rank === 1 ? 1000 : 600 - r.rank * 10);
+  });
+}
+function supByName(n) { return DATA.suppliers.find(s => s.name === n); }
+function drawLinks() {
+  linkLayer.clearLayers();
+  if (!selCand) return;
+  const r = ROWS.find(x => x.name === selCand); if (!r) return;
+  const from = candMarkers[r.name].getLatLng();
+  for (const mat of ['dpk', 'sheet', 'rod']) {
+    const d = r.inbound_detail[mat]; const s = supByName(d.supplier); if (!s || s.lat == null) continue;
+    const to = s._pos;
+    const pl = L.polyline([from, to], { pane: 'linkPane', color: css(GVAR[mat]), weight: 3, opacity: 0.9, dashArray: '8 6', lineCap: 'round' });
+    pl.bindTooltip(`${GROUP[mat]}: ${esc(shortSup(s.name))}, ${rub(d.km)} км, ${d.trips} рейсов, ${rub(d.cost / 1000)} тыс. ₽ в год`, { sticky: true });
+    linkLayer.addLayer(pl);
+    if (!layers[mat].hasLayer(supMarkers.get(s))) { const m = supMarkers.get(s); if (m) linkLayer.addLayer(L.circleMarker(to, { pane: 'linkPane', radius: 5, color: css(GVAR[mat]), fillOpacity: 1, weight: 1 })); }
+  }
+}
+function selectCand(name, fly) {
+  selCand = name;
+  updateCandIcons(); drawLinks(); renderCandTable(); renderChart();
+  if (!map.hasLayer(layers.cand)) { layers.cand.addTo(map); $('input[data-layer="cand"]').checked = true; }
+  if (fly) {
+    const r = ROWS.find(x => x.name === name);
+    const pts = [candMarkers[name].getLatLng()];
+    for (const mat of ['dpk', 'sheet', 'rod']) { const s = supByName(r.inbound_detail[mat].supplier); if (s && s._pos) pts.push(L.latLng(s._pos)); }
+    showMap();
+    map.once('moveend', () => candMarkers[name].openPopup());
+    map.flyToBounds(L.latLngBounds(pts), { padding: [60, 60], maxZoom: 8, duration: 0.8 });
+  }
+}
+
+/* ---------- supplier tables ---------- */
+const sortState = { dpk: { k: 'total_score', d: -1 }, sheet: { k: 'total_score', d: -1 }, rod: { k: 'total_score', d: -1 } };
+const SCOLS = [
+  { k: 'name', t: 'Завод', cls: '' },
+  { k: 'price_score', t: 'Цена', cls: 'num' },
+  { k: 'quality_score', t: 'Кач.', cls: 'num' },
+  { k: 'assortment_score', t: 'Ассорт.', cls: 'num' },
+  { k: 'total_score', t: 'Итог', cls: 'num' }
+];
+function renderSupTable(g) {
+  const st = sortState[g];
+  const only = $('#onlyConfirmed').checked;
+  let list = DATA.suppliers.filter(s => s.group === g && (!only || s.confirmed));
+  list.sort((a, b) => {
+    let va = a[st.k], vb = b[st.k];
+    if (st.k === 'name') return va.localeCompare(vb, 'ru') * st.d;
+    if (va !== vb) return (va - vb) * st.d;
+    if (a.contact_first !== b.contact_first) return a.contact_first ? -1 : 1;
+    if (a.confirmed !== b.confirmed) return a.confirmed ? -1 : 1;
+    return a.name.localeCompare(b.name, 'ru');
+  });
+  const head = '<thead><tr>' + SCOLS.map(c => `<th class="sort ${c.cls}" data-k="${c.k}" data-g="${g}" title="Сортировать">${c.t}<span class="arr">${st.k === c.k ? (st.d > 0 ? '▲' : '▼') : ''}</span></th>`).join('') + '</tr></thead>';
+  const sc = v => `<span class="sc sc${Math.round(v)}">${num1(v)}</span>`;
+  const body = list.map(s => {
+    const idx = DATA.suppliers.indexOf(s);
+    const where = s.lat == null ? 'место неизвестно, на карте нет' : esc(s.city) + (s.region && s.region !== '—' ? ', ' + esc(s.region) : '');
+    const flags = (s.confirmed ? '' : ' <span class="tag no">не подтверждён</span>');
+    return `<tr class="${s.lat != null ? 'click' : ''}" data-i="${idx}"><td><span class="nm">${s.contact_first ? '<span class="star">★</span> ' : ''}${esc(shortSup(s.name))}</span>${flags}<span class="sub">${where}</span></td>
+      <td class="num">${sc(s.price_score)}</td><td class="num">${sc(s.quality_score)}</td><td class="num">${sc(s.assortment_score)}</td><td class="num"><b>${num1(s.total_score.toFixed(1))}</b></td></tr>`;
+  }).join('');
+  $('#tbl-' + g).innerHTML = head + '<tbody>' + body + '</tbody>';
+  $('#cnt-' + g).textContent = '· ' + list.length;
+}
+function renderSupTables() { ['dpk', 'sheet', 'rod'].forEach(renderSupTable); }
+document.addEventListener('click', e => {
+  const th = e.target.closest('th.sort');
+  if (th) { const g = th.dataset.g, k = th.dataset.k, st = sortState[g]; if (st.k === k) st.d *= -1; else { st.k = k; st.d = k === 'name' ? 1 : -1; } renderSupTable(g); return; }
+  const tr = e.target.closest('#t-sup tbody tr.click');
+  if (tr) {
+    const s = DATA.suppliers[+tr.dataset.i]; const m = supMarkers.get(s); if (!m) return;
+    if (!map.hasLayer(layers[s.group])) { layers[s.group].addTo(map); $(`input[data-layer="${s.group}"]`).checked = true; }
+    $$('#t-sup tbody tr.sel').forEach(x => x.classList.remove('sel')); tr.classList.add('sel');
+    showMap();
+    map.once('moveend', () => m.openPopup());
+    map.flyTo(m.getLatLng(), Math.max(map.getZoom(), 8), { duration: 0.8 });
+  }
+  const trd = e.target.closest('#tbl-dem tbody tr');
+  if (trd) {
+    const i = +trd.dataset.i, c = demMarkers[i];
+    if (!map.hasLayer(layers.demand)) { layers.demand.addTo(map); $('input[data-layer="demand"]').checked = true; }
+    $$('#tbl-dem tbody tr.sel').forEach(x => x.classList.remove('sel')); trd.classList.add('sel');
+    showMap();
+    map.once('moveend', () => c.openPopup());
+    map.flyTo([DATA.demand[i].lat, DATA.demand[i].lon], 6, { duration: 0.8 });
+  }
+  const trc = e.target.closest('#tbl-cand tbody tr');
+  if (trc) selectCand(trc.dataset.n, true);
+});
+function showMap() {
+  autoView = false;
+  const r = $('#map').getBoundingClientRect();
+  if (r.top < 0 || r.top > window.innerHeight * 0.5) $('#map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ---------- candidate table + chart ---------- */
+function renderCandTable() {
+  const head = `<thead><tr><th>#</th><th>Место</th><th class="num">Сырьё</th><th class="num">Доставка</th><th class="num">Аренда</th><th class="num">Зарплата</th><th class="num">Итого</th><th class="num">₽/компл.</th></tr></thead>`;
+  const body = ROWS.map(r => {
+    const c = r.src;
+    return `<tr class="click${r.rank === 1 ? ' winrow' : ''}${selCand === r.name ? ' sel' : ''}" data-n="${esc(r.name)}"><td>${r.rank}</td><td><span class="nm">${esc(short(r.name))}</span></td>
+      <td class="num">${mln(r.inbound)}</td><td class="num">${mln(r.outbound)}</td>
+      <td class="num">${mln(r.rent)}${isEst(c.rent_src) ? '*' : ''}</td><td class="num">${mln(r.labor)}${isEst(c.salary_src) ? '*' : ''}</td>
+      <td class="num"><b>${mln(r.total)}</b></td><td class="num">${rub(r.per_kit)}</td></tr>`;
+  }).join('');
+  $('#tbl-cand').innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+const SEG = [['inbound', '--s1', 'подвоз сырья'], ['outbound', '--s2', 'доставка покупателям'], ['rent', '--s3', 'аренда'], ['labor', '--s4', 'зарплата']];
+function renderChart() {
+  const box = $('#chart'); const W = Math.max(280, box.clientWidth || 440);
+  const labW = W < 400 ? 128 : 140, valW = 46, rowH = 26, barH = 16, top = 4;
+  const plotW = W - labW - valW - 8;
+  const max = Math.max(...ROWS.map(r => r.total)) * 1.0;
+  const H = top + ROWS.length * rowH + 22;
+  const surf = css('--surface'), grid = css('--line');
+  let g = '';
+  // gridlines (clean ticks in млн)
+  const step = max > 60e6 ? 20e6 : max > 30e6 ? 10e6 : 5e6;
+  for (let v = 0; v <= max; v += step) {
+    const x = labW + v / max * plotW;
+    g += `<line x1="${x}" x2="${x}" y1="${top}" y2="${H - 18}" stroke="${grid}" stroke-width="1"/>`;
+    g += `<text x="${x}" y="${H - 4}" text-anchor="middle" style="font-size:11px;fill:var(--ink-3)">${v / 1e6}</text>`;
+  }
+  ROWS.forEach((r, i) => {
+    const y = top + i * rowH;
+    g += `<rect class="rowhit" x="0" y="${y}" width="${W}" height="${rowH}" rx="6" data-n="${esc(r.name)}"/>`;
+    const nm = W < 400 ? (SHORT_M[r.name] || short(r.name)) : short(r.name);
+    g += `<text x="${labW - 8}" y="${y + rowH / 2 + 4}" text-anchor="end" style="${r.rank === 1 || selCand === r.name ? 'font-weight:700;fill:var(--ink)' : ''}" pointer-events="none">${r.rank}. ${esc(nm)}</text>`;
+    let x = labW; const segs = SEG.map(s => [s, r[s[0]] / max * plotW]);
+    segs.forEach(([s, w], j) => {
+      const last = j === segs.length - 1;
+      const ww = Math.max(0, w - (last ? 0 : 2));
+      if (ww > 0) {
+        if (last) g += `<path d="M${x},${y + (rowH - barH) / 2} h${Math.max(0, ww - 4)} a4,4 0 0 1 4,4 v${barH - 8} a4,4 0 0 1 -4,4 h${-Math.max(0, ww - 4)} z" fill="${css(s[1])}" pointer-events="none"/>`;
+        else g += `<rect x="${x}" y="${y + (rowH - barH) / 2}" width="${ww}" height="${barH}" fill="${css(s[1])}" pointer-events="none"/>`;
+      }
+      x += w;
+    });
+    g += `<text class="tot" x="${labW + r.total / max * plotW + 6}" y="${y + rowH / 2 + 4}" pointer-events="none">${mln(r.total)}</text>`;
+  });
+  box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Годовые затраты по местам сборки, млн рублей">${g}</svg>`;
+}
+const tip = $('#tip');
+$('#chart').addEventListener('mousemove', e => {
+  const h = e.target.closest('.rowhit'); if (!h) { tip.style.display = 'none'; return; }
+  const r = ROWS.find(x => x.name === h.dataset.n);
+  tip.innerHTML = `<b>${r.rank}. ${esc(r.name)}</b><br>` + SEG.map(s => `<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${css(s[1])};margin-right:5px"></span>${s[2]}: ${mln(r[s[0]])} млн`).join('<br>') + `<br><b>Итого ${mln(r.total)} млн ₽</b> · ${rub(r.per_kit)} ₽ на комплект`;
+  tip.style.display = 'block';
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let lx = e.clientX + 14, ly = e.clientY + 14;
+  if (lx + tw > window.innerWidth - 8) lx = e.clientX - tw - 14;
+  if (ly + th > window.innerHeight - 8) ly = e.clientY - th - 14;
+  tip.style.left = Math.max(8, lx) + 'px'; tip.style.top = Math.max(8, ly) + 'px';
+});
+$('#chart').addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+$('#chart').addEventListener('click', e => { const h = e.target.closest('.rowhit'); if (h) { tip.style.display = 'none'; selectCand(h.dataset.n, true); } });
+
+function renderLeader() {
+  const a = ROWS[0], b = ROWS[1], last = ROWS[ROWS.length - 1];
+  const mo = ROWS.find(r => r.name.startsWith('Московская обл. (восток'));
+  $('#leader').innerHTML = `Сейчас лучшее место: <b>${esc(short(a.name))}</b> — ${mln(a.total)} млн ₽ в год, ${rub(a.per_kit)} ₽ на комплект.<br>
+    <span class="small">2-е: ${esc(short(b.name))} (дороже на ${mln(b.total - a.total)} млн). Подмосковье, восток: ${mo.rank}-е, дороже на ${mln(mo.total - a.total)} млн. Самое дорогое: ${esc(short(last.name))}.</span>`;
+}
+
+/* ---------- controls ---------- */
+const ctl = { kits: $('#kits'), rentM: $('#rentM'), salM: $('#salM'), truck: $('#truck'), box: $('#box'), holz: $('#holz'), flat: $('#flat') };
+function readControls() {
+  P.kits = +ctl.kits.value; P.rentMul = +ctl.rentM.value / 100; P.salMul = +ctl.salM.value / 100;
+  P.truck = +ctl.truck.value; P.boxPct = +ctl.box.value; P.ltlA = LTL.a * P.boxPct / 100;
+  P.dpkOnly = ctl.holz.checked ? 'Holzhof (Хольцхоф Рус)' : null; P.demand = ctl.flat.checked ? 'score' : 'raw';
+  $('#kitsO').textContent = rub(P.kits);
+  $('#rentMO').textContent = ctl.rentM.value + ' %';
+  $('#salMO').textContent = ctl.salM.value + ' %';
+  $('#truckO').textContent = P.truck + ' ₽/км';
+  $('#boxO').textContent = '≈' + rub(Math.round(P.ltlA / 10) * 10) + ' ₽';
+  $$('#volChips button[data-v]').forEach(b => b.classList.toggle('on', +b.dataset.v === P.kits));
+}
+let lastDemand = null;
+function recompute() {
+  readControls();
+  ROWS = evaluate(P);
+  if (lastDemand !== P.demand) { buildDemand(demandShares(P.demand)); renderDemandTable(); lastDemand = P.demand; }
+  updateCandIcons(); drawLinks(); renderCandTable(); renderChart(); renderLeader();
+  const open = Object.values(candMarkers).find(m => m.isPopupOpen()); if (open) open.getPopup().update();
+}
+['kits', 'rentM', 'salM', 'truck', 'box'].forEach(k => ctl[k].addEventListener('input', recompute));
+['holz', 'flat'].forEach(k => ctl[k].addEventListener('change', recompute));
+$$('#volChips button[data-v]').forEach(b => b.addEventListener('click', () => { ctl.kits.value = b.dataset.v; recompute(); }));
+$('#resetBtn').addEventListener('click', () => {
+  ctl.kits.value = 1000; ctl.rentM.value = 100; ctl.salM.value = 100; ctl.truck.value = 75; ctl.box.value = 100; ctl.holz.checked = false; ctl.flat.checked = false; recompute();
+});
+
+/* ---------- demand table ---------- */
+function renderDemandTable() {
+  const sh = demandShares(P.demand);
+  const head = `<thead><tr><th>Регион</th><th class="num">Балл</th><th class="num">Доля</th><th class="num">Доход, ₽</th></tr></thead>`;
+  const body = DATA.demand.map((d, i) => `<tr class="click" data-i="${i}"><td><span class="nm">${esc(d.region)}</span><span class="sub">${esc(d.hubs)}</span></td>
+    <td class="num">${num1(d.score)}</td><td class="num">${(sh[i] * 100).toFixed(1).replace('.', ',')}%</td><td class="num">${d.income ? rub(d.income) : '—'}</td></tr>`).join('');
+  $('#tbl-dem').innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+/* ---------- scenarios from data.json ---------- */
+function renderScenarios() {
+  const NAMES = {
+    base_1000: 'База, 1 000 комплектов', volume_2000: '2 000 комплектов', volume_5000: '5 000 комплектов',
+    dpk_only_holzhof_1000: 'Лага только от Holzhof, 1 000', dpk_only_holzhof_5000: 'Лага только от Holzhof, 5 000',
+    demand_flat_1000: 'Спрос ровнее по стране', mo_rent_500_1000: 'Аренда в Подмосковье 500 ₽/м² (помещение попроще)',
+    equal_salary_1000: 'Зарплата везде 85 тыс. ₽', logistics_only_1000: 'Только перевозки (аренда и зарплата везде одинаковые)'
+  };
+  const out = [];
+  for (const k in DATA.scenarios) {
+    if (k === 'two_sites') continue;
+    const rows = DATA.scenarios[k];
+    const mo = rows.find(r => r.name.startsWith('Московская обл. (восток'));
+    out.push(`<li><b>${esc(NAMES[k] || k)}</b><br>${rows.slice(0, 3).map(r => `${r.rank}. ${esc(short(r.name))} ${mln(r.total)}`).join(' · ')}<span class="muted"> · Подмосковье (восток): ${mo.rank}-е, ${mln(mo.total)}</span></li>`);
+  }
+  $('#scenList').innerHTML = out.join('');
+  $('#twoList').innerHTML = DATA.scenarios.two_sites.map(t => {
+    const d = t.delta_vs_single;
+    return `<li>${rub(t.kits)} комплектов: ${esc(short(t.sites[0]))} + ${esc(short(t.sites[1]))} — ${mln(t.total)} млн; это ${d > 0 ? '<b>дороже</b>' : '<b>дешевле</b>'} одной площадки (${esc(short(t.single_best))}) на ${mln(Math.abs(d))} млн.</li>`;
+  }).join('') + '<li>Вывод: при 1 000 комплектов вторая площадка невыгодна. Для юга разумнее сначала договориться с партнёром о складе в Краснодаре.</li>';
+}
+
+/* ---------- calls ---------- */
+const CALLS = [
+  ['Holzhof', 'Ульяновск, контрактное производство', 'Сделают ли лагу 50×30 или 50×35 с пазом под лист 3–4 мм по нашему чертежу? Сколько стоит форма, чья она после оплаты, сколько её делать? Минимальная партия? Цена за метр при партии 10–20 т? Из чего лага и сколько весит метр? Есть ли протоколы испытаний по ГОСТ Р 59555-2021? Какая гарантия, если лага несущая?'],
+  ['Terrapol', 'Владимир', 'Оптовая цена лаги 50×35 за партию 10–20 т? Могут ли прорезать паз в готовой лаге или сделать новую форму? Режут ли в размер от 1,5 м? Сколько на деле весит метр (на сайте 1,24 кг/м)? Гарантия 10 лет касается и лаги?'],
+  ['Ай-Техпласт', 'Подольск', 'Нет ли среди 60+ готовых форм профиля, близкого к 50×35 с пазом? Сколько стоит новая форма и какая минимальная партия? Могут ли отлить заглушки и уголки?'],
+  ['Savewood', 'Тульская обл.', 'Какие сечения лаги и оптовая цена? Сделают ли профиль по чертежу и с какого объёма? Сколько стоит окраска по RAL?'],
+  ['Полигаль Восток', 'Куровское, +7 496 411-90-00', 'Цена опалового Monogal 3 и 4 мм кусками 400×1000 мм при 500–1 000 кусков? Режет ли склад поштучно? Есть ли кремовый или «слоновая кость» под заказ? Защита от солнца с двух сторон? Точность резки?'],
+  ['Юг-Ойл-Пласт / BORREX', 'Карачаево-Черкесия', 'Заводская цена опала 3 и 4 мм? Сколько стоит резка в нестандартный размер и с какой партии? Доставка во Владимир или Калугу?'],
+  ['СафПласт', 'Казань', 'Есть ли монолит опал или «слоновая кость» 3–4 мм и с какой партии?'],
+  ['МЗПКК', 'Балашиха', 'Продают ли прямые прутки Ø12, нарезанные 500–2 300 мм? Есть ли вариант без песка и рёбер? Насколько ровный пруток? Минимальный заказ? Чем отличаются версии по ГОСТ и по ТУ?'],
+  ['Армпласт', 'Нижний Новгород', 'Цена гладкого стержня Ø12 при 2–5 тыс. м с резкой? Прочность на растяжение, не боится ли влаги? Реальна ли цена 19 ₽/м за арматуру Ø12?'],
+  ['PULTRA', 'Петербург', 'Сделают ли гладкий стержень Ø12 протяжкой через форму, почём за метр и с какой партии?'],
+  ['Индустриальные парки и владельцы помещений', 'Владимир, Калуга, Тула', 'Сколько стоит 500 м² тёплого помещения с воротами для фуры? Есть ли льготы для малого бизнеса и займы регионального фонда развития промышленности?']
+];
+function renderCalls() {
+  $('#callList').innerHTML = CALLS.map(([n, w, q]) => {
+    const s = DATA.suppliers.find(x => x.name.toLowerCase().startsWith(n.toLowerCase().split(' ')[0]) && x.lat != null && n !== 'Индустриальные парки и владельцы помещений');
+    const link = s ? ` <button class="btn" type="button" data-sup="${DATA.suppliers.indexOf(s)}">на карте</button>` : '';
+    return `<li><b>${esc(n)}</b> <span class="muted small">(${esc(w)})</span>${link}<br><span class="small" style="color:var(--ink-2)">${esc(q)}</span></li>`;
+  }).join('');
+  $('#callList').addEventListener('click', e => {
+    const b = e.target.closest('button[data-sup]'); if (!b) return;
+    const s = DATA.suppliers[+b.dataset.sup]; const m = supMarkers.get(s); if (!m) return;
+    if (!map.hasLayer(layers[s.group])) { layers[s.group].addTo(map); $(`input[data-layer="${s.group}"]`).checked = true; }
+    if (!layers[s.group].hasLayer(m)) layers[s.group].addLayer(m);
+    showMap(); map.once('moveend', () => m.openPopup()); map.flyTo(m.getLatLng(), 8, { duration: 0.8 });
+  });
+}
+
+/* ---------- assumptions & sources ---------- */
+function renderSources() {
+  $('#assumpList').innerHTML = DATA.assumptions.map(a => `<li>${esc(a.replace(/м3/g, 'м³').replace(/м2/g, 'м²').replace(/\b1\.4\b/g, '1,4').replace(/\b1\.25\b/g, '1,25').replace(/\b1\.3\b/g, '1,3').replace(/\b1\.04\b/g, '1,04'))}</li>`).join('')
+    + `<li>Сборный груз подогнан прямой по 7 направлениям из Москвы: ${rub(LTL.a)} ₽ + ${num1(LTL.b.toFixed(2))} ₽/км за коробку 1,5 м³.</li>`;
+  const inf = DATA.info;
+  $('#infoLine').textContent = `На комплект уходит около ${inf.dpk_m_per_kit} м лаги. По 250 ₽/м это ${rub(inf.dpk_cost_per_kit_rub_at_250)} ₽ на комплект, по 310 ₽/м — ${rub(inf.dpk_cost_per_kit_rub_at_310)} ₽. Разница в цене лаги на 60 ₽/м при 1 000 комплектов — около 5 млн ₽ в год, больше, чем разница между 1-м и 10-м местом сборки.`;
+  $('#srcList').innerHTML = DATA.sources.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></li>`).join('');
+}
+
+/* ---------- tabs, layers, view ---------- */
+$$('.tabs button').forEach(b => b.addEventListener('click', () => {
+  $$('.tabs button').forEach(x => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+  $$('.tabpane').forEach(p => p.classList.toggle('on', p.id === b.dataset.tab));
+  if (b.dataset.tab === 't-site') renderChart();
+}));
+$$('#layers input').forEach(i => i.addEventListener('change', () => {
+  const l = layers[i.dataset.layer];
+  if (i.checked) l.addTo(map); else map.removeLayer(l);
+  if (i.dataset.layer === 'cand') { if (i.checked) drawLinks(); else linkLayer.clearLayers(); }
+}));
+$('#onlyConfirmed').addEventListener('change', () => { renderSupTables(); applySupplierFilter(); });
+let euroView = true;
+$('#viewBtn').addEventListener('click', () => {
+  autoView = false;
+  if (euroView) {
+    const pts = [];
+    DATA.suppliers.forEach(s => s.lat != null && pts.push([s.lat, s.lon]));
+    DATA.demand.forEach(d => pts.push([d.lat, d.lon]));
+    DATA.hubs.forEach(h => pts.push([h.lat, h.lon]));
+    DATA.candidates.forEach(c => pts.push([c.lat, c.lon]));
+    map.flyToBounds(L.latLngBounds(pts), { padding: [20, 20], duration: 0.8 });
+    $('#viewBtn').textContent = 'Европейская часть';
+  } else {
+    map.flyToBounds(EURO, { padding: [8, 8], duration: 0.8 });
+    $('#viewBtn').textContent = 'Показать всю Россию';
+  }
+  euroView = !euroView;
+});
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { renderChart(); map.invalidateSize(); }, 150); });
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+const onScheme = () => { recolorSuppliers(); buildDemand(demandShares(P.demand)); drawLinks(); renderChart(); };
+if (mq.addEventListener) mq.addEventListener('change', onScheme);
+
+/* ---------- start ---------- */
+buildSuppliers(); applySupplierFilter(); buildHubs(); buildCandidates();
+renderSupTables(); renderScenarios(); renderCalls(); renderSources();
+recompute();
+window.__karta = { map, P, get ROWS() { return ROWS; }, evaluate, DEFAULTS };
+})();
+</script>
+</body>
+</html>
