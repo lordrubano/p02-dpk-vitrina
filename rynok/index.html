@@ -640,8 +640,6 @@ function filterP(){
 }
 renderPF();filterP();
 D.concepts.forEach(function(p){loadImg(p,cards[p.id]);});
-// крыша над столом (А1r) — опция стола: маленькая картинка в пояснении «крыша над столом», а не вторая картинка в карточке
-(function(){var m=IMGS["А1r"];var box=$("#clRoof");if(!m||!box)return;var im=el("img");im.loading="lazy";im.src=m.s;im.alt=m.cap||"Крыша над столом — опция стола А1";im.style.cssText="display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;margin-top:8px";box.appendChild(im);})();
 
 /* ---------- не подходит ---------- */
 D.nofit.forEach(function(x){$("#nofitBox").appendChild(el("div",null,"<b>"+x[0]+"</b>"+x[1]));});
