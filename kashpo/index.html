@@ -94,6 +94,10 @@ input[type=range]{width:100%}
 .pt tr.mkrow td{font-size:15px;font-weight:700;color:var(--green)}
 .pt small{color:var(--muted);font-size:11.5px}
 #markup{width:62px;padding:2px 5px;font:inherit;font-weight:700;border:1px solid #9fb5ab;border-radius:6px;text-align:right}
+#mkbox{margin:8px 0 6px;padding:8px 10px;border:1px solid #9fb5ab;border-radius:10px;background:#eef4f0}
+#mkbox .mkl{display:block;font-size:15px;font-weight:600;color:var(--green);margin:0 0 4px;cursor:default}
+#mkbox .mkl b{font-size:22px;font-weight:800}
+#mkRange{display:block;width:100%;min-width:220px;height:28px;margin:0;cursor:pointer;accent-color:var(--green)}
 #pVs{margin:4px 0 2px;font-size:12.5px}
 #anDet summary{cursor:pointer;color:var(--green);font-size:12.5px;margin-top:4px}
 #anList{margin:6px 0 4px;padding-left:18px;font-size:12.5px}
@@ -401,6 +405,7 @@ body.clean #animBar #caption{margin:0}
 <div id="facts">
   <div class="whead"><span class="wtitle" id="factsMini">Цена и рынок</span><button class="wmin" data-win="facts" title="Свернуть" aria-label="Свернуть" aria-expanded="true">–</button></div>
   <div id="factsHead"></div>
+  <div id="mkbox"><label class="mkl" for="mkRange">Наценка: <b id="mkVal">50</b> %</label><input id="mkRange" type="range" min="0" max="150" step="5" value="50" aria-label="Наценка, %"></div>
   <table class="pt">
     <tr><td>1. Себестоимость по материалам</td><td id="pMat"></td></tr>
     <tr><td>2. Себестоимость с работой <small id="pLab"></small></td><td id="pBase"></td></tr>
@@ -5587,6 +5592,11 @@ function updateInfo() {
   renderPrices(p, c);
 }
 /* Четыре цены для выбранной модели: материалы, с работой, с наценкой, рынок */
+function syncMarkupSlider(mk) {
+  const rg = document.getElementById('mkRange'), lb = document.getElementById('mkVal');
+  if (rg) rg.value = Math.min(150, mk);
+  if (lb) lb.textContent = fmt(mk);
+}
 function renderPrices(p, c) {
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   const a = E.analogs(p), mk = +S.markup || 0, withMk = c.full * (1 + mk / 100);
@@ -5600,6 +5610,7 @@ function renderPrices(p, c) {
   set('pMkt', a.items.length ? fmt(a.low) + ' · ' + fmt(a.mid) + ' · ' + fmt(a.high) + ' ₽' : 'нет данных');
   const inp = document.getElementById('markup');
   if (inp && document.activeElement !== inp) inp.value = mk;
+  syncMarkupSlider(mk);
   const vs = document.getElementById('pVs');
   if (vs && p.season === 'winter') {
     /* зима — второе назначение летнего изделия: сравниваем то, что докупается, а не всю цену */
@@ -6000,6 +6011,12 @@ document.getElementById('markup').addEventListener('input', e => {
   S.markup = v;
   try { localStorage.setItem('p02-markup', String(v)); } catch (err) { /* без хранилища — просто не запоминаем */ }
   updateInfo();
+});
+/* ползунок наценки: двигает то же числовое поле и вызывает его обработчик */
+document.getElementById('mkRange').addEventListener('input', e => {
+  const num = document.getElementById('markup');
+  num.value = e.target.value;
+  num.dispatchEvent(new Event('input', { bubbles: true }));
 });
 /* Сворачиваемые окна: «–» оставляет узкую полоску с главным, «+» разворачивает.
    «Скрыть окна» (или клавиша H) убирает всё разом. Состояние запоминается в этом браузере. */

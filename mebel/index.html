@@ -50,6 +50,10 @@ label{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;margin:6px 0;cu
 .fitok{margin:2px 0 6px;padding:6px 9px;border-radius:8px;background:#e6f1eb;color:#2c6b46;font-size:12.5px}.fitbad{margin:2px 0 6px;padding:6px 9px;border-radius:8px;background:#f8e8e4;color:#9d3b2f;font-size:12.5px;font-weight:600}
 .cart td.qty button:disabled{opacity:.3;cursor:not-allowed}
 #barLen{font:inherit;font-size:12px;padding:1px 3px}
+#mkbox{margin:8px 0 6px;padding:8px 10px;border:1px solid #9fb5ab;border-radius:10px;background:#eef4f0}
+#mkbox .mkl{display:block;font-size:15px;font-weight:600;color:var(--green);margin:0 0 4px;cursor:default}
+#mkbox .mkl b{font-size:22px;font-weight:800}
+#mkRange{display:block;width:100%;min-width:220px;height:28px;margin:0;cursor:pointer;accent-color:var(--green)}
 #markup{width:58px;padding:2px 5px;font:inherit;font-weight:700;border:1px solid #9fb5ab;border-radius:6px;text-align:right}
 .chips{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 6px}.chips button{padding:2px 8px;font-size:12px;border-radius:12px}
 .bars{margin:4px 0}
@@ -107,6 +111,7 @@ body.hideall #side,body.hideall #facts,body.hideall #cap{display:none}
 </aside>
 <div id="facts">
   <div class="whead"><span class="wtitle" id="factsMini">Цена и рынок</span><button class="wmin" id="factsMin" title="Свернуть">–</button></div>
+  <div id="mkbox"><label class="mkl" for="mkRange">Наценка: <b id="mkVal">60</b> %</label><input id="mkRange" type="range" min="0" max="150" step="5" value="60" aria-label="Наценка, %"></div>
   <div class="tabs"><button data-tab="cart" class="on">Заказ</button><button data-tab="base">База</button><button data-tab="loads">Нагрузки</button><button data-tab="market">Рынок</button><button data-tab="cmp">Сравнение</button></div>
   <div id="tab-cart"></div>
   <div id="tab-base" hidden></div>
@@ -4495,7 +4500,13 @@ function build() {
 }
 
 /* ---------- корзина ---------- */
+function syncMarkupSlider() {
+  const rg = $('mkRange'), lb = $('mkVal');
+  if (rg) rg.value = Math.min(150, S.markup);
+  if (lb) lb.textContent = S.markup;
+}
 function refresh() {
+  syncMarkupSlider();
   const cat = catalog(); let tot = 0, h = '';
   const bad = fits(S.q), cap = F.NWCFG[S.set].cap;
   h += '<p class="' + (bad ? 'fitbad' : 'fitok') + '">' + (bad ? '✗ Не складывается в ящик: ' + bad + '.' : '✓ Всё складывается в ящик' + (S.q.table ? ' стола на ' + S.set.slice(1) + ' (помещается ' + pl(cap.tum * S.q.table, 'тумба', 'тумбы', 'тумб') + ' сидений, из них скамеечных — ' + cap.led * S.q.table + ')' : ': табурет сам по себе — закрытая тумба с крышкой') + '.') + '</p>';
@@ -4650,6 +4661,7 @@ $('pcol').onchange = e => { S.pcol = +e.target.value; applyPaint(); };
 $('fab').onchange = e => { S.fab = +e.target.value; refresh(); };
 $('coverView').onchange = e => { S.coverView = e.target.checked; build(); };
 $('markup').oninput = e => { S.markup = Math.max(0, +e.target.value || 0); refresh(); };
+$('mkRange').oninput = e => { const num = $('markup'); num.value = e.target.value; num.dispatchEvent(new Event('input', { bubbles: true })); };
 $('warr').onchange = e => { S.warr = +e.target.value; compare(); summaries(); };
 document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { S.tab = b.dataset.tab;
   document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('on', x === b));
