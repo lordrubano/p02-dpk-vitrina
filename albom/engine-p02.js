@@ -8,15 +8,17 @@ const KERF = 3;   // пропил, мм
 
 /* ---------- 1. Профили ------------------------------------------------
    kgm — кг на погонный метр. price_m — ₽/п.м из открытых прайсов, проверить у поставщика.
-   26.09.2026: артикул ДекМастера за 363 ₽ оказался 50×30, а не 50×35. Берём его — он дешевле всех.
+   26.09.2026: артикул ДекМастера 50×30 — берём его.
+   30.09.2026 (решение владельца): 363 ₽ — цена за ПОГОННЫЙ МЕТР, а не за хлыст 4 м (подтвердил дилер torgsp.ru:
+   «363 ₽ за 1 м.п., 1 089 ₽ за 3 м»). Хлыст 4 м = 1 452 ₽. Раньше в расчёте было 90,75 ₽/м — в 4 раза дешевле.
    Внутреннее устройство 50×30 не опубликовано: принято как у 50×35 (две полости, центральный канал,
    стенки 4 мм), полости 16×22. Чертёж или фото торца запросить у ДекМастера. */
 const PROFILES = {
   dpk50x30: { id:'dpk50x30', name:'ДПК лага 50×30 — ДекМастер', w:50, h:30, wall:4,
-    price_m:90.75, stocks:[4000], kgm:1.00, E:3000, cavities:2,
+    price_m:363, stocks:[4000], kgm:1.00, E:3000, cavities:2,
     uv:'да', frost:'да', ground:'да', texture:'дерево',
     cut_min:0.4, drill_min:0.7, slot_min:0.6, repaint:false,
-    src:'dpk-decking.ru/laga-dpk-50x30x4000 — 363 ₽ за хлыст 4 м; масса ≈1 кг/п.м по сечению; цвет на карточке не указан' },
+    src:'dpk-decking.ru/laga-dpk-50x30x4000 — 363 ₽ за погонный метр (дилер torgsp.ru: 363 ₽ за 1 м.п., 1 089 ₽ за 3 м), хлыст 4 м — 1 452 ₽; масса ≈1 кг/п.м по сечению; цвет на карточке не указан' },
   dpk50x35: { id:'dpk50x35', name:'ДПК лага 50×35 — Terrapol', w:50, h:35, wall:4,
     price_m:439, stocks:[4000], kgm:1.10, E:3000, cavities:2,
     uv:'да', frost:'да', ground:'да', texture:'дерево',
@@ -141,7 +143,7 @@ const ENDS = {
              { name:'Красная',    hex:'#a8322b', stock:'под заказ' }
            ] },
   trims: { id:'trims', name:'Угловой профиль ДПК', stick: 3000, price_m: 275, kgm: 0.9,
-           src:'декоративный угол ДПК 50×50 — 275 ₽/п.м; уголок 56×56 и 57×57 — 320 ₽/п.м',
+           src:'декоративный угол ДПК 50×50 — 275 ₽/п.м (Русдекинг, terradeck.ru; Grand Line внешний 50×50 — 279 ₽/п.м); уголок 56×56 и 57×57 — 268–320 ₽/п.м',
            colors: [
              { name:'Венге',          hex:'#40291d', stock:'угол 50×50 · 275 ₽/м' },
              { name:'Тик',            hex:'#8a5a36', stock:'угол 50×50 · 275 ₽/м' },
@@ -265,7 +267,7 @@ const LIGHTS = {
 };
 const WHEEL_SCREW = { price: 2, name:'Саморез нержавеющий 4,2×19 с прессшайбой' };
 /* уголок ДПК 60×60 как ножка: сечение по аналогии с L60×60×4, модуль ДПК ≈ 3 ГПа — сверить с образцом */
-const LEG_TRIM = { I: 1.6e5, E: 3000 };        // длительно допустимое напряжение изгиба, МПа — ориентир, заменить паспортом
+const LEG_TRIM = { I: 0.9e5, E: 3000 };        // уголок 50×50, стенка ≈4 мм (30.09.2026: втулки без паза не выступают, 60×60 не нужен); длительно допустимое напряжение изгиба — ориентир, заменить паспортом
 
 /* ---------- 7. Параметры по умолчанию --------------------------------- */
 const defaults = {
@@ -770,8 +772,9 @@ function derive(p) {
   const N = ol.N;
   /* Бруски в стенке — сколько оставить, выбирает заказчик: от 2 (нижний и верхний) до всех.
      Оставленные распределяются по высоте равномерно; «низ сплошной» — все бруски в зоне снега до 490 мм.
-     На месте пропущенного бруска в углу — втулка 57 мм с пазом: лист проходит сквозь неё, как сквозь
-     брусок. Только у квадрата: у многогранника угол не прямой. */
+     На месте пропущенного бруска в углу — втулка 50 мм без паза (30.09.2026): лист до неё не доходит, её торцы — под
+     заглушку и уголок; от проворота её держит саморез через уголок, поэтому при пропуске брусков уголок обязателен.
+     Только у квадрата: у многогранника угол не прямой. */
   const nb = beltsMax;
   let want = square ? Math.round(+p.wallBars || 0) : 0;
   if (!(want >= 2 && want < nb)) want = nb;
@@ -819,8 +822,10 @@ function derive(p) {
   });
 
   /* вставки по граням */
-  /* при пропуске брусков край листа на 2 мм ближе к углу (27 мм от стержня) — заходит в паз втулки на 5 мм */
-  const clipShift = thinAny && p.panel !== 'none' ? 2 : 0;
+  /* 30.09.2026 (правило владельца «торцы всегда закрыты»): лист во втулку не заходит — край листа, как у сплошной
+     стенки, в 29 мм от стержня, в 4 мм от торца втулки; на торце втулки встаёт обычная заглушка (2 мм), до листа 2 мм.
+     Прежде при пропуске брусков лист заходил в паз втулки 57 мм и выходил из её торца — такой торец заглушкой не закрыть. */
+  const clipShift = 0;
   const panels = ol.edges.map(e => {
     const mA = panelMargin(ol.turn[e.ia], w) - clipShift, mB = panelMargin(ol.turn[e.ib], w) - clipShift;
     return { width: module - mA - mB, shift: (mA - mB) / 2, parity: e.parity };
@@ -885,7 +890,7 @@ function derive(p) {
   const pWind = 0.5 * 1.225 * p.wind * p.wind * 1.3 * 1e-6;
   const pnS = PANELS[p.panel] || PANELS.pc4m;
   const noPanels = p.panel === 'none';
-  const clipsOn = thinAny && !noPanels;                        // втулка с пазом — только когда есть лист
+  const clipsOn = false;                                       // втулок с пазом больше нет (30.09.2026): втулка 50 мм, лист до неё не доходит
   const keepWorst = keepE.slice().sort((a, b) => Math.max.apply(null, b.slice(1).map((j, i) => j - b[i])) - Math.max.apply(null, a.slice(1).map((j, i) => j - a[i])))[0];
   const naChk = { s: 0, sigma: 0, sAllow: 0, defl: 0, limit: 0, freq: 0, pass: true, na: true };
   const thinCheck = { summer: noPanels ? naChk : wallCheck(keepWorst, h, pnS, pWind, false, clipsOn, panels[0].width),
@@ -987,7 +992,7 @@ function derive(p) {
      Втулки без листа в углу держит от проворота только саморез через уголок — там уголок обязателен. */
   const nodeOf = V => ol.pts.findIndex(q => Math.abs(q[0] - V[0]) < 0.5 && Math.abs(q[1] - V[1]) < 0.5);
   const isPlain = st => {
-    if (noPanels) return true;
+    if (noPanels || !clipsOn) return true;                          // лист во втулку не заходит — от проворота её держит саморез через уголок
     if (segList) { const s = segList.find(q => q.edge === st.edge && q.ja < st.j && st.j < q.jb); return !s || s.mat === 'none'; }
     return st.j < keepE[st.edge][0];
   };
@@ -1012,8 +1017,7 @@ function derive(p) {
     keepE[e.i].forEach(j => { plugList.push({ key: e.i + ':' + j + ':a', node: ka }); plugList.push({ key: e.i + ':' + j + ':b', node: kb }); }); });
   stubList.forEach(st => plugList.push({ key: 's' + st.edge + ':' + st.j + ':' + (st.sg > 0 ? 'a' : 'b'), node: nodeOf(st.pos) }));
   /* второй торец втулки смотрит вдоль стенки внутрь яруса — уголок его не закрывает, заглушка нужна всегда.
-     У втулки с пазом из этого торца выходит лист — обычная заглушка не встаёт (заглушки с прорезью в комплекте нет,
-     новая деталь — только с согласия владельца): торец остаётся открытым и считается в slotEnds */
+     С 30.09.2026 лист во втулку не заходит, поэтому этот торец закрывается обычной заглушкой всегда (slotEnds = 0) */
   stubList.forEach(st => { st.plain = isPlain(st); });              // в ярусе без листа (ножки, пустой ярус) лист сквозь втулку не идёт
   const innerOk = st => !clipsOn || st.plain;
   stubList.forEach(st => { if (innerOk(st)) plugList.push({ key: 's' + st.edge + ':' + st.j + ':' + (st.sg > 0 ? 'a' : 'b') + 'i', node: nodeOf(st.pos), always: true }); });
@@ -1029,7 +1033,7 @@ function derive(p) {
            outer: Math.max(outerX, outerY), outerX, outerY, clear, barCount,
            panels, panelW, panelH, panelArea: panelsByMat ? Object.keys(panelsByMat).reduce((a, k) => a + panelsByMat[k], 0) : (panelListT ? panelAreaT : panelArea),
            panelList: panelListT, lineT: panelListT ? p.lineT : null, tHoles, tParity, slatPosT, rot90: !!((ol.sh.rot || 0) % 2),
-           rodLen, summerRod, stock, cut, rowsMode, segList, panelsByMat, stopScrews, plainStubs,
+           rodLen, summerRod, stock, cut, rowsMode, segList, panelsByMat, stopScrews, plainStubs: clipsOn ? plainStubs : stubList.length,
            bearing: (w - 8) / 2, convex90, concave, trimsAllowed,
            slatsPer, slatLen, slatCount, slatPos, slatCut, crossings: (slatCount && layers === 2) ? slatsPer * slatsPer : 0,
            layers, layersAuto, check1, check2, pot, potKg, saucerOn, saucer,
@@ -1130,7 +1134,9 @@ function packing(p) {
   }
   const d = derive(p), m = mass(p), pn = PANELS[p.panel];
   const inner = d.custom ? Math.max(d.panelH, 300) + 10 : Math.max(d.module, d.panelW) + 10;
-  const pieces = d.custom ? d.pieces.length : d.barCount + d.slatCount + (d.roof && d.roof.h ? ROOF_BARS : 0) + (d.table ? d.table.pieces : 0);
+  /* втулки (50 мм + 2 заглушки) лежат по несколько в ряд вдоль ячейки коробки — раньше их не считали, и они налезали на вставки и поддон */
+  const stubPer = Math.max(1, Math.floor((Math.max(d.L, d.module) - 10) / (d.w + 6))), stubSlots = d.custom ? 0 : Math.ceil((d.stubs || 0) / stubPer);
+  const pieces = d.custom ? d.pieces.length : d.barCount + d.slatCount + (d.roof && d.roof.h ? ROOF_BARS : 0) + (d.table ? d.table.pieces : 0) + stubSlots;
   const across = Math.max(1, Math.floor(inner / d.w));
   const layers = Math.ceil(pieces / across);
   const boxL = d.custom ? d.longest + 25 : Math.max(d.L, d.module) + 25;
@@ -1146,7 +1152,7 @@ function packing(p) {
   const flatVol = flatV * 1e6 / K, asmVol = asmV * 1e6 / K;
   const flatBill = Math.max(flatVol, m.totalKg), asmBill = Math.max(asmVol, m.totalKg);
   return { boxL: Math.round(boxL), boxW: Math.round(boxW), boxH: Math.round(boxH), boxes: 1, longBox: boxL > 1500,
-           across, layers, pieces, ringSeparate, rodsSeparate,
+           across, layers, pieces, stubPer, stubSlots, ringSeparate, rodsSeparate,
            flatV, asmV, flatVol, asmVol, flatBill, asmBill,
            saving: (asmBill - flatBill) / asmBill * 100 };
 }
@@ -1161,7 +1167,7 @@ function extraPlugs(d) {
 }
 /* Заглушки, которые ставятся при любых торцах (и при уголке): внутренний торец втулки без паза, оба торца каждого
    отрезка полки-решётки, оба торца брусков крышки (уголок до крышки не доходит). Столешница — своей строкой.
-   Внутренний торец втулки с пазом (из него выходит лист) обычной заглушкой не закрыть — d.slotEnds, решает владелец. */
+   С 30.09.2026 втулок с пазом нет: лист до втулки не доходит, внутренний торец втулки — всегда заглушка (d.slotEnds = 0). */
 function alwaysPlugs(d) {
   return innerPlugs(d) + (d.slatCount || 0) * 2 + (d.roof && d.roof.h ? ROOF_BARS * 2 : 0);
 }

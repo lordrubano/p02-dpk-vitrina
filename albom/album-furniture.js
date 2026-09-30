@@ -46,6 +46,13 @@ function sheetBox(g, sx, sy, sz, x, y, z, ry) {
   if (SHOW.sheets) return box(g, sx, sy, sz, x, y, z, M.sheet, ry);
   const m = box(g, sx, sy, sz, x, y, z, M.ghost, ry); m.visible = false; m.castShadow = false; m.receiveShadow = false; m.userData.ghostSheet = true; return m;
 }
+/* 30.09.2026 (правило владельца «торцы всегда закрыты»): лист стенки тумбы не заходит во втулки колонн — кончается в 3 мм
+   от их торца (заглушка 2 мм + зазор 1 мм). Лист между колоннами: cols — оси колонн (втулки 50 мм) вдоль стенки. */
+const SHEET_GAP = W / 2 + 3;
+function sheetsBetween(g, cols, h, y, at) {
+  const c = cols.slice().sort((p, q) => p - q);
+  for (let i = 0; i + 1 < c.length; i++) { const a = c[i] + SHEET_GAP, b = c[i + 1] - SHEET_GAP; if (b - a > 20) at(b - a, (a + b) / 2); }
+}
 function cyl(g, r, h, x, y0, z, mat) {
   const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 16), mat);
   m.position.set(x, y0 + h / 2, z); m.castShadow = true; g.add(m); return m;
@@ -283,7 +290,7 @@ function drawCanopy(g, xs, Lt) {
         [60, 180].forEach(y => studA(g, x, y, zc, 160 + 26, 'z'));
         studA(g, x, 2180, zc, 90 + 26, 'x'); });                                                     // к перекладине
       [-1, 1].forEach(sx => { box(g, 30, 50, 916, x + sx * 30, 2180, 0, M.bar); pcs.push(916); });           // перекладина портала — пара брусков на ребро по бокам стоек, 2155–2205
-      [-1, 1].forEach(sz => { box(g, 30, C.yTop - 2155, 50, x, (2155 + C.yTop) / 2, sz * 40, M.bar); pcs.push(C.yTop - 2155); studA(g, x, 2180, sz * 40, 90 + 26, 'x'); });   // бабка конька — два бруска вплотную к коньку
+      [-1, 1].forEach(sz => { box(g, 30, C.yTop - 2155 - 2, 50, x, (2155 + C.yTop - 2) / 2, sz * 40, M.bar); pcs.push(C.yTop - 2155 - 2); studA(g, x, 2180, sz * 40, 90 + 26, 'x'); });   // бабка конька — два бруска вплотную к коньку; на 2 мм короче: сверху заглушка, на ней накладка конька
       studA(g, x, C.yR - 25, 0, 2 * (C.zr + 15) + 26, 'z');
       return; }
     [-1, 1].forEach(sx => [-1, 1].forEach(sz => { box(g, 30, C.yTop - C.yE, 50, x + sx * 72, (C.yE + C.yTop) / 2, sz * 40, M.bar); pcs.push(C.yTop - C.yE); }));   // надставки — до накладки конька
@@ -297,13 +304,15 @@ function drawCanopy(g, xs, Lt) {
     [-1, 1].forEach(sz => { box(g, b - a - 1, 50, 30, xc, C.yR - 25, sz * C.zr, M.bar); pcs.push(b - a); });      // коньковый брус с петлями
     [-1, 1].forEach(sz => {
       const sg = new THREE.Group(); sg.position.set(0, C.yR, sz * C.zh); sg.userData.sz = sz; g.add(sg);
-      const L = C.Ls, inW = sw - 100;
-      [a + 3 + 25, b - 3 - 25].forEach(xb => { const m = box(sg, 50, 30, L, xb, 15, sz * L / 2, M.bar); m.userData.slope = true; spcs.push(L); });   // боковины рамы
+      const L = C.Ls, inW = sw - 60;
+      /* боковины рамы — на ребро (30.09.2026): торцы брусков на ребро (низ, средник) упираются в боковину всем сечением — закрыты ею;
+         раньше боковина лежала плашмя (30 мм), верх торца на 20 мм был открыт, а лист выходил сквозь торец в боковину */
+      [a + 3 + 15, b - 3 - 15].forEach(xb => { const m = box(sg, 30, 50, L, xb, 25, sz * L / 2, M.bar); m.userData.slope = true; spcs.push(L); });
       { const m = box(sg, inW, 30, 50, xc, 15, sz * 25, M.bar); m.userData.slope = true; spcs.push(Math.round(inW)); }                          // верх рамы
       [L - 15, L - 45].forEach(u => { const m = box(sg, inW, 50, 30, xc, 25, sz * u, M.bar); m.userData.slope = true; spcs.push(Math.round(inW)); });   // низ рамы — два бруска на ребро: край держит повисшего
       (xs.midDouble ? [C.mid - 15, C.mid + 15] : [midU]).forEach(u => { const m = box(sg, inW, 50, 30, xc, 25, sz * u, M.bar); m.userData.slope = true; spcs.push(Math.round(inW)); });                     // средник на ребро — на него опираются спицы, держит вынос створки за спицей
       const p = box(sg, inW + 20, 4, L - 80, xc, 15, sz * L / 2, M.pc); p.userData.slope = true; sheets.push([Math.round(inW + 20), L - 80]);
-      if (i + 2 < bnd.length) { const c = box(sg, 60, 3, L, b, 31.5, sz * L / 2, M.pc); c.userData.slope = true; }                   // нащельник на стыке створок
+      if (i + 2 < bnd.length) { const c = box(sg, 60, 3, L, b, 51.5, sz * L / 2, M.pc); c.userData.slope = true; }                   // нащельник на стыке створок — поверх боковин на ребро
       [a + 80, b - 80].forEach(xh => { const h = box(sg, 40, 6, 24, xh, -3, sz * 14, M.steel); h.userData.slope = true; });              // петли у конька
       sg.rotation.x = sz * C.close; st.sashes.push(sg);
       sg.updateMatrixWorld(true);
@@ -329,7 +338,7 @@ function drawCanopy(g, xs, Lt) {
           if (k < n - 1) cols.forEach(z => { for (let j = 0; j < 3; j++) { box(g, W, gp / 3, W, xw, y + HB / 2 + gp / 3 * (j + 0.5), z, M.filler); pcs.push(50); } }); }   // втулки стопкой, как в тумбе
         cols.forEach(z => cyl(g, 6, H, xw, base, z, M.rod));                                                // стержни тумбы — дальше вверх, через обвязку столешницы
         const yj = base + Math.floor(n / 2) * (HB + gp) + HB / 2;                                            // стык двух листов — в пазу среднего бруска
-        sh(xw + so * 13, base + 5, yj, 0, D - 54, false).userData.slot = true; sh(xw + so * 13, yj, yT - 5, 0, D - 54, false).userData.slot = true; plates.push([D - 54, Math.round(yj - base - 5)], [D - 54, Math.round(yT - 5 - yj)]); }   // лист — в пазах брусков и втулок
+        [[base + 5, yj], [yj, yT - 5]].forEach(([y0, y1]) => sheetsBetween(g, cols, y1 - y0, 0, (w, zc) => { sh(xw + so * 13, y0, y1, zc, w, false).userData.slot = true; plates.push([Math.round(w), Math.round(y1 - y0)]); })); }   // листы — в пазах брусков, между колоннами втулок (во втулки не заходят, 30.09.2026)
       for (let t = 0; t < dp.sT; t++) [-1, 1].forEach(s2 => { const z = s2 * 365, gl = g1 - g0 - 4;   // ширмы по бокам: между стойкой у входа и дальней, в плоскости стоек
         const yb = t === 0 ? base + 25 : lv[t - 1] + 25, yt = lv[t] - 55;
         box(g, gl, 50, 30, (g0 + g1) / 2, yb, z, M.bar); pcs.push(Math.round(gl)); box(g, gl, 50, 30, (g0 + g1) / 2, yt, z, M.bar); pcs.push(Math.round(gl));   // низ — на столешнице / на досках полки, верх — средняя опора досок
@@ -354,22 +363,30 @@ function drawGable(g, xg, pcs, st, plates) {                         // фрон
   const C = CAN, t = Math.tan(C.close), yu = z => C.yR - t * (Math.abs(z) - C.zh), zE = Math.round(C.zh + C.Ls * Math.cos(C.close) - 81), yb = yu(zE) - 55, zt = 110, yt = yu(zt) - 8, yr = 2330;   // yu — низ створки над точкой z
   const P = (z, y) => new THREE.Vector3(xg, y, z);
   [-1, 1].forEach(sz => {
-    box(g, 30, 50, zE - 15, xg, yb + 25, sz * (zE + 15) / 2, M.bar); pcs.push(zE - 15);                          // затяжка — две половины, стык у стойки
-    const z0 = zE - 160, m = barBetween(g, P(sz * z0, yu(z0) - 31), P(sz * zt, yu(zt) - 31), 30, 50, M.bar); pcs.push(Math.round(m.geometry.parameters.depth));   // скатные бруски — под створкой
+    box(g, 30, 50, zE, xg, yb + 25, sz * zE / 2, M.bar); pcs.push(zE);                          // затяжка — две половины встык под стойкой фронтона: торец стойки лежит на них целиком (30.09.2026)
+    const z0 = zE - 160, m = barBetween(g, P(sz * z0, yu(z0) - 31), P(sz * (zt + 12), yu(zt + 12) - 31), 30, 50, M.bar);   // верх — в 12 мм от перемычки: оба торца под заглушку pcs.push(Math.round(m.geometry.parameters.depth));   // скатные бруски — под створкой
   });
   box(g, 30, yr - 15 - (yb + 50), 50, xg, (yb + 50 + yr - 15) / 2, 0, M.bar); pcs.push(Math.round(yr - 15 - yb - 50));   // стойка фронтона по оси
   box(g, 30, 30, 2 * zt, xg, yr, 0, M.bar); pcs.push(2 * zt);                                                    // верхняя перемычка под коньком
   [-1, 1].forEach(sz => st && st.portal ? studA(g, xg + (xg < 0 ? 1 : -1) * 45, 2213 - 25, sz * 200, 146, 'x') : studA(g, xg + (xg < 0 ? 1 : -1) * 30, 2213 - 25, sz * 200, 2 * 45 + 26, 'x'));   // фронтон — к обеим перекладинам             // притянут к спицам
-  const pts = [[-zE + 20, yb + 50], [0, yb + 50], [0, yu(zt) - 60], [-zt, yu(zt) - 60], [zE - 20, yb + 50], [zt, yu(zt) - 60]], geo = new THREE.BufferGeometry();   // поликарбонат — две половины, стык за стойкой фронтона (в ящик)
-  const tri = [0, 1, 2, 0, 2, 3, 1, 4, 5, 1, 5, 2], pos = []; tri.forEach(i => pos.push(xg, pts[i][1], pts[i][0])); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.computeVertexNormals();
-  const pm = new THREE.Mesh(geo, M.pc); pm.userData.slope = true; pm.userData.gable = true; g.add(pm); if (plates) plates.push([zE - 20, yu(zt) - 60 - yb - 50], [zE - 20, yu(zt) - 60 - yb - 50]);
+  /* поликарбонат фронтона (30.09.2026, «торцы всегда закрыты»): край листа идёт в пазу скатного бруска (12 мм), но у обоих его торцев
+     уходит под брусок — лист не выходит сквозь торец, там встаёт заглушка; у перемычки лист в её пазу (20 мм), у её торцев — ниже неё.
+     Контур — ломаная по z от края к оси (низ — на затяжке); лист — две половины, стык за стойкой фронтона (в ящик). */
+  const th = Math.atan(t), sn = Math.sin(th), cs = Math.cos(th), hb = 25 / cs, bb = z => yu(z) - 31 - hb, z0 = zE - 160, yA = yu(z0) - 31, zU = zt + 12, yB0 = yb + 50, yTop = yr + 5, yLow = yr - 15 - 3;
+  const chain = [[zE - 20, yB0], [zE - 20, yu(zE - 20) - 8], [z0 + 25 * sn + 2.5 * cs, yA + 25 * cs - 2.5 * sn - 2], [z0 - 25 * sn + 2.5 * cs, yA - 25 * cs - 2.5 * sn - 1.5],
+    [z0 - 25 * sn - 4, bb(z0 - 25 * sn - 4) - 3], [z0 - 100, bb(z0 - 100) + 12], [zU + 50, bb(zU + 50) + 12], [zU + 13, bb(zU + 13) - 3], [zU - 25 * sn - 4, yLow], [zt - 10, yLow], [zt - 10, yTop], [0, yTop]];
+  const pos = []; let pcA = 0;
+  [-1, 1].forEach(sz => { for (let i = 0; i + 1 < chain.length; i++) { const [za, ya] = chain[i], [zb, yb2] = chain[i + 1]; if (za - zb < 0.01) continue;
+    const q = [[za, yB0], [zb, yB0], [zb, yb2], [za, ya]].map(([z, y]) => [sz * z, y]); [0, 1, 2, 0, 2, 3].forEach(k => pos.push(xg, q[k][1], q[k][0])); pcA += (za - zb) * ((ya + yb2) / 2 - yB0); } });
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.computeVertexNormals();
+  const pm = new THREE.Mesh(geo, M.pc); pm.userData.slope = true; pm.userData.gable = true; g.add(pm); if (plates) plates.push([zE - 20, yTop - yB0], [zE - 20, yTop - yB0]);
   if (st && !st.noEnd) { const out = xg < 0 ? -1 : 1, w = 2 * zE - 80;                                                 // торцевая штора — одна, косая: рулон под затяжкой фронтона на всю ширину,
     const roll = new THREE.Mesh(new THREE.CylinderGeometry(32, 32, w + 20, 16), M.alu); roll.rotation.x = Math.PI / 2; roll.position.set(xg + out * 55, yb - 36, 0); roll.userData.slope = true; g.add(roll);
     const sl = new THREE.Mesh(new THREE.CylinderGeometry(30, 30, 90, 16), M.steel); sl.rotation.x = Math.PI / 2; sl.position.set(xg + out * 55, yb - 36, 0); sl.userData.slope = true; g.add(sl);   // труба рулона — две половины на муфте (в ящик)
     const wb = 2 * MD3 + W - 60, parts = st.halfEnd ? [[0, -w / 2, 0, -wb / 2], [0, w / 2, 0, wb / 2]] : [[-w / 2, w / 2, -wb / 2, wb / 2]];   // [верх от, до, низ от, до] по z
     parts.forEach(([t0, t1, b0, b1]) => st.shutters.push({ g, axis: 't', xc: xg + out * 55, zc: 0, w: Math.abs(t1 - t0), wb: Math.abs(b1 - b0), tc: (t0 + t1) / 2, bc: (b0 + b1) / 2, roll, fixedY: yb - 36 - 32, xb: st.portal ? out * (st.xEnd + 45) : xg - out * 52, yB: TOPY + 40, tie: st.portal ? out * st.xEnd : xg - out * 107,
       hz: parts.length > 1 ? [Math.sign(b1 + b0) * 100, Math.sign(b1 + b0) * 300] : [-300, 300], sheet: null, bar: null })); }   // низ — к торцу столешницы
-  return ((2 * zE - 40) + 2 * zt) / 2 * (yu(zt) - 60 - yb - 50) / 1e6;
+  return pcA / 1e6;
 }
 function setCanopyAngle(ang, down) {                        // створки на угол ang (18° — крыша, до CAN.fold — сложена), спицы и шторы следом; down 0…1 — шторы свёрнуты…опущены
   const st = CANST; if (!st) return; st.ang = ang; if (down !== undefined) st.down = down;
@@ -465,7 +482,7 @@ function rainCheck(slantDeg) {                             // доля сухи�
   return res;
 }
 function canopyXs(set) { const c = newCfg(set), Lt = 2 * c.a + c.zone, xi = Lt / 2 - c.a + W / 2, xo = Lt / 2 - W / 2, all = [-xo, -xi].concat(c.props.slice().sort((p, q) => p - q), [xi, xo]);
-  if (CAN.portal) { const r = [-(xo - 45), -(xi + 45), xi + 45, xo - 45]; r.wall = [-xo, -xi, xi, xo]; r.xo = xo; r.xi = xi; r.lim = { T4: 1080, T6: 2040, T8: 2090 }[set] || 1080; r.midMax = set === 'T4'; r.zc = MD3; r.zn = 280; r.zp = 365; r.zh = 80; r.pz = [315, 365, 415]; r.ov = CAN.ov + 45; return r; }   // стойка — внутри тумбы у торцевой стенки: 3 бруска на ребро, z 310–460   // стойка у угла тумбы — охватывает боковую стенку, ось в 90 мм от торцевой   // стойки — на углах тумб: у входа и у дальней стенки, по краям стола
+  if (CAN.portal) { const r = [-(xo - 45), -(xi + 45), xi + 45, xo - 45]; r.wall = [-xo, -xi, xi, xo]; r.xo = xo; r.xi = xi; r.lim = { T4: 1080, T6: 2040, T8: 2090 }[set] || 1080; r.midMax = set === 'T4'; r.zc = MD3; r.zn = 274; r.zp = 365; r.zh = 80; r.pz = [315, 365, 415]; r.ov = CAN.ov + 45; return r; }   // стойка — внутри тумбы у торцевой стенки: 3 бруска на ребро, z 310–460   // стойка у угла тумбы — охватывает боковую стенку, ось в 90 мм от торцевой   // стойки — на углах тумб: у входа и у дальней стенки, по краям стола
   const r = set === 'T4' ? all.filter(x => Math.abs(Math.abs(x) - xi) > 1) : set === 'T8' ? all.filter(x => !(Math.abs(x) > 1 && Math.abs(x) < xi - 1)) : all.slice();   // на 8 — без пары стоек ±710 (симметрично): швы крыши на их месте, средник сдвоенный   // на 4 — 3 стойки: средник створки на ребро держит вынос 535 мм (10,7 МПа из 12 при 20 м/с); на 6 и 8 без стойки вынос > 0,8 м — не держит
   r.xo = xo; r.xi = xi; r.lim = { T4: 1080, T6: 2040, T8: 2090 }[set] || 1080; r.midMax = set === 'T4'; if (set === 'T8') { const p = all.find(x => x > 1 && x < xi - 1); r.seams = [-p, p]; r.midDouble = true; } return r; }   // lim — створка ложится на крышку ящика (1090 / 2056 / 2106 × 1020)
 const canopyInners = xs => xs.map(x => Math.abs(Math.abs(x) - xs.xo) < 1 ? -Math.sign(x) : Math.abs(Math.abs(x) - xs.xi) < 1 ? Math.sign(x) : 0);   // с какой стороны стойки — внутренность опоры стола   // с какой стороны стойки — внутренность опоры стола (там вилка — над базовой полкой)
@@ -516,7 +533,7 @@ function tableLR(g, zone, props, planks, Mt, opt) {
       if (L1) box(sg, 2, HB - 2, W - 2, a1 + 1, yT, zz, M.plug); });
     const n = Math.max(1, Math.floor((r1 - r0 + 5) / 55)), pitch = (r1 - r0) / n;
     for (let i = 0; i < n; i++) { if (planks === 'half' && k > 0) continue; const px = r0 + pitch * (i + 0.5);
-      if (LIGHTX && LIGHTX.some(mx => Math.abs(px - mx) < (LIGHTX.zc ? 45 : 80))) { if (LIGHTX.zc) box(sg, W - 2, HB, 2 * LIGHTX.zn, px, yT, 0, M.top); else { const L = D / 2 - W - 70; [-1, 1].forEach(sz => box(sg, W - 2, HB, L, px, yT, sz * (70 + L / 2), M.top)); } }   // доска с вырезом под стойку света (у навеса — пазы у краёв)
+      if (LIGHTX && LIGHTX.some(mx => Math.abs(px - mx) < (LIGHTX.zc ? 45 : 80))) { if (LIGHTX.zc) box(sg, W - 2, HB, 2 * LIGHTX.zn, px, yT, 0, M.top); else { const L = D / 2 - W - 70; [-1, 1].forEach(sz => box(sg, W - 2, HB, L, px, yT, sz * (70 + L / 2), M.top)); } }   // доска с вырезом под стойку света (у навеса — пазы у краёв; доска короче на 6 мм — заглушка встаёт до конца шпильки стойки, 30.09.2026)
       else box(sg, W - 2, HB, D - 2 * W, px, yT, 0, M.top); }
     if (SHOW.pnT) panelPieces(sg, r0, r1, yT + HB / 2 + PN / 2, PN, D);   // накладная столешница: панели от стойки до стойки света
   }
@@ -598,7 +615,7 @@ const INFO = {};
 const cap = (t, r, seats, price) => [t,
   'Стол ' + r.Lt + ' × ' + TOPD + ' × ' + r.H + ' мм. Свободно для ног ' + r.free + ' мм — ' + r.pct + ' % длины. Тумбы только по краям: 400 мм вдоль стола, во всю глубину. Снаружи — сплошная стенка, хранение (полка и пол) открыто внутрь, к месту для ног.',
   seats,
-  'Стенки тумб — брусок через два, табуретов — через один: в углах втулки, лист проходит сквозь них. Стойки разрежены: в пролёте нижний, средний и верхний брусок, нагрузку несут колонны у стержней. Над торцевыми стенками тумб верхнего бруска нет — лист заходит в паз снизу балки. Три балки во всю длину стола, по линиям стержней, надеты на стержни тумб и стоек, торцы заглушены. Пролёт ≤ 650 мм — алюминий не нужен. Проверено: посередине 3,3 из 4,7 мм, облокотились на край — 5,8 из 7,0 мм, σ 10,6 из 12 МПа. Под столом листов нет.',
+  'Стенки тумб — брусок через два, табуретов — через один: в углах втулки, лист кончается у втулок (их торцы — под заглушку). Стойки разрежены: в пролёте нижний, средний и верхний брусок, нагрузку несут колонны у стержней. Над торцевыми стенками тумб верхнего бруска нет — лист заходит в паз снизу балки. Три балки во всю длину стола, по линиям стержней, надеты на стержни тумб и стоек, торцы заглушены. Пролёт ≤ 650 мм — алюминий не нужен. Проверено: посередине 3,3 из 4,7 мм, облокотились на край — 5,8 из 7,0 мм, σ 10,6 из 12 МПа. Под столом листов нет.',
   price,
   'Столешница из секций, сиденья скамеек — из трёх частей: всё прячется под стол и едет посылками (см. «Разложить и сложить» и «Как устроен стол»). Торцы — на выбор покупателя: заглушки или декоративный уголок (переключатель вверху). Столешница и сиденья — в рамке: торцы досок спрятаны, заглушены только торцы рамки. Табуреты и тумбы скамеек задвигаются под стол — см. «Сложено».'];
 /* ---------- Зима: стол в ящик (предложение 27.09.2026) ----------
@@ -756,7 +773,7 @@ function winAnim(set, noSeats) {
 /* ---------- показ вариантов (27.09.2026) ---------- */
 function setMat(g) {                               // оценка материалов группы: лага по метражу, заглушки, стержни
   const b = bom(g), mm = b.lag.body.concat(b.lag.top).reduce((x, y) => x + y + 3, 0);
-  return { lagM: mm / 1000, rub: mm * 363 / 4000 * 1.03 + b.plugs * 13 + b.rods.reduce((x, y) => x + y, 0) / 1000 * 55 };
+  return { lagM: mm / 1000, rub: mm * E.PROFILES.dpk50x30.price_m / 1000 * 1.03 + b.plugs * 13 + b.rods.reduce((x, y) => x + y, 0) / 1000 * 55 };
 }
 function animSlide(set, title, lines) { CFG.cover = true; const { h, w } = winAnim(set); CFG.cover = false;
   return [title, '<b id="stepnow"></b>'].concat(lines(h, w)); }
@@ -851,7 +868,8 @@ function tumbaK(g, xc, side, a, shelves, mz) {
   [[xo, -zE], [xo, zE], [xi, -zE], [xi, zE], [xo, mz], [xi, mz]].forEach(([x, z]) => { cyl(g, 6, 22 * HB - 2, x, 0, z, M.rod); if (Math.abs(z) < 1 || Math.abs(z) > 400) cyl(g, 6, 48, x, 22 * HB - 2, z, M.rod); });
   const n = Math.floor((a - 2 * W + 5) / 55), Wd = n * 50 + (n - 1) * 5;                                                      // полки — на брусках обеих боковых стенок
   [17].concat(shelves || []).forEach(k => { for (let i = 0; i < n; i++) box(g, W, HB, 2 * M5, xc - Wd / 2 + 25 + i * 55, yr(k), 0, k === 17 ? M.top : M.tie); });
-  [-1, 1].forEach(sz => sheetBox(g, a - 54, 22 * HB - 30, 4, xc, 11 * HB, sz * (zE + 13))); sheetBox(g, 4, 22 * HB - 30, D - 54, xo + side * 13, 11 * HB, 0);
+  [-1, 1].forEach(sz => sheetBox(g, a - 50 - 2 * SHEET_GAP, 22 * HB - 30, 4, xc, 11 * HB, sz * (zE + 13)));   // лист кончается перед втулками колонн
+  sheetsBetween(g, [-zE, mz, 0, zE], 22 * HB - 30, 11 * HB, (w, zc) => sheetBox(g, 4, 22 * HB - 30, w, xo + side * 13, 11 * HB, zc));   // средние втулки дальней стенки — на 0 и на mz
   return { xo, xi };
 }
 function propK(g, px, zs) {                          // стойка: поперечные бруски 944 мм по нечётным рядам, колонны у стержней
@@ -913,7 +931,7 @@ function slideV(step, shA, shB, o) {
   CANST = null; let lt = null, cn = null; if (LIGHTX) { const n0 = root.children.length; lt = drawLight(root, LIGHTX, !!SHOW.light, !!SHOW.canopy, SHOW.canopy ? canopyInners(LIGHTX) : null); tagItem(root, n0, 'light');
     const n1 = root.children.length; if (SHOW.canopy) cn = drawCanopy(root, LIGHTX, 2 * c.a + c.zone); tagItem(root, n1, 'canopy'); if (!SHOW.light) lt = null; }
   if (step === 2 && SHOW.people) drawPeople(root, c);
-  if (o.lift) r.secs.forEach(sg => { sg.position.y = 450; });
+  if (o.lift && !SHOW.canopy) r.secs.forEach(sg => { sg.position.y = 450; });   // с навесом столешницу не поднимаем: поднятая секция вошла бы в стойки, полки и ширму навеса
   if (o.seats) { const zw = Md + W / 2 + L4 / 2 + 8;                                               // скамьи в 8 мм от края стола
     [1, -1].forEach(sd => { seatList(c).forEach(t => stoolL(root, t.x, sd * zw, t));
       c.bench.concat(SHOW.xIns ? c.xins || [] : []).forEach(bx => { const ig = new THREE.Group(); root.add(ig); insertPart(ig, 0, true); ig.position.set(bx, 14 * HB, sd * zw); }); }); }
@@ -932,7 +950,7 @@ function slideV(step, shA, shB, o) {
   [L.xi - W / 2 - 1, Rr.xi + W / 2 + 1].forEach(x => [-Z0, Z0].forEach(z => box(root, 2, HB - 2, W - 2, x, yr(0), z, M.plug)));
   if (step !== 2) [[L.xo, L.xi, zl(0)], [Rr.xi, Rr.xo, zl(nS - 1)]].forEach(([x0, x1, z]) => { box(root, x1 - x0 + W, HB, W, (x0 + x1) / 2, yr(2), z, M.tie); plugsX(root, x0 - W / 2, x1 + W / 2, yr(2), z); });
   // деньги против стойки из 2 частей (3 колонны: 47 втулок, 6 брусков 944, 3 стержня 706) и одной нитки обвязки
-  const PER = 363 / 4000 * 1.03, lag = (mm, n) => (mm + 3 * n) * PER, q = qs[0];
+  const PER = E.PROFILES.dpk50x30.price_m / 1000 * 1.03, lag = (mm, n) => (mm + 3 * n) * PER, q = qs[0];
   const dProp = lag((q.fill - 47) * W + (q.bar - 6 * 944), q.fill - 47) + (q.rod - 3 * 706) / 1000 * 55;
   const dTie = lag(fake.reduce((u, v) => u + v, 0), fake.length) + studs * STUD, dAll = Math.round((dProp * ps.length + dTie) / 10) * 10;
   LIGHTX = null; PANELX = null;
@@ -965,8 +983,9 @@ function tumbaK3(g, xc, side, a, shA, shB, Md) {
   const n = Math.floor((a - 2 * W - (LIGHTX && LIGHTX.wall ? 86 : 0) + 5) / 55), Wd = n * 50 + (n - 1) * 5, hl = zE - Z0, hz = (zE + Z0) / 2;   // полки-половинки; с навесом у торцов — место под стойки
   [[-1, [17].concat(shA || [])], [1, [17].concat(shB || [])]].forEach(([sz, ks]) => ks.forEach(k => {
     for (let i = 0; i < n; i++) box(g, W, HB, hl, xc - Wd / 2 + 25 + i * 55, yr(k), sz * hz, k === 17 ? M.top : M.tie); }));
-  { const sL = a - 54;   // вставка всегда на всю стенку
-    [-1, 1].forEach(sz => sheetBox(g, sL, 22 * HB - 30, 4, xc, 11 * HB, sz * (zE + 13))); sheetBox(g, 4, 22 * HB - 30, D - 54, xo + side * 13, 11 * HB, 0); }
+  {   // вставка всегда на всю стенку — от колонны до колонны
+    [-1, 1].forEach(sz => sheetBox(g, a - 50 - 2 * SHEET_GAP, 22 * HB - 30, 4, xc, 11 * HB, sz * (zE + 13)));   // лист кончается перед втулками колонн (30.09.2026)
+    sheetsBetween(g, [-zE, -Z0, Z0, zE], 22 * HB - 30, 11 * HB, (w, zc) => sheetBox(g, 4, 22 * HB - 30, w, xo + side * 13, 11 * HB, zc)); }   // дальняя стенка — два листа по сторонам сдвоенной колонны
   return { xo, xi, hl, n };
 }
 function propStep3(g, px) {                                // колонны ±25, ±236 до пола; ±447 — наверху; просветы по 211 мм
@@ -1019,7 +1038,7 @@ function partsCost(fnBuild) {                               // лага и ст�
   g.traverse(o => { if (!o.isMesh) return; const p = o.geometry.parameters || {};
     if (o.material === M.filler || o.material === M.bar || o.material === M.bar2 || o.material === M.tie) { mm += Math.max(p.width, p.depth); n++; }
     if (o.material === M.rod) rod += p.height; });
-  return (mm + 3 * n) * 363 / 4000 * 1.03 + rod / 1000 * 55;
+  return (mm + 3 * n) * E.PROFILES.dpk50x30.price_m / 1000 * 1.03 + rod / 1000 * 55;
 }
 const tieLines = v => ['Обвязка — две нитки по ±25 мм от оси, вся в полосе 100 мм по центру. В каждом пролёте одна нитка несущая: концы в колоннах, на стержнях (' + v.load.join(' / ') + ' мм); несущие чередуются — стыки вразбежку, в каждой колонне ровно один конец.',
   'Вторая нитка — фальш-брусок для вида (' + v.fake.join(' / ') + ' мм): нагрузку не несёт, притянут к несущей двумя горизонтальными шпильками M12 с гайками и гроверами с двух сторон — обе нитки работают как одна (всего ' + v.studs + ' шпилек). Самый длинный кусок ' + Math.max.apply(null, v.load.concat(v.fake)) + ' мм — в ящик ложится.',
@@ -1045,11 +1064,15 @@ INFO.V3 = () => { const v = slideV(2, [], []), q = v.q, free = Math.round(v.Md +
    секции столешницы — крышкой поперёк (балки проходят мимо выступов стержней), вставки скамеек — сверху. */
 function winterNew(set, noSeats) {
   const c = newCfg(set), Md = MD3, a = c.a, np = c.np, D = 2 * Md + W, yr = k => k * HB + HB / 2;
-  PANELX = lightXs(set); const r = tableLR(root, c.zone, c.props, null, Md, { a, split: 1490, noBase: true }), Lt = r.Lt, xt = Lt / 2 - a / 2, two = r.secs.length === 2; PANELX = null;
+  root.userData.packed = true; let n0 = root.children.length;                                  // сложенная сцена: заглушки — по своему узлу (см. closeEnds)
+  PANELX = lightXs(set); LIGHTX = SHOW.light || SHOW.canopy ? (SHOW.canopy ? canopyXs(set) : lightXs(set)) : null;   // доски столешницы — с теми же вырезами под стойки, что летом
+  const r = tableLR(root, c.zone, c.props, null, Md, { a, split: 1490, noBase: true }), Lt = r.Lt, xt = Lt / 2 - a / 2, two = r.secs.length === 2; PANELX = null; LIGHTX = null;
+  r.secs.forEach((sg, k) => { sg.userData.unit = 'секция ' + k; });
   NOSTUB = two;
-  const gT = SHOW.ends === 'trims' ? 8 : 3, xL = -(np * W / 2 + gT + a / 2), box3 = 2 * a + np * W + 2 * gT;
-  [-1, 1].forEach(sd => tumbaK3(root, sd * -xL, sd, a, [], [], Md));
-  for (let i = 0; i < np; i++) propStepN(root, (i - (np - 1) / 2) * W, Md, 3);
+  /* зазоры в ящике — под постоянные заглушки (30.09.2026): между стойками 5 мм (2 + 2 мм заглушки + 1), стойка — тумба 5 мм (с уголком 8) */
+  const PW = W + 5, blk = np * W + (np - 1) * 5, gT = SHOW.ends === 'trims' ? 8 : 5, xL = -(blk / 2 + gT + a / 2), box3 = 2 * a + blk + 2 * gT;
+  [-1, 1].forEach(sd => { n0 = root.children.length; tumbaK3(root, sd * -xL, sd, a, [], [], Md); tagUnit(root, n0, 'тумба ' + sd); });
+  for (let i = 0; i < np; i++) { n0 = root.children.length; propStepN(root, (i - (np - 1) / 2) * PW, Md, 3); tagUnit(root, n0, 'стойка ' + i); }
   NOSTUB = false;
   const tg = new THREE.Group(); seatTumba(tg, 0, 0, 0); const hS = new THREE.Box3().setFromObject(tg).max.x, LE = M4 / 2 + W + W / 2;   // полтабурета и вылет полки-упора
   // табуреты: сначала со скамей (с полкой-упором), потом одиночные; отсеки по порядку
@@ -1094,8 +1117,8 @@ function winterNew(set, noSeats) {
     if (cp) cp.sashL.forEach(Lx => {                        // створки — целыми рамами стопкой, на крышке
       const along = Lx <= BX && cp.Ls <= BZ, across = Lx <= BZ && cp.Ls <= BX; if (!along && !across) { unfit.push('створка ' + Lx + ' × ' + cp.Ls); return; }
       const sg = new THREE.Group(); root.add(sg); sg.position.set(0, y, 0); if (!along) sg.rotation.y = Math.PI / 2;
-      [-1, 1].forEach(k => box(sg, 50, 50, cp.Ls, k * (Lx / 2 - 25), 25, 0, M.bar)); [-cp.Ls / 2 + 25, -cp.Ls / 2 + CAN.mid, cp.Ls / 2 - 15, cp.Ls / 2 - 45].forEach(z => box(sg, Lx - 100, 50, 30, 0, 25, z, M.bar));
-      box(sg, Lx - 80, 4, cp.Ls - 80, 0, 25, 0, M.pc).userData.slope = true; y += 56; });   // лист — в пазах рамы, как на крыше
+      [-1, 1].forEach(k => box(sg, 30, 50, cp.Ls, k * (Lx / 2 - 15), 25, 0, M.bar)); [-cp.Ls / 2 + 25, -cp.Ls / 2 + CAN.mid, cp.Ls / 2 - 15, cp.Ls / 2 - 45].forEach(z => box(sg, Lx - 60, 50, 30, 0, 25, z, M.bar));
+      box(sg, Lx - 40, 4, cp.Ls - 80, 0, 15, 0, M.pc).userData.slope = true; y += 56; });   // лист — в пазах рамы, как на крыше; боковины на ребро
     const items = lp.pcs.concat(cp ? cp.loose : []).filter(L => L > 100).map(L => ({ L, t: 30, w: 55, mat: M.bar }));   // бруски
     if (SHOW.light) { const prof = lp.len / Math.max(1, lp.n - 1); for (let i = 0; i < lp.n - 1; i++) items.push({ L: Math.round(prof), t: 30, w: 55, mat: M.alu }); }
     const rolls = []; if (cp) cp.curtDims.forEach(([cw, ch]) => {                 // шторы: на трубе, если труба ложится вдоль; иначе труба половинами, полотно снято и свёрнуто поперёк
@@ -1189,12 +1212,31 @@ function endGrid() {
       return [...out]; }
   };
 }
+/* лист-многоугольник (поликарбонат фронтона — треугольники в плоскости, толщина 4 мм): точка внутри, если она у плоскости
+   треугольника не дальше tol и внутри него в плоскости (с запасом 0,35 мм) — точнее, чем по габаритной коробке */
+function trisOf(gm) {
+  const a = gm.attributes.position, out = [];
+  for (let i = 0; i + 2 < a.count; i += 3) { const v = [0, 1, 2].map(k => new THREE.Vector3(a.getX(i + k), a.getY(i + k), a.getZ(i + k)));
+    const n = new THREE.Vector3().subVectors(v[1], v[0]).cross(new THREE.Vector3().subVectors(v[2], v[0])); if (n.lengthSq() < 1e-6) continue; out.push({ v, n: n.normalize() }); }
+  return out;
+}
+function triIn(tris, p, tol) {
+  const e = new THREE.Vector3(), w = new THREE.Vector3(), c = new THREE.Vector3();
+  return tris.some(({ v, n }) => { const d = w.subVectors(p, v[0]).dot(n); if (Math.abs(d) > tol) return false;
+    for (let k = 0; k < 3; k++) { const a = v[k], b = v[(k + 1) % 3]; e.subVectors(b, a); w.subVectors(p, a); c.crossVectors(e, w); if (c.dot(n) < -0.35 * e.length()) return false; }
+    return true; });
+}
+/* ящик на зиму (30.09.2026): узлы (тумба, стойка, табурет, секция столешницы) сложены вплотную, но заглушки — постоянные, едут с деталью.
+   В сложенной сцене торец закрывает только деталь своего узла; чужой узел рядом торец не «закрывает» — заглушка стоит, как летом. */
+function tagUnit(g, from, id) { g.children.slice(from).forEach(o => { o.userData.unit = id; }); }
 function closeEnds(g) {
   if (g.userData.endsClosed) return;
   g.updateMatrixWorld(true);
+  const packed = !!g.userData.packed, unitOf = o => { let q = o; while (q.parent && q.parent !== g) q = q.parent; return q.userData.unit || q; };
   const notCover = [M.sheet, M.pc, M.pvc, M.glass, M.cover, M.person, M.led, M.panel, M.ghost], sheetM = [M.sheet, M.pc, M.pvc], lag = [], cov = endGrid(), hard = endGrid(), sh = endGrid(), ghost = endGrid();
-  const entry = (o, e) => { const gm = o.geometry; if (!gm.boundingBox) gm.computeBoundingBox(); const bb = gm.boundingBox.clone().expandByScalar(e);
-    return { o, bb, wb: bb.isEmpty() ? bb.clone() : bb.clone().applyMatrix4(o.matrixWorld), inv: new THREE.Matrix4().copy(o.matrixWorld).invert() }; };
+  const entry = (o, e) => { const gm = o.geometry; if (!gm.boundingBox) gm.computeBoundingBox(); const bb = gm.boundingBox.clone().expandByScalar(e + (gm.type === 'BufferGeometry' ? 2 : 0));
+    const cy = gm.type === 'CylinderGeometry' ? { r: Math.max(gm.parameters.radiusTop, gm.parameters.radiusBottom) + e, h: gm.parameters.height / 2 + e } : null;   // цилиндр — по радиусу, не по коробке
+    return { o, bb, wb: bb.isEmpty() ? bb.clone() : bb.clone().applyMatrix4(o.matrixWorld), inv: new THREE.Matrix4().copy(o.matrixWorld).invert(), tri: gm.type === 'BufferGeometry' ? trisOf(gm) : null, tol: 2 + e, cy, u: packed ? unitOf(o) : null }; };
   g.traverse(o => {
     if (!o.isMesh || !o.geometry) return;
     const L = lagDims(o); if (L && !o.userData.endsDone) lag.push({ o, L });
@@ -1205,17 +1247,17 @@ function closeEnds(g) {
     cov.add(entry(o, 0.35)); hard.add(entry(o, -0.4));
   });
   const q = new THREE.Vector3(), p = new THREE.Vector3(), reg = new THREE.Box3();
-  const hitOf = (list, pt, self) => { for (const c of list) { if (c.o === self || !c.wb.containsPoint(pt)) continue; q.copy(pt).applyMatrix4(c.inv); if (c.bb.containsPoint(q)) return c.o; } return null; };
+  const hitOf = (list, pt, self, u) => { for (const c of list) { if (c.o === self || (u && c.u !== u) || !c.wb.containsPoint(pt)) continue; q.copy(pt).applyMatrix4(c.inv); if (c.bb.containsPoint(q) && (!c.tri || triIn(c.tri, q, c.tol)) && (!c.cy || (Math.abs(q.y) <= c.cy.h && q.x * q.x + q.z * q.z <= c.cy.r * c.cy.r))) return c.o; } return null; };
   const at = (o, ax, s, t, u, v, dm) => { const a1 = (ax + 1) % 3, a2 = (ax + 2) % 3; p.set(0, 0, 0);
     p.setComponent(ax, s * (dm[ax] / 2 + t)); p.setComponent(a1, u * dm[a1] / 2); p.setComponent(a2, v * dm[a2] / 2); return p.applyMatrix4(o.matrixWorld); };
   const region = (o, ax, s, t0, t1, dm) => { reg.makeEmpty(); [t0, t1].forEach(t => [-1, 1].forEach(u => [-1, 1].forEach(v => reg.expandByPoint(at(o, ax, s, t, u, v, dm))))); return reg; };   // слой перед торцом (или за ним) в мировых осях
   const SMP = [[0, 0], [0.68, 0.68], [0.68, -0.68], [-0.68, 0.68], [-0.68, -0.68]];
   const closed = (o, ax, s, dm) => { const nb = cov.near(region(o, ax, s, 0.5, 2.3, dm)); if (!nb.length) return false;
-    return [0.8, 2].some(t => SMP.every(([u, v]) => hitOf(nb, at(o, ax, s, t, u, v, dm), o))); };
+    const un = packed ? unitOf(o) : null; return [0.8, 2].some(t => SMP.every(([u, v]) => hitOf(nb, at(o, ax, s, t, u, v, dm), o, un))); };
   const through = (o, ax, s, dm, grid) => { const nb = (grid || sh).near(region(o, ax, s, -1.2, -0.8, dm)); if (!nb.length) return false;
-    for (let u = -0.95; u <= 0.95; u += 0.02) for (const v of [-0.5, 0, 0.5]) if (hitOf(nb, at(o, ax, s, -1, u, v, dm), null)) return true; return false; };
+    const un = packed ? unitOf(o) : null; for (let u = -0.95; u <= 0.95; u += 0.02) for (const v of [-0.5, 0, 0.5]) if (hitOf(nb, at(o, ax, s, -1, u, v, dm), null, un)) return true; return false; };
   const taken = (o, ax, s, dm) => { const nb = hard.near(region(o, ax, s, 0.3, 1.7, dm)); if (!nb.length) return '';   // место заглушки занято: листом или другой деталью
-    for (const t of [0.4, 1.6]) for (let u = -0.9; u < 0.95; u += 0.3) for (let v = -0.9; v < 0.95; v += 0.3) { const h = hitOf(nb, at(o, ax, s, t, u, v, dm), o); if (h) return sheetM.indexOf(h.material) >= 0 ? 'лист' : 'деталь'; } return ''; };
+    const un = packed ? unitOf(o) : null; for (const t of [0.4, 1.6]) for (let u = -0.9; u < 0.95; u += 0.3) for (let v = -0.9; v < 0.95; v += 0.3) { const h = hitOf(nb, at(o, ax, s, t, u, v, dm), o, un); if (h) return sheetM.indexOf(h.material) >= 0 ? 'лист' : 'деталь'; } return ''; };
   lag.forEach(({ o, L }) => {
     let best = null;
     /* втулка, сквозь которую проходит лист (или место под вставку), стоит пазом вдоль листа — ось вдоль стенки, лист выходит из её торцов;
