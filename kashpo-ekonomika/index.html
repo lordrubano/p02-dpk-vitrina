@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кашпо-трансформер: экономика</title>
+<meta name="description" content="Кашпо P-02, которое зимой становится укрытием для туи: из чего складывается цена, сценарии цены лаги и наценки, экономия в конструкции, сравнение с конкурентами и план.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f6f5f1; --surface:#fcfcfb; --surface-2:#f0efec; --line:#dedcd5;
+  --ink:#0b0b0b; --ink-2:#52514e; --muted:#77756f;
+  --accent:#1c5cab; --accent-soft:#e3edf9;
+  --good:#1a7f37; --good-soft:#e5f3e8; --warn:#9a6700; --warn-soft:#fbf1d9; --bad:#b42318; --bad-soft:#fbe9e7;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7;
+  --band:#cde2fb; --band-ink:#1c5cab;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#383835;
+    --ink:#ffffff; --ink-2:#c3c2b7; --muted:#9a998f;
+    --accent:#6da7ec; --accent-soft:#1d2a3b;
+    --good:#5cc27a; --good-soft:#15291b; --warn:#e0b04a; --warn-soft:#2e2511; --bad:#f08b80; --bad-soft:#35181500;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9;
+    --band:#1f3656; --band-ink:#86b6ef;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#121211; --surface:#1a1a19; --surface-2:#242422; --line:#383835;
+  --ink:#ffffff; --ink-2:#c3c2b7; --muted:#9a998f;
+  --accent:#6da7ec; --accent-soft:#1d2a3b;
+  --good:#5cc27a; --good-soft:#15291b; --warn:#e0b04a; --warn-soft:#2e2511; --bad:#f08b80; --bad-soft:#351815;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9;
+  --band:#1f3656; --band-ink:#86b6ef;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Golos Text",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;overflow-x:hidden}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 48px}
+header.hero{padding:28px 0 8px}
+.kicker{font-size:13px;color:var(--muted);letter-spacing:.02em}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:6px 0 10px;letter-spacing:-.01em}
+h2{font-size:clamp(21px,3.6vw,27px);line-height:1.2;margin:0 0 6px}
+h3{font-size:17px;margin:18px 0 6px}
+p{margin:8px 0}
+.lead{font-size:18px;color:var(--ink-2);max-width:62ch}
+.verdict{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:start;margin-top:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.verdict .main{font-size:19px;font-weight:600;line-height:1.35;margin:0 0 10px}
+.verdict ul{margin:0;padding-left:20px}
+.verdict li{margin:6px 0}
+.photo{margin:0}
+.photo img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line)}
+.photo figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 6px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi .v{font-size:24px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:13px;color:var(--ink-2);margin-top:4px}
+section{margin-top:40px}
+.sub{color:var(--ink-2);margin:0 0 14px;max-width:70ch}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--surface-2);border-radius:10px;padding:4px;margin:4px 0 12px}
+.seg button{border:0;background:transparent;color:var(--ink-2);font:inherit;font-size:14px;padding:7px 12px;border-radius:8px;cursor:pointer;min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chartbox{position:relative;width:100%;height:360px}
+.chartbox.tall{height:560px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2);margin:10px 0 0;padding:0;list-style:none}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tbl{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td.wrap,th.wrap{white-space:normal;min-width:220px;text-align:left}
+thead th{font-size:12.5px;color:var(--ink-2);font-weight:600;background:var(--surface-2);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tr.total td{font-weight:700}
+details.more{margin-top:10px}
+details.more summary{cursor:pointer;color:var(--accent);font-size:14px}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ctl label{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--ink-2)}
+.ctl output{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.ctl input[type=range]{width:100%;margin:8px 0 2px;accent-color:var(--accent);height:28px}
+.ctl .hint{font-size:12px;color:var(--muted)}
+.toggles{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 4px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.presets button{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:34px}
+.presets button:hover{border-color:var(--accent)}
+.rows{display:grid;gap:12px;margin-top:16px}
+.row{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.row .top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+.row .nm{font-weight:600}
+.row .nm small{font-weight:400;color:var(--muted);margin-left:6px}
+.row .price{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.row .meta{font-size:13px;color:var(--ink-2);margin-top:2px}
+.chip{display:inline-block;font-size:12.5px;font-weight:600;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:2px}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.track{position:relative;height:34px;margin-top:10px}
+.track .base{position:absolute;left:0;right:0;top:14px;height:6px;border-radius:3px;background:var(--surface-2)}
+.track .band{position:absolute;top:10px;height:14px;border-radius:4px;background:var(--band)}
+.track .tgt{position:absolute;top:6px;width:2px;height:22px;background:var(--band-ink)}
+.track .me{position:absolute;top:5px;width:14px;height:24px;margin-left:-7px;border-radius:4px;background:var(--s2);border:2px solid var(--surface)}
+.track .ax{position:absolute;top:28px;font-size:11px;color:var(--muted);transform:translateX(-50%);white-space:nowrap}
+.keys{font-size:12.5px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px}
+.keys i{display:inline-block;width:12px;height:10px;border-radius:3px;margin-right:5px;vertical-align:0}
+.note{font-size:13.5px;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:10px 12px;margin-top:12px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 52px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:14px;display:grid;place-items:center}
+.steps b{display:block}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.two>*,.verdict>*,.controls>*{min-width:0}
+.tag{font-size:12px;font-weight:600;border-radius:6px;padding:1px 7px;white-space:nowrap}
+.tag.ok{background:var(--good-soft);color:var(--good)}
+.tag.ask{background:var(--warn-soft);color:var(--warn)}
+footer{margin-top:44px;font-size:13px;color:var(--muted)}
+footer a{color:var(--accent);word-break:break-all}
+a{color:var(--accent)}
+@media (max-width:820px){
+  .verdict{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .controls{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .chartbox{height:320px}
+}
+@media (max-width:480px){
+  body{font-size:15px}
+  .lead{font-size:16px}
+  .verdict .main{font-size:17px}
+  .kpi .v{font-size:20px}
+  .row .price{font-size:19px}
+  .chartbox.tall{height:600px}
+  th,td{padding:7px 8px;font-size:13px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  .chartbox{height:260px}
+  .chartbox.tall{height:480px}
+  .verdict{grid-template-columns:1.3fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">P-02 · квадратное кашпо, которое осенью становится укрытием для туи · расчёт от 30.09.2026</div>
+  <h1>Кашпо-трансформер: экономика</h1>
+  <p class="lead">Все цифры взяты из расчётного ядра проекта (engine-p02.js), цены конкурентов — из заметок и из поиска 30.09.2026.</p>
+
+  <div class="verdict">
+    <div class="card">
+      <p class="main">Продолжать стоит, но не в нынешнем виде: при лаге 363 ₽ за метр и наценке 60 % кашпо в полтора–два раза дороже деревянных и ДПК-аналогов. В рынок оно попадает, если сойдутся три условия: лага не дороже 250 ₽ за метр, облегчённая конструкция и выпуск партиями.</p>
+      <ul>
+        <li><b>Лага — 55–57 % себестоимости.</b> Остальное вместе весит меньше, поэтому главный рычаг — цена лаги.</li>
+        <li><b>Своими силами, без новых деталей, можно убрать 18–32 %.</b> Для этого: молочный поликарбонат в базе, 3–5 брусков в стенке вместо всех (с уголком) и раскрой лаги партией.</li>
+        <li><b>Начинать с 500/7</b> (50×50, высота 42 см). Ориентир — около 10 500 ₽ за кашпо и около 12 000 ₽ вместе с зимним комплектом.</li>
+        <li><b>Прямых аналогов «кашпо + укрытие» не нашли.</b> Но укрытие для туи на рынке стоит всего 0,2–1,2 тыс. ₽, так что зима — довод при покупке, а не повод сильно поднимать цену.</li>
+        <li><b>Своя лага (фильера ≈10 000 $) окупится только при 600–900 кашпо в год.</b> Пока рано.</li>
+      </ul>
+    </div>
+    <figure class="photo">
+      <img src="img/kashpo.jpg" alt="Кашпо P-02 из чёрной ДПК-лаги со светлыми вставками, с травой внутри, на настиле" width="1600" height="1000" loading="lazy">
+      <figcaption>Кашпо P-02 (рендер из геометрии проекта). Бруски из ДПК-лаги 50×30, между ними листы.</figcaption>
+    </figure>
+  </div>
+
+  <div class="kpis" aria-label="Главные цифры">
+    <div class="kpi"><div class="v">16 900 ₽</div><div class="l">500/7 сейчас: лага 363 ₽/м, наценка 60 %</div></div>
+    <div class="kpi"><div class="v">8 800–12 200 ₽</div><div class="l">кашпо 50×50 из ДПК и сосны на рынке</div></div>
+    <div class="kpi"><div class="v">55 %</div><div class="l">доля лаги в себестоимости 500/7</div></div>
+    <div class="kpi"><div class="v">≤ 250 ₽/м</div><div class="l">цена лаги, при которой 500/7 укладывается в рынок</div></div>
+  </div>
+</header>
+
+<section id="sostav">
+  <h2>Из чего складывается цена</h2>
+  <p class="sub">Цена одного изделия при лаге 363 ₽/м и наценке 60 %. В «Брак, накладные, прочие» входят брак 5 %, накладные 12 % и 650 ₽ прочих расходов на изделие; коробка отдельной строкой в ядре не выделена и сидит внутри этих 650 ₽.</p>
+  <div class="seg" role="group" aria-label="Конструкция">
+    <button type="button" data-comp="cur" aria-pressed="true">Как сейчас</button>
+    <button type="button" data-comp="opt" aria-pressed="false">После экономии в конструкции</button>
+  </div>
+  <div class="chartbox"><canvas id="stack" role="img" aria-label="Столбцы: из чего складывается цена каждого варианта"></canvas></div>
+  <ul class="legend" id="stackLegend"></ul>
+  <details class="more"><summary>Таблица: рубли и доли по статьям</summary>
+    <div class="tbl"><table id="stackTable"></table></div>
+  </details>
+  <div class="note">Что больше всего весит: <b>лага</b> — 55–57 % себестоимости, дальше <b>брак и накладные</b> (14–15 %), <b>заглушки</b> (6–8 %), <b>труд</b> (5–7 %) и <b>прочие 650 ₽</b> (3–8 %). Листы из акрила занимают 5–8 %, из поликарбоната — 1–3 %. Стержни и мелочи — около 1 %.</div>
+</section>
+
+<section id="scen">
+  <h2>Сценарии: сколько будет стоить для покупателя</h2>
+  <p class="sub">Двигайте ползунки. Голубая полоса — цены похожих кашпо (ДПК и сосна), вертикальная черта — ориентир цены, оранжевая метка — наша цена.</p>
+  <div class="card">
+    <div class="controls">
+      <div class="ctl"><label for="lag">Цена лаги, ₽ за метр <output id="lagO"></output></label>
+        <input type="range" id="lag" min="100" max="450" step="5" value="363">
+        <div class="hint">363 — розница ДекМастера; 200–250 — другие заводы и опт; 100 — своя экструзия (оценка)</div></div>
+      <div class="ctl"><label for="mk">Наценка, % <output id="mkO"></output></label>
+        <input type="range" id="mk" min="20" max="80" step="5" value="60">
+        <div class="hint">60 % — как в задании; 30–40 % — обычная для серийного товара</div></div>
+      <div class="ctl"><label for="cm">Комиссия маркетплейса, % <output id="cmO"></output></label>
+        <input type="range" id="cm" min="0" max="30" step="1" value="0">
+        <div class="hint">0 — продаём сами; Ozon и WB — 15–25 % (без доставки и хранения)</div></div>
+    </div>
+    <div class="toggles">
+      <div class="seg" role="group" aria-label="Конструкция">
+        <button type="button" data-d="cur" aria-pressed="true">Конструкция как сейчас</button>
+        <button type="button" data-d="opt" aria-pressed="false">С экономией</button>
+      </div>
+      <div class="seg" role="group" aria-label="Производство">
+        <button type="button" data-s="0" aria-pressed="true">Штучно</button>
+        <button type="button" data-s="1" aria-pressed="false">Партиями</button>
+      </div>
+    </div>
+    <div class="presets">
+      <button type="button" data-p="363,60,0,cur,0">Сейчас</button>
+      <button type="button" data-p="250,35,0,opt,1">Цель: лага 250, продаём сами</button>
+      <button type="button" data-p="200,35,20,opt,1">Маркетплейс: лага 200, комиссия 20 %</button>
+      <button type="button" data-p="100,40,0,opt,1">Своя лага 100 ₽/м (оценка)</button>
+    </div>
+    <p class="hint" style="font-size:12.5px;color:var(--muted);margin:10px 0 0">«Партиями» — раскрой лаги сразу на много заказов (почти без обрезков), накладные 8 % вместо 12 %, брак 3 % вместо 5 %, прочие 300 ₽ вместо 650. «С экономией» — молочный поликарбонат и меньше брусков в стенке, подробности ниже.</p>
+  </div>
+  <div class="rows" id="rows"></div>
+  <div class="keys"><span><i style="background:var(--band)"></i>рынок (ДПК, сосна)</span><span><i style="background:var(--band-ink);width:3px"></i>ориентир</span><span><i style="background:var(--s2)"></i>наша цена</span></div>
+</section>
+
+<section id="save">
+  <h2>Экономия в конструкции</h2>
+  <p class="sub">База — 500/7 как сейчас: себестоимость 10 561 ₽, лага 363 ₽/м. Всё посчитано ядром проекта. Правила при этом соблюдены: каждый торец закрыт заглушкой или уголком, листы стоят в пазах брусков, детали не проходят друг сквозь друга, зимой изделие собирается в укрытие. Файлы проекта не менялись.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Что меняем</th><th>Себест., ₽</th><th>Экономия, ₽</th><th>%</th><th class="wrap">Как это работает</th><th>Согласие</th></tr></thead>
+    <tbody>
+      <tr><td>Молочный поликарбонат вместо акрила</td><td>9 832</td><td>729</td><td>6,9</td><td class="wrap">Лист 262 ₽/м² вместо 1 200. Этот же лист идёт на зиму, второй комплект не нужен. Цветной акрил остаётся платной опцией.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>Уголок вместо заглушек</td><td>10 409</td><td>152</td><td>1,4</td><td class="wrap">4 уголка по 42 см и 24 самореза вместо 56 заглушек по 13 ₽. Сам по себе даёт немного.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>4 бруска в стенке вместо 7 (ПК + уголок)</td><td>8 612</td><td>1 949</td><td>18,5</td><td class="wrap">16 брусков и 24 втулки вместо 28 брусков: 3 хлыста вместо 4. Проверки ядра на лето и зиму пройдены. Уголок ядро ставит само — у втулок без листа он обязателен.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>5 поясов вместо 7 (кашпо 30 см)</td><td>8 071</td><td>2 490</td><td>23,6</td><td class="wrap">Хлыстов 3 вместо 4, но кашпо ниже. Это отдельная модель, а не упрощение.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>6 поясов вместо 7</td><td>10 172</td><td>389</td><td>3,7</td><td class="wrap">Хлыстов остаётся 4 — выигрыш маленький.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>Раскрой лаги партией</td><td>10 475</td><td>86</td><td>0,8</td><td class="wrap">У 500/7 раскрой и так почти без обрезков (212 мм на 16 м). У 400/7 из-за 3 отрезков полки нужен 4-й хлыст ради 25 см: партия экономит 1 605 ₽ (15,7 %), у 400/5 — 1 262 ₽ (16 %).</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>Прочие 650 → 300 ₽, накладные 12 → 8 %, брак 5 → 3 %</td><td>9 660</td><td>901</td><td>8,5</td><td class="wrap">Когда кашпо делают сериями, постоянные расходы делятся на много штук. Это оценка, её нужно подтвердить первой партией.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>Без поддона</td><td>10 463</td><td>98</td><td>0,9</td><td class="wrap">Поддон 79 ₽. Выигрыш мал — лучше оставить. У 660 поддон стоит 1 250 ₽, там стоит поискать дешевле.</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr class="total"><td>Всё вместе: ПК + 4 бруска + партия + серия</td><td>7 444</td><td>3 117</td><td>29,5</td><td class="wrap">При лаге 250 ₽/м — 6 050 ₽, при 200 ₽/м — 5 430 ₽.</td><td></td></tr>
+      <tr><td>Трансформер: ПК круглый год</td><td>12 828</td><td>932</td><td>6,8</td><td class="wrap">Второй комплект листов на зиму не нужен (база трансформера — 13 760 ₽).</td><td><span class="tag ok">не нужно</span></td></tr>
+      <tr><td>Другая лага (40×30, 50×30 других заводов)</td><td colspan="3">−2 130 / −3 080 / −4 020 ₽ при 250 / 200 / 150 ₽/м</td><td class="wrap">Меняется сечение и устройство полостей, поэтому пазы, втулки и заглушки придётся проверить заново.</td><td><span class="tag ask">нужно</span></td></tr>
+      <tr><td>Составной зимний стержень</td><td colspan="3">не считали</td><td class="wrap">Зимний стержень длиной 1,63 м не помещается в коробку 52×48 см и едет отдельной длинной упаковкой, а для маркетплейса это дорого. Составной стержень — новая деталь.</td><td><span class="tag ask">нужно</span></td></tr>
+      <tr><td>Свой профиль с готовым пазом</td><td colspan="3">≈0,6 мин труда на брусок</td><td class="wrap">Только вместе со своей экструзией (см. ниже). Это меняет канон.</td><td><span class="tag ask">нужно</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">Лучший вариант для каждого размера: 400/5 — 4 бруска в стенке (5 932 ₽ вместо 7 831), 400/7 — 3 бруска (6 982 вместо 10 241), 500/7 — 4 бруска (8 612 вместо 10 561), 660/12 — 5 брусков (17 981 вместо 25 667). Везде с молочным ПК; проверки ядра на лето и зиму пройдены. Вариант с 2 брусками в стенке зимнюю проверку не проходит, поэтому его нет в таблице.</div>
+</section>
+
+<section id="market">
+  <h2>Конкуренты</h2>
+  <p class="sub">Розничные цены в России на уличные кашпо и укрытия для туй. Голубые полосы — рынок (от и до). Оранжевые — наше изделие: левый край — «с экономией, партиями, лага 250 ₽/м, наценка 35 %, продаём сами», правый край — «как сейчас, лага 363 ₽/м, наценка 60 %».</p>
+  <div class="chartbox tall"><canvas id="comp" role="img" aria-label="Горизонтальные полосы: цены кашпо конкурентов и наша цена по размерам"></canvas></div>
+  <ul class="legend"><li><i style="background:var(--s1)"></i>рынок</li><li><i style="background:var(--s2)"></i>наше: от «после экономии» до «как сейчас»</li></ul>
+
+  <div class="two">
+    <div class="card">
+      <h3 style="margin-top:0">Только кашпо</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Размер</th><th>Рынок ДПК / сосна</th><th>Сейчас (+60 %)</th><th>Ориентир</th></tr></thead>
+        <tbody>
+          <tr><td>400/5 (40×40×30)</td><td>4 700–10 200</td><td>12 530</td><td>6 500</td></tr>
+          <tr><td>400/7 (40×40×42)</td><td>6 200–10 200</td><td>16 390</td><td>8 000</td></tr>
+          <tr><td>500/7 (50×50×42)</td><td>8 800–12 200</td><td>16 900</td><td>10 500</td></tr>
+          <tr><td>660/12 (66×66×72)</td><td>12 200–21 000</td><td>41 070</td><td>18 000</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">«Два в одном»: кашпо + укрытие отдельно</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Что</th><th>Цена, ₽</th></tr></thead>
+        <tbody>
+          <tr><td>Кашпо 50×50 ДПК / сосна</td><td>8 800–12 200</td></tr>
+          <tr><td>Укрытие для туи: каркас + чехол</td><td>160–1 190</td></tr>
+          <tr class="total"><td>Вместе</td><td>9 000–13 400</td></tr>
+          <tr><td>Наше 500/7 + зима сейчас (+60 %)</td><td>22 020</td></tr>
+          <tr><td>Наше с экономией, лага 250, +35 %</td><td>10 560</td></tr>
+          <tr><td>Ориентир</td><td>12 000</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="note">Где наша цена приемлема: 500/7 и «500/7 + зима» попадают в рынок при лаге около 250 ₽/м, если конструкция облегчена, кашпо выпускаются партиями, а продаём сами. 400/5 и 400/7 требуют лагу около 200 ₽/м. 660/12 даже с экономией укладывается в рынок только при лаге около 200 ₽/м; кроме того, ядро помечает, что полка у 660 не выдерживает горшок весом 94 кг. Зимнее укрытие у нас высотой около 1 м (корпус 42 см + крышка 60 см, внутри 40×40 см): подходит для молодых туй, роз, гортензий и самшита, но не для туй выше 1,2 м. Такие туи закрывают чехлами за 0,2–1 тыс. ₽.</div>
+</section>
+
+<section id="next">
+  <h2>Что делать дальше</h2>
+  <ol class="steps">
+    <li><b>Найти лагу за 200–250 ₽/м.</b> Попросить у ДекМастера оптовую цену (обычно на 10–20 % ниже розницы, опт от 50–100 тыс. ₽). Параллельно запросить образцы и прайсы: Polydeck 50×30 (≈280 ₽/м), DPK-Profile 40×30 (≈212), Holzhof 40×35 (≈230), WPC-ТеХно 40×30 (≈150). Взвесить хлыст и проверить торец: полости, паз, посадку заглушки.</li>
+    <li><b>Утвердить базовую комплектацию.</b> Молочный поликарбонат, 4 бруска в стенке у 500/7, уголок; цветной акрил — платная опция. Нужно решение владельца: новых деталей здесь нет, но меняется то, что входит в базу.</li>
+    <li><b>Собрать 3–5 образцов 500/7.</b> Проверить на них посадку листа в паз, втулки, уголок, саморез в торец стержня и переход «лето → зима → лето» вокруг туи.</li>
+    <li><b>Узнать цены заглушек и уголков оптом</b> (сейчас 13 ₽ за штуку и 275 ₽/м) и цену коробки. После этого пересчитать «прочие 650 ₽» по факту.</li>
+    <li><b>Пробная продажа напрямую:</b> Авито (комиссия около 6,5 %), свой сайт, садовые центры. Ориентир — 10 500 ₽ за кашпо и 12 000 ₽ с зимним комплектом. На маркетплейсы выходить, только когда лага будет около 200 ₽/м и решится вопрос с длинным зимним стержнем.</li>
+    <li><b>К своей лаге вернуться после сезона,</b> если продажи идут на 600–900 кашпо в год (расчёт ниже).</li>
+  </ol>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">Своя лага на заказном производстве — когда окупится</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+      <tbody>
+        <tr><td>Фильера (оснастка под свой профиль)</td><td>≈10 000 $ ≈ 0,8–1 млн ₽ (курс не проверяли)</td></tr>
+        <tr><td>Сырьё на метр лаги</td><td>≈50–60 ₽ (оценка из заметок)</td></tr>
+        <tr><td>Цена метра на заказном производстве</td><td>≈100 ₽ — оценка, в открытых данных нет</td></tr>
+        <tr><td>Минимальная партия</td><td>у заводов ДПК не опубликована; для похожего ПВХ-профиля — 10 000 м</td></tr>
+        <tr><td>10 000 м лаги — это</td><td>≈900 кашпо 500/7 (11 м на кашпо с экономией)</td></tr>
+        <tr><td>Деньги на старт</td><td>≈2 млн ₽ (фильера + первая партия 10 000 м × 100 ₽)</td></tr>
+        <tr><td>Окупается фильера против лаги за 250 ₽/м</td><td>после ≈6 300 м ≈ 570 кашпо</td></tr>
+        <tr><td>… против лаги за 200 ₽/м</td><td>после ≈9 500 м ≈ 860 кашпо</td></tr>
+        <tr><td>… против нынешних 363 ₽/м</td><td>после ≈3 600 м ≈ 330 кашпо</td></tr>
+      </tbody>
+    </table></div>
+    <p style="font-size:14px;color:var(--ink-2)">Вывод: своя лага имеет смысл, только если продаётся 600–900 кашпо в год. Первый сезон дешевле работать на покупной лаге за 200–250 ₽/м.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Откуда цифры: ядро проекта engine-p02.js (лага, листы, стержни, заглушки, уголки, труд 450 ₽/ч, брак 5 %, накладные 12 %, прочие 650 ₽). В СОСТОЯНИЕ.md цены 11 747 / 15 362 / 15 841 / 38 501 ₽ посчитаны с наценкой 50 % (по умолчанию на странице модели). С наценкой 60 % получается 12 530 / 16 386 / 16 897 / 41 068 ₽.</p>
+  <p>Рынок кашпо: kashpof.ru, live-elka.ru, mebeldpk.ru (заметки проекта, 25–27.09.2026); kwa-gold.ru, pkgreenwood.ru, ultrales.ru, tvoydom.ru, brkno.com, lumistyle.ru, mpolis-pro.ru, cheapman.ru, воронежские ДПК-наборы — поиск 30.09.2026, цены из выдачи поисковика. Укрытия: lemanapro.ru, blagodatmir.ru, udsezon.ru, dayas.ru, каркас-для-туи — поиск 30.09.2026. Лага: dpk-decking.ru и torgsp.ru (363 ₽/м), заметки «Материал ДПК» и «Поставщики сырья».</p>
+</footer>
+</div>
+
+<script>
+const DATA=[{"id":"v4005","name":"400/5","desc":"40×40, высота 30 см","optNote":"ПК молочный, 4 бруска в стенке","cur":{"nonLag":1735.24,"bought":12,"batch":9.05,"sheets":391.68,"rods":65.56,"ends":598,"other":116,"lab":564,"bars":20,"stubs":0,"sticks":3,"plugs":46,"trims":0,"min":75},"opt":{"nonLag":1576.05,"bought":8,"batch":7.87,"sheets":85.49,"rods":65.56,"ends":706,"other":116,"lab":603,"bars":16,"stubs":8,"sticks":2,"plugs":14,"trims":4,"min":80}},{"id":"v4007","name":"400/7","desc":"40×40, высота 42 см","optNote":"ПК молочный, 3 бруска в стенке","cur":{"nonLag":2327.48,"bought":16,"batch":12.25,"sheets":587.52,"rods":91.96,"ends":806,"other":116,"lab":726,"bars":28,"stubs":0,"sticks":4,"plugs":62,"trims":0,"min":97},"opt":{"nonLag":2467.19,"bought":8,"batch":7.55,"sheets":128.23,"rods":91.96,"ends":1294,"other":116,"lab":837,"bars":12,"stubs":32,"sticks":2,"plugs":38,"trims":4,"min":112}},{"id":"v5007","name":"500/7","desc":"50×50, высота 42 см","optNote":"ПК молочный, 4 бруска в стенке","cur":{"nonLag":2598.52,"bought":16,"batch":15.8,"sheets":790.81,"rods":91.96,"ends":832,"other":151,"lab":732.75,"bars":28,"stubs":0,"sticks":4,"plugs":64,"trims":0,"min":98},"opt":{"nonLag":2397.31,"bought":12,"batch":11.07,"sheets":172.6,"rods":91.96,"ends":1168,"other":151,"lab":813.75,"bars":16,"stubs":24,"sticks":3,"plugs":32,"trims":4,"min":109}},{"id":"v66012","name":"660/12","desc":"66×66, высота 72 см","optNote":"ПК молочный, 5 брусков в стенке","cur":{"nonLag":6699.95,"bought":40,"batch":39.42,"sheets":2072.24,"rods":157.96,"ends":1560,"other":1610,"lab":1299.75,"bars":48,"stubs":0,"sticks":10,"plugs":120,"trims":0,"min":173},"opt":{"nonLag":5987.99,"bought":24,"batch":23.71,"sheets":452.28,"rods":157.96,"ends":2312,"other":1610,"lab":1455.75,"bars":20,"stubs":56,"sticks":6,"plugs":80,"trims":4,"min":194}},{"id":"vT","name":"500/7 + зима","desc":"50×50×42 летом; зимой укрытие ≈1 м с крышкой 600","optNote":"ПК круглый год, 4 бруска в стенке","cur":{"nonLag":3860.48,"bought":20,"batch":17.8,"sheets":963.41,"rods":588.5,"ends":936,"other":495.81,"lab":876.75,"bars":28,"stubs":0,"sticks":5,"plugs":72,"trims":0,"min":117},"opt":{"nonLag":3486.66,"bought":16,"batch":13.07,"sheets":172.6,"rods":588.5,"ends":1272,"other":495.81,"lab":957.75,"bars":16,"stubs":24,"sticks":4,"plugs":40,"trims":4,"min":128}}];
+/* рынок (ДПК, сосна) и ориентир по каждому варианту */
+const MKT={v4005:[4716,10200,6500],v4007:[6200,10200,8000],v5007:[8799,12183,10500],v66012:[12168,20966,18000],vT:[8959,13373,12000]};
+
+const fmt=x=>Math.round(x).toLocaleString('ru-RU').replace(/ /g,' ');
+const r10=x=>Math.round(x/10)*10;
+function full(r,lag,ser){
+  const M=ser?r.batch:r.bought, b=r.nonLag+M*lag;
+  const def=ser?3:5, ovh=ser?8:12, misc=ser?300:650;
+  return b/(1-def/100)*(1+ovh/100)+misc;
+}
+function parts(r,lag){          // статьи при штучном производстве
+  const lagC=r.bought*lag, b=r.nonLag+lagC, def=b/0.95-b, ovh=(b+def)*0.12;
+  return {lag:lagC,sheets:r.sheets,ends:r.ends,small:r.rods+r.other,lab:r.lab,oh:def+ovh+650};
+}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- 1. состав цены ---------- */
+const CATS=[['lag','Лага','--s1'],['sheets','Листы','--s2'],['ends','Заглушки и уголки','--s3'],['small','Стержни, поддон, мелочи','--s4'],['lab','Труд','--s5'],['oh','Брак, накладные, прочие','--s6'],['mk','Наценка 60 %','--s7']];
+let comp='cur', stackChart=null, compChart=null;
+function stackData(){
+  return DATA.map(v=>{const p=parts(v[comp],363), f=Object.values(p).reduce((a,b)=>a+b,0); p.mk=f*0.6; p.full=f; return p;});
+}
+function drawStack(){
+  const rows=stackData();
+  const ds=CATS.map(([k,n,c])=>({label:n,data:rows.map(r=>Math.round(r[k])),backgroundColor:css(c),borderColor:css('--surface'),borderWidth:{top:2},borderSkipped:false,maxBarThickness:64}));
+  const cfg={type:'bar',data:{labels:DATA.map(v=>v.name),datasets:ds},options:{responsive:true,maintainAspectRatio:false,animation:false,
+    plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:c=>' '+c.dataset.label+': '+fmt(c.raw)+' ₽',footer:it=>{const i=it[0].dataIndex;return 'Цена: '+fmt(rows[i].full*1.6)+' ₽';}}}},
+    scales:{x:{stacked:true,grid:{display:false},ticks:{color:css('--ink-2')}},y:{stacked:true,grid:{color:css('--line')},border:{display:false},ticks:{color:css('--ink-2'),callback:v=>fmt(v/1000)+' т.'}}}}};
+  if(stackChart) stackChart.destroy();
+  stackChart=new Chart(document.getElementById('stack'),cfg);
+  document.getElementById('stackLegend').innerHTML=CATS.map(([k,n,c])=>'<li><i style="background:var('+c+')"></i>'+n+'</li>').join('');
+  const t=document.getElementById('stackTable');
+  let h='<thead><tr><th>Статья</th>'+DATA.map(v=>'<th>'+v.name+'</th>').join('')+'</tr></thead><tbody>';
+  const pr=rows.map(r=>r.full*1.6);
+  CATS.forEach(([k,n])=>{h+='<tr><td>'+n+'</td>'+rows.map((r,i)=>'<td>'+fmt(r[k])+' <span style="color:var(--muted)">('+Math.round(r[k]/pr[i]*100)+' %)</span></td>').join('')+'</tr>';});
+  h+='<tr class="total"><td>Цена</td>'+pr.map(x=>'<td>'+fmt(x)+'</td>').join('')+'</tr>';
+  h+='<tr><td>Хлыстов лаги по 4 м</td>'+DATA.map(v=>'<td>'+v[comp].sticks+'</td>').join('')+'</tr>';
+  h+='<tr><td>Брусков / втулок</td>'+DATA.map(v=>'<td>'+v[comp].bars+' / '+v[comp].stubs+'</td>').join('')+'</tr>';
+  h+='<tr><td>Заглушек / уголков</td>'+DATA.map(v=>'<td>'+v[comp].plugs+' / '+v[comp].trims+'</td>').join('')+'</tr>';
+  h+='<tr><td>Труд, минут</td>'+DATA.map(v=>'<td>'+v[comp].min+'</td>').join('')+'</tr></tbody>';
+  t.innerHTML=h;
+}
+document.querySelectorAll('[data-comp]').forEach(b=>b.addEventListener('click',()=>{comp=b.dataset.comp;document.querySelectorAll('[data-comp]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawStack();}));
+
+/* ---------- 2. сценарии ---------- */
+const st={lag:363,mk:60,cm:0,d:'cur',s:0};
+function setSeg(attr,val){document.querySelectorAll('['+attr+']').forEach(x=>x.setAttribute('aria-pressed',String(x.getAttribute(attr)===String(val))));}
+function drawRows(){
+  document.getElementById('lagO').textContent=st.lag+' ₽';
+  document.getElementById('mkO').textContent=st.mk+' %';
+  document.getElementById('cmO').textContent=st.cm+' %';
+  const el=document.getElementById('rows');
+  el.innerHTML=DATA.map(v=>{
+    const r=v[st.d], c=full(r,st.lag,st.s), price=c*(1+st.mk/100)/(1-st.cm/100), mine=c*st.mk/100;
+    const [lo,hi,tg]=MKT[v.id], max=Math.max(hi,price)*1.12, pct=x=>(x/max*100).toFixed(2)+'%';
+    const chip=price<=hi?(price<=tg?'<span class="chip good">в рынке, не дороже ориентира</span>':'<span class="chip warn">в рынке, дороже ориентира</span>'):'<span class="chip bad">дороже рынка на '+Math.round((price/hi-1)*100)+' %</span>';
+    const ticks=[0,Math.round(max/2/1000)*1000,Math.floor(max/1000)*1000].map((x,i)=>'<span class="ax" style="left:'+pct(x)+(i===0?';transform:none':i===2?';transform:translateX(-100%)':'')+'">'+fmt(x/1000)+' тыс. ₽</span>').join('');
+    return '<div class="row"><div class="top"><div class="nm">'+v.name+'<small>'+v.desc+'</small></div><div><span class="price">'+fmt(r10(price))+' ₽</span>'+chip+'</div></div>'+
+      '<div class="meta">себестоимость '+fmt(c)+' ₽ · вам с продажи '+fmt(mine)+' ₽ · рынок '+fmt(lo)+'–'+fmt(hi)+' ₽ · ориентир '+fmt(tg)+' ₽'+(st.d==='opt'?' · '+v.optNote:'')+'</div>'+
+      '<div class="track" aria-hidden="true"><div class="base"></div><div class="band" style="left:'+pct(lo)+';width:calc('+pct(hi)+' - '+pct(lo)+')"></div><div class="tgt" style="left:'+pct(tg)+'"></div><div class="me" style="left:'+pct(price)+'"></div>'+ticks+'</div></div>';
+  }).join('');
+}
+['lag','mk','cm'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{st[id]=+e.target.value;drawRows();}));
+document.querySelectorAll('[data-d]').forEach(b=>b.addEventListener('click',()=>{st.d=b.dataset.d;setSeg('data-d',st.d);drawRows();}));
+document.querySelectorAll('[data-s]').forEach(b=>b.addEventListener('click',()=>{st.s=+b.dataset.s;setSeg('data-s',st.s);drawRows();}));
+document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{
+  const [l,m,c,d,s]=b.dataset.p.split(',');Object.assign(st,{lag:+l,mk:+m,cm:+c,d,s:+s});
+  document.getElementById('lag').value=l;document.getElementById('mk').value=m;document.getElementById('cm').value=c;
+  setSeg('data-d',d);setSeg('data-s',s);drawRows();}));
+
+/* ---------- 4. конкуренты ---------- */
+const byId=id=>DATA.find(v=>v.id===id);
+const ours=id=>{const v=byId(id);return [Math.round(full(v.opt,250,1)*1.35),Math.round(full(v.cur,363,0)*1.6)];};
+const COMP=[
+  ['40×40 · пластик',[1610,6290],0],['40×40 · стеклопл., ДПК-набор',[4716,8600],0],['40×40 · сосна, металл',[10200,11630],0],['40×40 · премиум',[13082,18150],0],
+  ['Наше 400/5',ours('v4005'),1],['Наше 400/7',ours('v4007'),1],
+  ['50×50 · ДПК, сосна',[8799,12183],0],['50×50 · пластик, файберстоун',[15490,25025],0],
+  ['Наше 500/7',ours('v5007'),1],['Наше 500/7 + зима',ours('vT'),1],
+  ['60×60 · сосна, ДПК-набор',[5772,20966],0],['60×60 · пластик',[23090,23090],0],
+  ['Наше 660/12',ours('v66012'),1],
+  ['Укрытие туи: каркас + чехол',[160,1190],0]
+];
+function drawComp(){
+  const narrow=window.innerWidth<520;
+  const cfg={type:'bar',data:{labels:COMP.map(c=>c[0]),datasets:[{label:'Цена, ₽',data:COMP.map(c=>c[1]),
+    backgroundColor:COMP.map(c=>css(c[2]?'--s2':'--s1')),borderRadius:4,borderSkipped:false,minBarLength:4,barPercentage:.72,categoryPercentage:.9}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const [a,b]=c.raw;return a===b?' '+fmt(a)+' ₽':' '+fmt(a)+' – '+fmt(b)+' ₽';}}}},
+      scales:{x:{min:0,max:42000,grid:{color:css('--line')},border:{display:false},ticks:{color:css('--ink-2'),callback:v=>fmt(v/1000)+' т.',maxTicksLimit:narrow?5:9}},
+              y:{grid:{display:false},ticks:{color:css('--ink'),font:{size:narrow?11:12.5},autoSkip:false}}}}};
+  if(compChart) compChart.destroy();
+  compChart=new Chart(document.getElementById('comp'),cfg);
+}
+
+function drawAll(){drawStack();drawComp();drawRows();}
+if(window.Chart){Chart.defaults.font.family='"Golos Text",system-ui,sans-serif';}
+drawRows();
+if(window.Chart){drawStack();drawComp();}
+const mq=window.matchMedia('(prefers-color-scheme: dark)');
+if(mq.addEventListener) mq.addEventListener('change',()=>{if(window.Chart){drawStack();drawComp();}});
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(window.Chart)drawComp();},200);});
+</script>
+</body>
+</html>
